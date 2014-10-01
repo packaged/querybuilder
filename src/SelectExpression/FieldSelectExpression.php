@@ -1,7 +1,5 @@
 <?php
-namespace Packaged\QueryBuilder\Predicate;
-
-use Packaged\QueryBuilder\QueryColumn\SelectExpressionInterface;
+namespace Packaged\QueryBuilder\SelectExpression;
 
 class FieldSelectExpression implements SelectExpressionInterface
 {
@@ -33,5 +31,21 @@ class FieldSelectExpression implements SelectExpressionInterface
   public function hasAlias()
   {
     return $this->_alias !== null;
+  }
+
+  /**
+   * Assemble the segment into a usable part of a query
+   *
+   * @return string
+   */
+  public function assemble()
+  {
+    return $this->_getFieldForAssemble()
+    . ($this->hasAlias() ? ' AS ' . $this->_alias : '');
+  }
+
+  protected function _getFieldForAssemble()
+  {
+    return $this->_field;
   }
 }

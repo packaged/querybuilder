@@ -1,8 +1,6 @@
 <?php
 namespace Packaged\QueryBuilder\SelectExpression;
 
-use Packaged\QueryBuilder\Predicate\FieldSelectExpression;
-
 abstract class FunctionSelectExpression extends FieldSelectExpression
 {
   /**
@@ -11,4 +9,9 @@ abstract class FunctionSelectExpression extends FieldSelectExpression
    * @return string
    */
   abstract public function getFunctionName();
+
+  protected function _getFieldForAssemble()
+  {
+    return $this->getFunctionName() . '(' . $this->_field . ')';
+  }
 }

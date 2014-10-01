@@ -1,0 +1,16 @@
+<?php
+namespace Packaged\Tests\QueryBuilder\SelectExpression;
+
+use Packaged\QueryBuilder\SelectExpression\SumSelectExpression;
+
+class SumSelectExpressionTest extends \PHPUnit_Framework_TestCase
+{
+  public function testAssemble()
+  {
+    $selector = new SumSelectExpression();
+    $selector->setField('fieldname');
+    $this->assertEquals('SUM(fieldname)', $selector->assemble());
+    $selector->setAlias('cnt');
+    $this->assertEquals('SUM(fieldname) AS cnt', $selector->assemble());
+  }
+}

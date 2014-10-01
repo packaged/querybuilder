@@ -1,5 +1,5 @@
 <?php
-namespace Packaged\QueryBuilder\QueryColumn;
+namespace Packaged\QueryBuilder\SelectExpression;
 
 use Packaged\QueryBuilder\Statement\StatementSegmentInterface;
 
