@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Expression;
 
-class StringExpression extends ValueExpression
+class NumericExpression extends ValueExpression
 {
   /**
    * Assemble the segment into a usable part of a query
@@ -10,6 +10,6 @@ class StringExpression extends ValueExpression
    */
   public function assemble()
   {
-    return '"' . $this->_value . '"';
+    return $this->_value;
   }
 }
