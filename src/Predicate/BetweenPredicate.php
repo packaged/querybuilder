@@ -3,24 +3,9 @@ namespace Packaged\QueryBuilder\Predicate;
 
 class BetweenPredicate implements PredicateInterface
 {
-  protected $_rangeStart;
-  protected $_rangeEnd;
-
-  /**
-   * Operator e.g. =, >= >
-   * @return string
-   */
-  public function getOperator()
-  {
-    return 'BETWEEN';
-  }
-
-  public function __construct($field, $start = null, $end = null)
-  {
-    $this->_field      = $field;
-    $this->_rangeStart = $start;
-    $this->_rangeEnd   = $end;
-  }
+  protected $_rangeStart = 0;
+  protected $_rangeEnd = 0;
+  protected $_field;
 
   public function setField($field)
   {
@@ -53,5 +38,19 @@ class BetweenPredicate implements PredicateInterface
   public function getRangeValues()
   {
     return [$this->_rangeStart, $this->_rangeEnd];
+  }
+
+  /**
+   * Assemble the segment into a usable part of a query
+   *
+   * @return string
+   */
+  public function assemble()
+  {
+    return $this->_field . ' BETWEEN '
+    . (is_numeric($this->_rangeStart)
+      ? $this->_rangeStart : "'$this->_rangeStart'")
+    . ' AND '
+    . (is_numeric($this->_rangeEnd) ? $this->_rangeEnd : "'$this->_rangeEnd'");
   }
 }

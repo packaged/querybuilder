@@ -12,12 +12,6 @@ abstract class AbstractOperatorPredicate implements PredicateInterface
    */
   abstract public function getOperator();
 
-  public function __construct($field, $value = null)
-  {
-    $this->_field = $field;
-    $this->_value = $value;
-  }
-
   public function setField($field)
   {
     $this->_field = $field;
@@ -38,5 +32,16 @@ abstract class AbstractOperatorPredicate implements PredicateInterface
   public function getValue()
   {
     return $this->_value;
+  }
+
+  /**
+   * Assemble the segment into a usable part of a query
+   *
+   * @return string
+   */
+  public function assemble()
+  {
+    return $this->_field . ' ' . $this->getOperator() . ' '
+    . (is_numeric($this->_value) ? $this->_value : "'$this->_value'");
   }
 }
