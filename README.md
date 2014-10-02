@@ -22,6 +22,8 @@ When running a sharded database, the query can be rebuilt to execute across mult
 Terms
 ==
 
+Base on information found on wikipedia - http://en.wikipedia.org/wiki/SQL
+
 Clauses
 ---
 Are constituent components of statements and queries.
