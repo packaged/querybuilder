@@ -20,4 +20,22 @@ class AllSelectExpression implements SelectExpressionInterface
   {
     return $this->_table === null ? '*' : $this->_table . '.*';
   }
+
+  /**
+   * Create a new Select * Expression with a table prefix
+   * e.g. table.*
+   *
+   * @param $table
+   *
+   * @return static
+   */
+  public static function create($table = null)
+  {
+    $select = new static;
+    if($table !== null)
+    {
+      $select->setTable($table);
+    }
+    return $select;
+  }
 }

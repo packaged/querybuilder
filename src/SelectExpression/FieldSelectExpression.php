@@ -39,4 +39,33 @@ class FieldSelectExpression extends FieldExpression
   {
     return $this->_field;
   }
+
+  /**
+   * @param $field
+   *
+   * @return static
+   */
+  public static function create($field)
+  {
+    $expression = new static;
+    $expression->setField($field);
+    return $expression;
+  }
+
+  /**
+   * @param $field
+   * @param $alias
+   *
+   * @return static
+   */
+  public static function createWithAlias($field, $alias)
+  {
+    $expression = new static;
+    $expression->setField($field);
+    if($alias !== null)
+    {
+      $expression->setAlias($alias);
+    }
+    return $expression;
+  }
 }

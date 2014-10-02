@@ -23,4 +23,11 @@ class ConcatSelectExpression implements SelectExpressionInterface
   {
     return 'CONCAT(' . implode(',', $this->_properties) . ')';
   }
+
+  public static function create()
+  {
+    $expression              = new static;
+    $expression->_properties = func_get_args();
+    return $expression;
+  }
 }

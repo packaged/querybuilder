@@ -12,4 +12,13 @@ class AllSelectExpressionTest extends \PHPUnit_Framework_TestCase
     $selector->setTable('test');
     $this->assertEquals('test.*', $selector->assemble());
   }
+
+  public function testStatics()
+  {
+    $this->assertEquals('*', AllSelectExpression::create()->assemble());
+    $this->assertEquals(
+      'table.*',
+      AllSelectExpression::create('table')->assemble()
+    );
+  }
 }

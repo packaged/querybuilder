@@ -22,4 +22,17 @@ class FieldSelectExpressionTest extends \PHPUnit_Framework_TestCase
     $selector->setAlias('alias');
     $this->assertEquals('alias', $selector->getAlias());
   }
+
+  public function testStatics()
+  {
+    $this->assertEquals(
+      'fieldname',
+      FieldSelectExpression::create('fieldname')->assemble()
+    );
+    $this->assertEquals(
+      'fieldname AS new_name',
+      FieldSelectExpression::createWithAlias('fieldname', 'new_name')->assemble(
+      )
+    );
+  }
 }

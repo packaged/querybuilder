@@ -30,4 +30,11 @@ class SubQuerySelectExpression implements SelectExpressionInterface
   {
     return '(' . $this->_query->assemble() . ') AS ' . $this->_alias;
   }
+
+  public static function create(QueryStatement $query, $alias = null)
+  {
+    $expression = new static;
+    $expression->setQuery($query, $alias);
+    return $expression;
+  }
 }

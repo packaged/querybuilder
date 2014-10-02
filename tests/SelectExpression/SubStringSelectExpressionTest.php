@@ -23,4 +23,25 @@ class SubStringSelectExpressionTest extends \PHPUnit_Framework_TestCase
       $selector->assemble()
     );
   }
+
+  public function testStatics()
+  {
+    $this->assertEquals(
+      'SUBSTRING(fieldname,0)',
+      SubStringSelectExpression::create('fieldname')->assemble()
+    );
+    $this->assertEquals(
+      'SUBSTRING(fieldname,0) AS new',
+      SubStringSelectExpression::createWithAlias('fieldname', 'new')->assemble()
+    );
+    $this->assertEquals(
+      'SUBSTRING(fieldname,10) AS new',
+      SubStringSelectExpression::create('fieldname', 10, null, 'new')->assemble(
+      )
+    );
+    $this->assertEquals(
+      'SUBSTRING(fieldname,10,5) AS new',
+      SubStringSelectExpression::create('fieldname', 10, 5, 'new')->assemble()
+    );
+  }
 }

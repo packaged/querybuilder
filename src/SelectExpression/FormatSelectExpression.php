@@ -32,4 +32,21 @@ class FormatSelectExpression extends FunctionSelectExpression
     . ($this->_precision > 0 ? ',' . $this->_precision : '')
     . ')';
   }
+
+  /**
+   * @param             $field
+   * @param int         $precision
+   * @param null|string $alias
+   *
+   * @return static
+   */
+  public static function create($field, $precision = 2, $alias = null)
+  {
+    $expression = parent::createWithAlias($field, $alias);
+    /**
+     * @var $expression static
+     */
+    $expression->setPrecision($precision);
+    return $expression;
+  }
 }

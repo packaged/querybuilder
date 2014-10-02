@@ -22,4 +22,20 @@ class FormatSelectExpressionTest extends \PHPUnit_Framework_TestCase
     $selector->setPrecision(2);
     $this->assertEquals(2, $selector->getPrecision());
   }
+
+  public function testStatics()
+  {
+    $this->assertEquals(
+      'FORMAT(fieldname)',
+      FormatSelectExpression::create('fieldname', 0)->assemble()
+    );
+    $this->assertEquals(
+      'FORMAT(fieldname) AS rnd',
+      FormatSelectExpression::createWithAlias('fieldname', 'rnd')->assemble()
+    );
+    $this->assertEquals(
+      'FORMAT(fieldname,2) AS rnd',
+      FormatSelectExpression::create('fieldname', 2, 'rnd')->assemble()
+    );
+  }
 }

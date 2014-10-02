@@ -36,4 +36,20 @@ class SubStringSelectExpression extends FunctionSelectExpression
     . ($this->_length !== null ? ',' . $this->_length : '')
     . ')';
   }
+
+  public static function create(
+    $field, $start = 0, $length = null, $alias = null
+  )
+  {
+    $expression = parent::createWithAlias($field, $alias);
+    /**
+     * @var $expression static
+     */
+    $expression->setStartPosition($start);
+    if($length !== null)
+    {
+      $expression->setLength($length);
+    }
+    return $expression;
+  }
 }
