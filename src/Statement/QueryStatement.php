@@ -5,6 +5,6 @@ class QueryStatement extends AbstractStatement
 {
   protected function _getOrder()
   {
-    return ['SELECT', 'FROM', 'WHERE', 'GROUPBY', 'HAVING', 'ORDERBY'];
+    return ['SELECT', 'FROM', 'WHERE', 'GROUPBY', 'HAVING', 'ORDERBY', 'LIMIT'];
   }
 }

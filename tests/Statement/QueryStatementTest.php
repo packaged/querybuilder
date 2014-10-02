@@ -4,6 +4,7 @@ namespace Packaged\Tests\QueryBuilder\Statement;
 use Packaged\QueryBuilder\Clause\FromClause;
 use Packaged\QueryBuilder\Clause\GroupByClause;
 use Packaged\QueryBuilder\Clause\HavingClause;
+use Packaged\QueryBuilder\Clause\LimitClause;
 use Packaged\QueryBuilder\Clause\OrderByClause;
 use Packaged\QueryBuilder\Clause\SelectClause;
 use Packaged\QueryBuilder\Clause\WhereClause;
@@ -95,6 +96,21 @@ class QueryStatementTest extends \PHPUnit_Framework_TestCase
       . 'GROUP BY role '
       . 'HAVING tasks < 4 '
       . 'ORDER BY user_id, age DESC',
+      $statement->assemble()
+    );
+
+    $limit = new LimitClause();
+    $limit->setLimit(10);
+    $limit->setOffset(20);
+    $statement->addClause($limit);
+
+    $this->assertEquals(
+      'SELECT * FROM tbl '
+      . 'WHERE username IS NOT NULL AND name LIKE "Joh%" '
+      . 'GROUP BY role '
+      . 'HAVING tasks < 4 '
+      . 'ORDER BY user_id, age DESC '
+      . 'LIMIT 20,10',
       $statement->assemble()
     );
   }
