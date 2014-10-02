@@ -15,4 +15,11 @@ class FormatSelectExpressionTest extends \PHPUnit_Framework_TestCase
     $selector->setPrecision(2);
     $this->assertEquals('FORMAT(fieldname,2) AS rnd', $selector->assemble());
   }
+
+  public function testGettersAndSetters()
+  {
+    $selector = new FormatSelectExpression();
+    $selector->setPrecision(2);
+    $this->assertEquals(2, $selector->getPrecision());
+  }
 }
