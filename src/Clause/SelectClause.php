@@ -10,6 +10,7 @@ class SelectClause implements ClauseInterface
   public function addExpression(SelectExpressionInterface $expression)
   {
     $this->_expressions[] = $expression;
+    return $this;
   }
 
   public function setExpressions(array $expressions)
@@ -18,11 +19,13 @@ class SelectClause implements ClauseInterface
       $expressions,
       '\Packaged\QueryBuilder\SelectExpression\SelectExpressionInterface'
     );
+    return $this;
   }
 
   public function clearExpressions()
   {
     $this->_expressions = [];
+    return $this;
   }
 
   public function getExpressions()

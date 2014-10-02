@@ -1,22 +1,22 @@
 <?php
 namespace Packaged\QueryBuilder\SelectExpression;
 
-use Packaged\QueryBuilder\Statement\QueryStatementInterface;
+use Packaged\QueryBuilder\Statement\QueryStatement;
 
 class SubQuerySelectExpression implements SelectExpressionInterface
 {
   /**
-   * @var QueryStatementInterface
+   * @var QueryStatement
    */
   protected $_query;
   protected $_alias;
 
-  public function setQuery(QueryStatementInterface $query, $alias = null)
+  public function setQuery(QueryStatement $query, $alias = null)
   {
     $this->_alias = $alias;
     if($this->_alias === null)
     {
-      $this->_alias = substr(md5($query), 0, 6);
+      $this->_alias = substr(md5($query->assemble()), 0, 6);
     }
     $this->_query = $query;
   }
