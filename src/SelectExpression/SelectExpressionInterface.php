@@ -1,9 +1,9 @@
 <?php
 namespace Packaged\QueryBuilder\SelectExpression;
 
-use Packaged\QueryBuilder\Statement\StatementSegmentInterface;
+use Packaged\QueryBuilder\Expression\ExpressionInterface;
 
-interface SelectExpressionInterface extends StatementSegmentInterface
+interface SelectExpressionInterface extends ExpressionInterface
 {
 
 }

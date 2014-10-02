@@ -7,4 +7,9 @@ class SetClause extends AbstractPredicateClause
   {
     return 'SET';
   }
+
+  public function getGlue()
+  {
+    return ', ';
+  }
 }

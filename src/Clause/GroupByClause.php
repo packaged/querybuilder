@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Clause;
 
-class GroupByClause implements ClauseInterface
+class GroupByClause extends AbstractFieldClause
 {
   /**
    * @return string

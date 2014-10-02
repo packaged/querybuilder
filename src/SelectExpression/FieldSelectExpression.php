@@ -1,21 +1,12 @@
 <?php
 namespace Packaged\QueryBuilder\SelectExpression;
 
-class FieldSelectExpression implements SelectExpressionInterface
+use Packaged\QueryBuilder\Expression\FieldExpression;
+
+class FieldSelectExpression extends FieldExpression
+  implements SelectExpressionInterface
 {
-  protected $_field;
   protected $_alias;
-
-  public function setField($field)
-  {
-    $this->_field = $field;
-    return $this;
-  }
-
-  public function getField()
-  {
-    return $this->_field;
-  }
 
   public function setAlias($alias)
   {

@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Clause;
 
-class HavingClause implements ClauseInterface
+class HavingClause extends AbstractPredicateClause
 {
   /**
    * @return string
