@@ -1,10 +1,19 @@
 <?php
 namespace Packaged\QueryBuilder\Predicate;
 
+use Packaged\QueryBuilder\Expression\ExpressionInterface;
+use Packaged\QueryBuilder\Expression\NullExpression;
+
 class BetweenPredicate implements PredicateInterface
 {
-  protected $_rangeStart = 0;
-  protected $_rangeEnd = 0;
+  /**
+   * @var ExpressionInterface
+   */
+  protected $_rangeStart;
+  /**
+   * @var ExpressionInterface
+   */
+  protected $_rangeEnd;
   protected $_field;
 
   public function setField($field)
@@ -18,7 +27,9 @@ class BetweenPredicate implements PredicateInterface
     return $this->_field;
   }
 
-  public function setValues($start, $end)
+  public function setValues(
+    ExpressionInterface $start, ExpressionInterface $end
+  )
   {
     $this->_rangeStart = $start;
     $this->_rangeEnd   = $end;
@@ -27,12 +38,12 @@ class BetweenPredicate implements PredicateInterface
 
   public function getRangeStart()
   {
-    return $this->_rangeStart;
+    return $this->_rangeStart ?: new NullExpression();
   }
 
   public function getRangeEnd()
   {
-    return $this->_rangeEnd;
+    return $this->_rangeEnd ?: new NullExpression();
   }
 
   public function getRangeValues()
@@ -48,9 +59,8 @@ class BetweenPredicate implements PredicateInterface
   public function assemble()
   {
     return $this->_field . ' BETWEEN '
-    . (is_numeric($this->_rangeStart)
-      ? $this->_rangeStart : "'$this->_rangeStart'")
+    . $this->getRangeStart()->assemble()
     . ' AND '
-    . (is_numeric($this->_rangeEnd) ? $this->_rangeEnd : "'$this->_rangeEnd'");
+    . $this->getRangeEnd()->assemble();
   }
 }

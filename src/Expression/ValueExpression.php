@@ -8,6 +8,7 @@ class ValueExpression implements ExpressionInterface
   public function setValue($value)
   {
     $this->_value = $value;
+    return $this;
   }
 
   public function getValue()

@@ -1,6 +1,8 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Predicate;
 
+use Packaged\QueryBuilder\Expression\NumericExpression;
+use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Predicate\AbstractOperatorPredicate;
 
 class AbstractOperatorPredicateTest extends \PHPUnit_Framework_TestCase
@@ -9,22 +11,25 @@ class AbstractOperatorPredicateTest extends \PHPUnit_Framework_TestCase
   {
     $predicate = new FinalAbstractOperatorPredicateTest();
     $predicate->setField('field');
-    $this->assertEquals('field T \'\'', $predicate->assemble());
-    $predicate->setValue(1);
+    $this->assertEquals('field T NULL', $predicate->assemble());
+    $predicate->setExpression((new NumericExpression())->setValue(1));
     $this->assertEquals('field T 1', $predicate->assemble());
-    $predicate->setValue('1');
+    $predicate->setExpression((new NumericExpression())->setValue('1'));
     $this->assertEquals('field T 1', $predicate->assemble());
-    $predicate->setValue('abc');
-    $this->assertEquals('field T \'abc\'', $predicate->assemble());
+    $predicate->setExpression((new StringExpression())->setValue('abc'));
+    $this->assertEquals('field T "abc"', $predicate->assemble());
   }
 
   public function testGettersAndSetters()
   {
     $predicate = new FinalAbstractOperatorPredicateTest();
-    $predicate->setValue(1);
+    $predicate->setExpression((new NumericExpression())->setValue(1));
     $predicate->setField('test');
     $this->assertEquals('test', $predicate->getField());
-    $this->assertEquals(1, $predicate->getValue());
+    $this->assertEquals(
+      (new NumericExpression())->setValue(1),
+      $predicate->getExpression()
+    );
   }
 }
 

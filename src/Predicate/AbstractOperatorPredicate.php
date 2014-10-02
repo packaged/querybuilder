@@ -1,9 +1,15 @@
 <?php
 namespace Packaged\QueryBuilder\Predicate;
 
+use Packaged\QueryBuilder\Expression\ExpressionInterface;
+use Packaged\QueryBuilder\Expression\NullExpression;
+
 abstract class AbstractOperatorPredicate implements PredicateInterface
 {
   protected $_field;
+  /**
+   * @var ExpressionInterface
+   */
   protected $_value;
 
   /**
@@ -23,15 +29,15 @@ abstract class AbstractOperatorPredicate implements PredicateInterface
     return $this->_field;
   }
 
-  public function setValue($value)
+  public function setExpression(ExpressionInterface $value)
   {
     $this->_value = $value;
     return $this;
   }
 
-  public function getValue()
+  public function getExpression()
   {
-    return $this->_value;
+    return $this->_value === null ? new NullExpression() : $this->_value;
   }
 
   /**
@@ -41,7 +47,8 @@ abstract class AbstractOperatorPredicate implements PredicateInterface
    */
   public function assemble()
   {
-    return $this->_field . ' ' . $this->getOperator() . ' '
-    . (is_numeric($this->_value) ? $this->_value : "'$this->_value'");
+    return $this->_field . ' '
+    . $this->getOperator() . ' '
+    . $this->getExpression()->assemble();
   }
 }
