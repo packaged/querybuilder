@@ -1,20 +1,21 @@
 {
-  "name":        "packaged/querybuilder",
+  "name": "packaged/querybuilder",
   "description": "Abstract Query Builder",
-  "license":     "MIT",
-  "authors":     [
+  "license": "MIT",
+  "authors": [
     {
-      "name":  "Brooke Bryan",
+      "name": "Brooke Bryan",
       "email": "brooke@bajb.net"
     }
   ],
-  "require":     {
-    "php": ">=5.4.0"
+  "require": {
+    "php": ">=5.4.0",
+    "packaged/helpers": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "4.1"
   },
-  "autoload":    {
+  "autoload": {
     "psr-4": {
       "Packaged\\QueryBuilder\\": "src"
     }
