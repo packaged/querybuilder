@@ -2,7 +2,7 @@
 namespace Packaged\QueryBuilder\Predicate;
 
 use Packaged\QueryBuilder\Expression\ExpressionInterface;
-use Packaged\QueryBuilder\Expression\NullExpression;
+use Packaged\QueryBuilder\Expression\ValueExpression;
 
 class BetweenPredicate implements PredicateInterface
 {
@@ -38,12 +38,12 @@ class BetweenPredicate implements PredicateInterface
 
   public function getRangeStart()
   {
-    return $this->_rangeStart ?: new NullExpression();
+    return $this->_rangeStart ?: new ValueExpression();
   }
 
   public function getRangeEnd()
   {
-    return $this->_rangeEnd ?: new NullExpression();
+    return $this->_rangeEnd ?: new ValueExpression();
   }
 
   public function getRangeValues()

@@ -4,7 +4,6 @@ namespace Packaged\Tests\QueryBuilder\Statement;
 use Packaged\QueryBuilder\Clause\InsertClause;
 use Packaged\QueryBuilder\Clause\ValuesClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
-use Packaged\QueryBuilder\Expression\NullExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
 use Packaged\QueryBuilder\Statement\InsertStatement;
 
@@ -25,7 +24,7 @@ class InsertStatementTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals('INSERT INTO tbl (id, name)', $statement->assemble());
 
     $values = new ValuesClause();
-    $values->addExpression(new NullExpression());
+    $values->addExpression(new ValueExpression());
     $values->addExpression((new ValueExpression())->setValue("Test"));
     $statement->addClause($values);
 

@@ -2,7 +2,7 @@
 namespace Packaged\QueryBuilder\Predicate;
 
 use Packaged\QueryBuilder\Expression\ExpressionInterface;
-use Packaged\QueryBuilder\Expression\NullExpression;
+use Packaged\QueryBuilder\Expression\ValueExpression;
 
 abstract class AbstractOperatorPredicate implements PredicateInterface
 {
@@ -37,7 +37,7 @@ abstract class AbstractOperatorPredicate implements PredicateInterface
 
   public function getExpression()
   {
-    return $this->_value === null ? new NullExpression() : $this->_value;
+    return $this->_value === null ? new ValueExpression() : $this->_value;
   }
 
   /**

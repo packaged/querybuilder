@@ -1,23 +1,22 @@
 <?php
 namespace Packaged\QueryBuilder\Expression;
 
-class IncrementExpression extends FieldExpression
+class IncrementExpression extends AbstractArithmeticExpression
 {
-  protected $_increment = 0;
+  protected $_defaultValue = 0;
 
   public function setIncrementValue($increment = 1)
   {
-    $this->_increment = $increment;
+    $this->setExpression(NumericExpression::create($increment));
     return $this;
   }
 
   /**
-   * Assemble the segment into a usable part of a query
-   *
+   * Operator e.g. +
    * @return string
    */
-  public function assemble()
+  public function getOperator()
   {
-    return parent::assemble() . ' + ' . (int)$this->_increment;
+    return '+';
   }
 }

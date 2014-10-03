@@ -23,10 +23,23 @@ class ValueExpression implements ExpressionInterface
    */
   public function assemble()
   {
+    if($this->_value === null)
+    {
+      return 'NULL';
+    }
+
     if(is_numeric($this->_value))
     {
       return $this->_value;
     }
+
     return '"' . $this->_value . '"';
+  }
+
+  public static function create($value)
+  {
+    $expression = new static;
+    $expression->setValue($value);
+    return $expression;
   }
 }

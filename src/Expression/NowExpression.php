@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Expression;
 
-class NullExpression implements ExpressionInterface
+class NowExpression implements ExpressionInterface
 {
   /**
    * Assemble the segment into a usable part of a query
@@ -10,6 +10,6 @@ class NullExpression implements ExpressionInterface
    */
   public function assemble()
   {
-    return 'NULL';
+    return 'NOW()';
   }
 }

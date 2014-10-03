@@ -2,8 +2,8 @@
 namespace Packaged\Tests\QueryBuilder\Clause;
 
 use Packaged\QueryBuilder\Clause\ValuesClause;
-use Packaged\QueryBuilder\Expression\NullExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
+use Packaged\QueryBuilder\Expression\ValueExpression;
 
 class ValuesClauseTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,7 +14,7 @@ class ValuesClauseTest extends \PHPUnit_Framework_TestCase
 
     $clause->addExpression((new StringExpression())->setValue('one'));
     $this->assertEquals('VALUES ("one")', $clause->assemble());
-    $clause->addExpression(new NullExpression());
+    $clause->addExpression(new ValueExpression());
     $this->assertEquals('VALUES ("one", NULL)', $clause->assemble());
 
     $clause->clearExpressions();
@@ -26,7 +26,7 @@ class ValuesClauseTest extends \PHPUnit_Framework_TestCase
     $clause = new ValuesClause();
     $field  = new StringExpression();
     $field->setValue('abc');
-    $null = new NullExpression();
+    $null = new ValueExpression();
 
     $this->assertFalse($clause->hasExpressions());
     $clause->addExpression($field);

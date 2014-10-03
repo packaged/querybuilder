@@ -1,23 +1,22 @@
 <?php
 namespace Packaged\QueryBuilder\Expression;
 
-class DecrementExpression extends FieldExpression
+class DecrementExpression extends AbstractArithmeticExpression
 {
-  protected $_decrement = 0;
+  protected $_defaultValue = 0;
 
-  public function setDecrementValue($increment = 1)
+  public function setDecrementValue($decrement = 1)
   {
-    $this->_decrement = $increment;
+    $this->setExpression(NumericExpression::create($decrement));
     return $this;
   }
 
   /**
-   * Assemble the segment into a usable part of a query
-   *
+   * Operator e.g. +
    * @return string
    */
-  public function assemble()
+  public function getOperator()
   {
-    return parent::assemble() . ' - ' . (int)$this->_decrement;
+    return '-';
   }
 }

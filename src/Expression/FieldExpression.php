@@ -25,4 +25,11 @@ class FieldExpression implements ExpressionInterface
   {
     return $this->_field;
   }
+
+  public static function create($field)
+  {
+    $expression = new static;
+    $expression->setField($field);
+    return $expression;
+  }
 }

@@ -10,7 +10,11 @@ class NumericExpressionTest extends \PHPUnit_Framework_TestCase
     $expression = new NumericExpression();
     $expression->setValue(1);
     $this->assertEquals('1', $expression->assemble());
+    $expression->setValue('1a');
+    $this->assertEquals('1', $expression->assemble());
+    $expression->setValue(1.2);
+    $this->assertEquals('1.2', $expression->assemble());
     $expression->setValue('abc');
-    $this->assertEquals('abc', $expression->assemble());
+    $this->assertEquals('0', $expression->assemble());
   }
 }

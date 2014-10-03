@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Expression;
 
-class NumericExpression extends ValueExpression
+class UnixTimestampExpression implements ExpressionInterface
 {
   /**
    * Assemble the segment into a usable part of a query
@@ -10,11 +10,6 @@ class NumericExpression extends ValueExpression
    */
   public function assemble()
   {
-    if(stristr($this->_value, '.'))
-    {
-      return (float)$this->_value;
-    }
-
-    return (int)$this->_value;
+    return 'UNIX_TIMESTAMP()';
   }
 }
