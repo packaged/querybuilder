@@ -21,7 +21,7 @@ class EqualPredicate extends AbstractOperatorPredicate
   {
     if($this->_value === null)
     {
-      return $this->_field . ' IS NULL';
+      return $this->getField()->assemble() . ' IS NULL';
     }
 
     return parent::assemble();

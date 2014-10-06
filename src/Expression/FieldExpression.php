@@ -4,6 +4,7 @@ namespace Packaged\QueryBuilder\Expression;
 class FieldExpression implements ExpressionInterface
 {
   protected $_field;
+  protected $_table;
 
   public function setField($field)
   {
@@ -16,6 +17,17 @@ class FieldExpression implements ExpressionInterface
     return $this->_field;
   }
 
+  public function setTableName($table)
+  {
+    $this->_table = $table;
+    return $this;
+  }
+
+  public function getTableName()
+  {
+    return $this->_table;
+  }
+
   /**
    * Assemble the segment into a usable part of a query
    *
@@ -23,13 +35,15 @@ class FieldExpression implements ExpressionInterface
    */
   public function assemble()
   {
-    return $this->_field;
+    return (empty($this->_table) ? '' : $this->getTableName() . '.')
+    . $this->getField();
   }
 
-  public static function create($field)
+  public static function create($field, $table = null)
   {
     $expression = new static;
     $expression->setField($field);
+    $expression->setTableName($table);
     return $expression;
   }
 }

@@ -21,7 +21,7 @@ class NotEqualPredicate extends AbstractOperatorPredicate
   {
     if($this->_value === null)
     {
-      return $this->_field . ' IS NOT NULL';
+      return $this->getField()->assemble() . ' IS NOT NULL';
     }
 
     return parent::assemble();

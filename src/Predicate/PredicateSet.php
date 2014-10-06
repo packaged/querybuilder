@@ -1,10 +1,7 @@
 <?php
-namespace Packaged\QueryBuilder\Clause;
+namespace Packaged\QueryBuilder\Predicate;
 
-use Packaged\QueryBuilder\Predicate\PredicateInterface;
-use Packaged\QueryBuilder\Predicate\PredicateSet;
-
-abstract class AbstractPredicateClause implements ClauseInterface
+class PredicateSet implements PredicateInterface
 {
   protected $_predicates = [];
 
@@ -36,11 +33,6 @@ abstract class AbstractPredicateClause implements ClauseInterface
     return !empty($this->_predicates);
   }
 
-  public function getGlue()
-  {
-    return ' AND ';
-  }
-
   /**
    * Assemble the segment into a usable part of a query
    *
@@ -48,25 +40,13 @@ abstract class AbstractPredicateClause implements ClauseInterface
    */
   public function assemble()
   {
-    if(count($this->_predicates) === 1
-      && head($this->_predicates) instanceof PredicateSet
-    )
-    {
-      return $this->getAction() . ' '
-      . substr(head($this->_predicates)->assemble(), 1, -1);
-    }
-    else
-    {
-      return $this->getAction() . ' '
-      . implode($this->getGlue(), mpull($this->getPredicates(), 'assemble'));
-    }
+    return '('
+    . implode($this->getGlue(), mpull($this->getPredicates(), 'assemble'))
+    . ')';
   }
 
-  /**
-   * @return bool
-   */
-  public function allowMultiple()
+  public function getGlue()
   {
-    return false;
+    return ' AND ';
   }
 }

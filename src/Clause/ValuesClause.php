@@ -57,4 +57,12 @@ class ValuesClause implements ClauseInterface
     . implode(', ', mpull($this->_expressions, 'assemble'))
     . ')';
   }
+
+  /**
+   * @return bool
+   */
+  public function allowMultiple()
+  {
+    return true;
+  }
 }

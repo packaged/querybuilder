@@ -25,4 +25,12 @@ abstract class AbstractTableClause implements ClauseInterface
   {
     return $this->getAction() . ' ' . $this->getTableName();
   }
+
+  /**
+   * @return bool
+   */
+  public function allowMultiple()
+  {
+    return false;
+  }
 }

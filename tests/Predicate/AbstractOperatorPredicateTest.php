@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Predicate;
 
+use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Predicate\AbstractOperatorPredicate;
@@ -24,8 +25,13 @@ class AbstractOperatorPredicateTest extends \PHPUnit_Framework_TestCase
   {
     $predicate = new FinalAbstractOperatorPredicateTest();
     $predicate->setExpression((new NumericExpression())->setValue(1));
+
     $predicate->setField('test');
-    $this->assertEquals('test', $predicate->getField());
+    $this->assertEquals(
+      FieldExpression::create('test'),
+      $predicate->getField()
+    );
+
     $this->assertEquals(
       (new NumericExpression())->setValue(1),
       $predicate->getExpression()

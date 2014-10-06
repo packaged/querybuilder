@@ -9,4 +9,9 @@ interface ClauseInterface extends StatementSegmentInterface
    * @return string
    */
   public function getAction();
+
+  /**
+   * @return bool
+   */
+  public function allowMultiple();
 }

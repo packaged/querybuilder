@@ -30,4 +30,12 @@ abstract class AbstractFieldClause implements ClauseInterface
     return $this->getAction() . ' '
     . implode(', ', mpull($this->_fields, 'assemble'));
   }
+
+  /**
+   * @return bool
+   */
+  public function allowMultiple()
+  {
+    return false;
+  }
 }

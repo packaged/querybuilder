@@ -6,14 +6,45 @@ use Packaged\QueryBuilder\Clause\ClauseInterface;
 abstract class AbstractStatement implements StatementInterface
 {
   /**
-   * @var ClauseInterface[]
+   * @var ClauseInterface[]|array[]
    */
   protected $_clauses;
 
   public function addClause(ClauseInterface $clause)
   {
-    $this->_clauses[str_replace(' ', '', $clause->getAction())] = $clause;
+    $key = $this->_makeKey($clause->getAction());
+    if($clause->allowMultiple())
+    {
+      if(!isset($this->_clauses[$key]))
+      {
+        $this->_clauses[$key] = [$clause];
+      }
+      else
+      {
+        $this->_clauses[$key][] = $clause;
+      }
+    }
+    else
+    {
+      $this->_clauses[$key] = $clause;
+    }
     return $this;
+  }
+
+  protected function _makeKey($action)
+  {
+    return str_replace(' ', '', $action);
+  }
+
+  /**
+   * @param $action
+   *
+   * @return null|ClauseInterface
+   */
+  public function getClause($action)
+  {
+    $key = $this->_makeKey($action);
+    return isset($this->_clauses[$key]) ? $this->_clauses[$key] : null;
   }
 
   abstract protected function _getOrder();
@@ -30,9 +61,28 @@ abstract class AbstractStatement implements StatementInterface
     {
       if(isset($this->_clauses[$order]))
       {
-        $compiled[] = $this->_clauses[$order]->assemble();
+        if(is_array($this->_clauses[$order]))
+        {
+          $compiled[] = implode(
+            $this->_getGlue($order),
+            mpull($this->_clauses[$order], 'assemble')
+          );
+        }
+        else
+        {
+          $compiled[] = $this->_clauses[$order]->assemble();
+        }
       }
     }
     return implode(' ', $compiled);
+  }
+
+  protected function _getGlue($order)
+  {
+    if($order === 'VALUES')
+    {
+      return ', ';
+    }
+    return ' ';
   }
 }

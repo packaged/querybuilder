@@ -37,4 +37,12 @@ class LimitClause implements ClauseInterface
     . ($this->_offset !== null ? (int)$this->_offset . ',' : '')
     . (int)$this->_limit;
   }
+
+  /**
+   * @return bool
+   */
+  public function allowMultiple()
+  {
+    return false;
+  }
 }
