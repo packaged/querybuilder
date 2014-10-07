@@ -28,6 +28,21 @@ class AbstractArithmeticExpressionTest extends \PHPUnit_Framework_TestCase
         StringExpression::create(5)
       )->assemble()
     );
+
+    $this->assertEquals(
+      'tbl.field_name T 5',
+      FinalAbstractArithmeticExpression::createWithTable('field_name', 'tbl', 5)
+        ->assemble()
+    );
+
+    $this->assertEquals(
+      'tbl.field_name T "5"',
+      FinalAbstractArithmeticExpression::createWithTable(
+        'field_name',
+        'tbl',
+        StringExpression::create(5)
+      )->assemble()
+    );
   }
 }
 

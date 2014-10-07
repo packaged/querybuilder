@@ -39,7 +39,7 @@ class WhereClause extends AbstractPredicateClause
       if(is_scalar($value))
       {
         $pred = ($inverse ? new NotEqualPredicate() : new EqualPredicate());
-        $pred->setField(FieldExpression::create($key, $table));
+        $pred->setField(FieldExpression::createWithTable($key, $table));
         $pred->setExpression(ValueExpression::create($value));
         $predicates[] = $pred;
       }
@@ -85,7 +85,7 @@ class WhereClause extends AbstractPredicateClause
         else
         {
           $pred = ($inverse ? new NotInPredicate() : new InPredicate());
-          $pred->setField(FieldExpression::create($key, $table));
+          $pred->setField(FieldExpression::createWithTable($key, $table));
           $pred->setExpression(ArrayExpression::create($value));
           $predicates[] = $pred;
         }

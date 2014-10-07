@@ -39,7 +39,14 @@ class FieldExpression implements ExpressionInterface
     . $this->getField();
   }
 
-  public static function create($field, $table = null)
+  public static function create($field)
+  {
+    $expression = new static;
+    $expression->setField($field);
+    return $expression;
+  }
+
+  public static function createWithTable($field, $table)
   {
     $expression = new static;
     $expression->setField($field);
