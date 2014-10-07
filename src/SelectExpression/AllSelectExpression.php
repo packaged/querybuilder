@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\SelectExpression;
 
-class AllSelectExpression implements SelectExpressionInterface
+class AllSelectExpression implements ISelectExpression
 {
   protected $_table;
 

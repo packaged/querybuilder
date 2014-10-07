@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Expression;
 
-class FieldExpression implements ExpressionInterface
+class FieldExpression implements IExpression
 {
   protected $_field;
   protected $_table;

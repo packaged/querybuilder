@@ -2,14 +2,14 @@
 namespace Packaged\QueryBuilder\Builder\Traits;
 
 use Packaged\QueryBuilder\Clause\LimitClause;
-use Packaged\QueryBuilder\Statement\StatementInterface;
+use Packaged\QueryBuilder\Statement\IStatement;
 
 trait LimitTrait
 {
   public function limit($limit)
   {
     /**
-     * @var $this StatementInterface
+     * @var $this IStatement
      */
 
     $limitClause = new LimitClause();
@@ -21,7 +21,7 @@ trait LimitTrait
   public function limitWithOffset($offset, $limit)
   {
     /**
-     * @var $this StatementInterface
+     * @var $this IStatement
      */
 
     $limitClause = new LimitClause();

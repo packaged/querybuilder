@@ -1,17 +1,17 @@
 <?php
 namespace Packaged\QueryBuilder\Predicate;
 
-use Packaged\QueryBuilder\Expression\ExpressionInterface;
+use Packaged\QueryBuilder\Expression\IExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
 
-class BetweenPredicate implements PredicateInterface
+class BetweenPredicate implements IPredicate
 {
   /**
-   * @var ExpressionInterface
+   * @var IExpression
    */
   protected $_rangeStart;
   /**
-   * @var ExpressionInterface
+   * @var IExpression
    */
   protected $_rangeEnd;
   protected $_field;
@@ -28,7 +28,7 @@ class BetweenPredicate implements PredicateInterface
   }
 
   public function setValues(
-    ExpressionInterface $start, ExpressionInterface $end
+    IExpression $start, IExpression $end
   )
   {
     $this->_rangeStart = $start;

@@ -3,7 +3,7 @@ namespace Packaged\QueryBuilder\Clause;
 
 use Packaged\QueryBuilder\Expression\FieldExpression;
 
-abstract class AbstractFieldClause implements ClauseInterface
+abstract class AbstractFieldClause implements IClause
 {
   /**
    * @var FieldExpression[]

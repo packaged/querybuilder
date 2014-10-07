@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Clause;
 
-class LimitClause implements ClauseInterface
+class LimitClause implements IClause
 {
   protected $_limit;
   protected $_offset;

@@ -1,9 +1,9 @@
 <?php
 namespace Packaged\QueryBuilder\Clause;
 
-use Packaged\QueryBuilder\Statement\StatementSegmentInterface;
+use Packaged\QueryBuilder\Statement\IStatementSegment;
 
-interface ClauseInterface extends StatementSegmentInterface
+interface IClause extends IStatementSegment
 {
   /**
    * @return string

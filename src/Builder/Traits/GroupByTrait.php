@@ -3,14 +3,14 @@ namespace Packaged\QueryBuilder\Builder\Traits;
 
 use Packaged\QueryBuilder\Clause\GroupByClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
-use Packaged\QueryBuilder\Statement\StatementInterface;
+use Packaged\QueryBuilder\Statement\IStatement;
 
 trait GroupByTrait
 {
   public function groupBy($fields)
   {
     /**
-     * @var $this StatementInterface
+     * @var $this IStatement
      */
 
     $groupClause = new GroupByClause();

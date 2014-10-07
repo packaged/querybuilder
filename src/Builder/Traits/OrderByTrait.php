@@ -3,14 +3,14 @@ namespace Packaged\QueryBuilder\Builder\Traits;
 
 use Packaged\QueryBuilder\Clause\OrderByClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
-use Packaged\QueryBuilder\Statement\StatementInterface;
+use Packaged\QueryBuilder\Statement\IStatement;
 
 trait OrderByTrait
 {
   public function orderBy($fields)
   {
     /**
-     * @var $this StatementInterface
+     * @var $this IStatement
      */
 
     $orderClause = new OrderByClause();

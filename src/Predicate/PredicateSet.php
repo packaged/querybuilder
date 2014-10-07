@@ -1,11 +1,11 @@
 <?php
 namespace Packaged\QueryBuilder\Predicate;
 
-class PredicateSet implements PredicateInterface
+class PredicateSet implements IPredicate
 {
   protected $_predicates = [];
 
-  public function addPredicate(PredicateInterface $predicate)
+  public function addPredicate(IPredicate $predicate)
   {
     $this->_predicates[] = $predicate;
   }
@@ -14,7 +14,7 @@ class PredicateSet implements PredicateInterface
   {
     $this->_predicates = assert_instances_of(
       $predicates,
-      '\Packaged\QueryBuilder\Predicate\PredicateInterface'
+      '\Packaged\QueryBuilder\Predicate\IPredicate'
     );
   }
 

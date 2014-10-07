@@ -9,7 +9,7 @@ use Packaged\QueryBuilder\Predicate\InPredicate;
 use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
 use Packaged\QueryBuilder\Predicate\NotInPredicate;
 use Packaged\QueryBuilder\Predicate\OrPredicateSet;
-use Packaged\QueryBuilder\Predicate\PredicateInterface;
+use Packaged\QueryBuilder\Predicate\IPredicate;
 use Packaged\QueryBuilder\Predicate\PredicateSet;
 
 class WhereClause extends AbstractPredicateClause
@@ -43,7 +43,7 @@ class WhereClause extends AbstractPredicateClause
         $pred->setExpression(ValueExpression::create($value));
         $predicates[] = $pred;
       }
-      else if($value instanceof PredicateInterface)
+      else if($value instanceof IPredicate)
       {
         $predicates[] = $value;
       }

@@ -4,14 +4,14 @@ namespace Packaged\QueryBuilder\Builder\Traits;
 use Packaged\QueryBuilder\Clause\WhereClause;
 use Packaged\QueryBuilder\Predicate\OrPredicateSet;
 use Packaged\QueryBuilder\Predicate\PredicateSet;
-use Packaged\QueryBuilder\Statement\StatementInterface;
+use Packaged\QueryBuilder\Statement\IStatement;
 
 trait WhereTrait
 {
   public function where()
   {
     /**
-     * @var $this StatementInterface
+     * @var $this IStatement
      */
     $where = WhereClause::create(func_get_args());
     $this->addClause($where);
@@ -21,7 +21,7 @@ trait WhereTrait
   public function orWhere()
   {
     /**
-     * @var $this  StatementInterface
+     * @var $this  IStatement
      * @var $where WhereClause
      */
     $where = $this->getClause('WHERE');

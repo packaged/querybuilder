@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Clause;
 
-abstract class AbstractTableClause implements ClauseInterface
+abstract class AbstractTableClause implements IClause
 {
   protected $_table;
 

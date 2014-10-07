@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Statement;
 
-interface StatementSegmentInterface
+interface IStatementSegment
 {
   /**
    * Assemble the segment into a usable part of a query

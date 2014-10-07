@@ -1,13 +1,13 @@
 <?php
 namespace Packaged\QueryBuilder\Clause;
 
-use Packaged\QueryBuilder\Expression\ExpressionInterface;
+use Packaged\QueryBuilder\Expression\IExpression;
 
-class ValuesClause implements ClauseInterface
+class ValuesClause implements IClause
 {
   protected $_expressions = [];
 
-  public function addExpression(ExpressionInterface $expression)
+  public function addExpression(IExpression $expression)
   {
     $this->_expressions[] = $expression;
     return $this;
@@ -17,7 +17,7 @@ class ValuesClause implements ClauseInterface
   {
     $this->_expressions = assert_instances_of(
       $expressions,
-      '\Packaged\QueryBuilder\Expression\ExpressionInterface'
+      '\Packaged\QueryBuilder\Expression\IExpression'
     );
     return $this;
   }

@@ -1,18 +1,18 @@
 <?php
 namespace Packaged\QueryBuilder\Predicate;
 
-use Packaged\QueryBuilder\Expression\ExpressionInterface;
+use Packaged\QueryBuilder\Expression\IExpression;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
 
-abstract class AbstractOperatorPredicate implements PredicateInterface
+abstract class AbstractOperatorPredicate implements IPredicate
 {
   /**
    * @var FieldExpression
    */
   protected $_field;
   /**
-   * @var ExpressionInterface
+   * @var IExpression
    */
   protected $_value;
 
@@ -34,7 +34,7 @@ abstract class AbstractOperatorPredicate implements PredicateInterface
     return $this->_field;
   }
 
-  public function setExpression(ExpressionInterface $value)
+  public function setExpression(IExpression $value)
   {
     $this->_value = $value;
     return $this;

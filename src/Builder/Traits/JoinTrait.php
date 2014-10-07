@@ -4,14 +4,14 @@ namespace Packaged\QueryBuilder\Builder\Traits;
 use Packaged\QueryBuilder\Clause\FromClause;
 use Packaged\QueryBuilder\Clause\JoinClause;
 use Packaged\QueryBuilder\Clause\WhereClause;
-use Packaged\QueryBuilder\Statement\StatementInterface;
+use Packaged\QueryBuilder\Statement\IStatement;
 
 trait JoinTrait
 {
   public function join($table, $sourceField, $destField = null, $where = null)
   {
     /**
-     * @var $this StatementInterface
+     * @var $this IStatement
      */
     if($destField === null)
     {

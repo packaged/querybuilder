@@ -1,16 +1,16 @@
 <?php
 namespace Packaged\QueryBuilder\Statement;
 
-use Packaged\QueryBuilder\Clause\ClauseInterface;
+use Packaged\QueryBuilder\Clause\IClause;
 
-abstract class AbstractStatement implements StatementInterface
+abstract class AbstractStatement implements IStatement
 {
   /**
-   * @var ClauseInterface[]|array[]
+   * @var IClause[]|array[]
    */
   protected $_clauses;
 
-  public function addClause(ClauseInterface $clause)
+  public function addClause(IClause $clause)
   {
     $key = $this->_makeKey($clause->getAction());
     if($clause->allowMultiple())
@@ -39,7 +39,7 @@ abstract class AbstractStatement implements StatementInterface
   /**
    * @param $action
    *
-   * @return null|ClauseInterface
+   * @return null|IClause
    */
   public function getClause($action)
   {

@@ -4,7 +4,7 @@ namespace Packaged\QueryBuilder\SelectExpression;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 
 class FieldSelectExpression extends FieldExpression
-  implements SelectExpressionInterface
+  implements ISelectExpression
 {
   protected $_alias;
 

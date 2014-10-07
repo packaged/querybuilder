@@ -3,7 +3,7 @@ namespace Packaged\QueryBuilder\SelectExpression;
 
 use Packaged\QueryBuilder\Statement\QueryStatement;
 
-class SubQuerySelectExpression implements SelectExpressionInterface
+class SubQuerySelectExpression implements ISelectExpression
 {
   /**
    * @var QueryStatement

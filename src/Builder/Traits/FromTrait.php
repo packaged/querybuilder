@@ -2,14 +2,14 @@
 namespace Packaged\QueryBuilder\Builder\Traits;
 
 use Packaged\QueryBuilder\Clause\FromClause;
-use Packaged\QueryBuilder\Statement\StatementInterface;
+use Packaged\QueryBuilder\Statement\IStatement;
 
 trait FromTrait
 {
   public function from($table)
   {
     /**
-     * @var $this StatementInterface
+     * @var $this IStatement
      */
 
     $from = new FromClause();

@@ -1,14 +1,14 @@
 <?php
 namespace Packaged\QueryBuilder\Clause;
 
-use Packaged\QueryBuilder\Predicate\PredicateInterface;
+use Packaged\QueryBuilder\Predicate\IPredicate;
 use Packaged\QueryBuilder\Predicate\PredicateSet;
 
-abstract class AbstractPredicateClause implements ClauseInterface
+abstract class AbstractPredicateClause implements IClause
 {
   protected $_predicates = [];
 
-  public function addPredicate(PredicateInterface $predicate)
+  public function addPredicate(IPredicate $predicate)
   {
     $this->_predicates[] = $predicate;
   }
@@ -17,7 +17,7 @@ abstract class AbstractPredicateClause implements ClauseInterface
   {
     $this->_predicates = assert_instances_of(
       $predicates,
-      '\Packaged\QueryBuilder\Predicate\PredicateInterface'
+      '\Packaged\QueryBuilder\Predicate\IPredicate'
     );
   }
 

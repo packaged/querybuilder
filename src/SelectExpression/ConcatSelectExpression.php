@@ -5,7 +5,7 @@ namespace Packaged\QueryBuilder\SelectExpression;
  * Fields to concat together should be specified individually into the contructor
  * and strings should be quoted before pushing through
  */
-class ConcatSelectExpression implements SelectExpressionInterface
+class ConcatSelectExpression implements ISelectExpression
 {
   protected $_alias;
   protected $_properties;

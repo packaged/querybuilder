@@ -3,13 +3,13 @@ namespace Packaged\QueryBuilder\Clause;
 
 use Packaged\QueryBuilder\SelectExpression\ConcatSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
-use Packaged\QueryBuilder\SelectExpression\SelectExpressionInterface;
+use Packaged\QueryBuilder\SelectExpression\ISelectExpression;
 
-class SelectClause implements ClauseInterface
+class SelectClause implements IClause
 {
   protected $_expressions = [];
 
-  public function addExpression(SelectExpressionInterface $expression)
+  public function addExpression(ISelectExpression $expression)
   {
     $this->_expressions[] = $expression;
     return $this;
@@ -19,7 +19,7 @@ class SelectClause implements ClauseInterface
   {
     $this->_expressions = assert_instances_of(
       $expressions,
-      '\Packaged\QueryBuilder\SelectExpression\SelectExpressionInterface'
+      '\Packaged\QueryBuilder\SelectExpression\ISelectExpression'
     );
     return $this;
   }
@@ -72,7 +72,7 @@ class SelectClause implements ClauseInterface
 
   public function addField($field, $alias = null)
   {
-    if($field instanceof SelectExpressionInterface)
+    if($field instanceof ISelectExpression)
     {
       $this->addExpression($field);
     }

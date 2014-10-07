@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Expression;
 
-class ValueExpression implements ExpressionInterface
+class ValueExpression implements IExpression
 {
   protected $_value;
 

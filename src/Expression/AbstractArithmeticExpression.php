@@ -4,7 +4,7 @@ namespace Packaged\QueryBuilder\Expression;
 abstract class AbstractArithmeticExpression extends FieldExpression
 {
   /**
-   * @var ExpressionInterface
+   * @var IExpression
    */
   protected $_value;
 
@@ -16,7 +16,7 @@ abstract class AbstractArithmeticExpression extends FieldExpression
    */
   abstract public function getOperator();
 
-  public function setExpression(ExpressionInterface $value)
+  public function setExpression(IExpression $value)
   {
     $this->_value = $value;
     return $this;
@@ -45,7 +45,7 @@ abstract class AbstractArithmeticExpression extends FieldExpression
     /**
      * @var $expression static
      */
-    if($value instanceof ExpressionInterface)
+    if($value instanceof IExpression)
     {
       $expression->setExpression($value);
     }
@@ -69,7 +69,7 @@ abstract class AbstractArithmeticExpression extends FieldExpression
     /**
      * @var $expression static
      */
-    if($value instanceof ExpressionInterface)
+    if($value instanceof IExpression)
     {
       $expression->setExpression($value);
     }
