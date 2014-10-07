@@ -7,11 +7,34 @@ namespace Packaged\QueryBuilder\SelectExpression;
  */
 class ConcatSelectExpression implements SelectExpressionInterface
 {
+  protected $_alias;
   protected $_properties;
+
+  public function setAlias($alias)
+  {
+    $this->_alias = $alias;
+    return $this;
+  }
+
+  public function getAlias()
+  {
+    return $this->_alias;
+  }
+
+  public function hasAlias()
+  {
+    return $this->_alias !== null;
+  }
 
   public function setProperties()
   {
     $this->_properties = func_get_args();
+  }
+
+  public function setPropertyArray($properties)
+  {
+    $this->_properties = $properties;
+    return $this;
   }
 
   /**
@@ -21,7 +44,8 @@ class ConcatSelectExpression implements SelectExpressionInterface
    */
   public function assemble()
   {
-    return 'CONCAT(' . implode(',', $this->_properties) . ')';
+    return 'CONCAT(' . implode(',', $this->_properties) . ')'
+    . ($this->hasAlias() ? ' AS ' . $this->getAlias() : '');
   }
 
   public static function create()

@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Clause;
 
+use Packaged\QueryBuilder\SelectExpression\ConcatSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\SelectExpressionInterface;
 
@@ -78,6 +79,16 @@ class SelectClause implements ClauseInterface
     else if(is_scalar($field))
     {
       $this->addExpression(FieldSelectExpression::create($field, $alias));
+    }
+    else if(is_array($field))
+    {
+      foreach($field as $fName => $values)
+      {
+        $expr = new ConcatSelectExpression();
+        $expr->setPropertyArray($values);
+        $expr->setAlias($fName);
+        $this->addExpression($expr);
+      }
     }
     else
     {

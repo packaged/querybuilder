@@ -35,6 +35,13 @@ class SelectClauseTest extends \PHPUnit_Framework_TestCase
     $clause->addField(new NowSelectExpression());
     $this->assertEquals('SELECT NOW()', $clause->assemble());
 
+    $clause->clearExpressions();
+    $clause->addField(['full_name' => ['first', '" "', 'last']]);
+    $this->assertEquals(
+      'SELECT CONCAT(first," ",last) AS full_name',
+      $clause->assemble()
+    );
+
     $this->setExpectedException("InvalidArgumentException");
     $clause->addField(new \stdClass());
   }
