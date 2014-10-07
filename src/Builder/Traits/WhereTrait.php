@@ -8,17 +8,17 @@ use Packaged\QueryBuilder\Statement\IStatement;
 
 trait WhereTrait
 {
-  public function where()
+  public function where(...$expressions)
   {
     /**
      * @var $this IStatement
      */
-    $where = WhereClause::create(func_get_args());
+    $where = WhereClause::create(...$expressions);
     $this->addClause($where);
     return $this;
   }
 
-  public function orWhere()
+  public function orWhere(...$expressions)
   {
     /**
      * @var $this  IStatement
@@ -42,7 +42,7 @@ trait WhereTrait
       $currentSet->setPredicates($where->getPredicates());
     }
 
-    $newPredicates = WhereClause::buildPredicates(func_get_args());
+    $newPredicates = WhereClause::buildPredicates($expressions);
     if(count($newPredicates) === 1)
     {
       $newSet = head($newPredicates);

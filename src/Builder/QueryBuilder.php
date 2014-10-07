@@ -6,20 +6,20 @@ use Packaged\QueryBuilder\Statement\QueryStatement;
 
 class QueryBuilder
 {
-  public static function select()
+  public static function select(...$expressions)
   {
     $select = new SelectClause();
-    $select->addFields(func_get_args());
+    $select->addFields($expressions);
     $statement = new QueryStatement();
     $statement->addClause($select);
     return $statement;
   }
 
-  public static function selectDistinct()
+  public static function selectDistinct(...$expressions)
   {
     $select = new SelectClause();
     $select->setDistinct(true);
-    $select->addFields(func_get_args());
+    $select->addFields($expressions);
     $statement = new QueryStatement();
     $statement->addClause($select);
     return $statement;

@@ -26,9 +26,9 @@ class ConcatSelectExpression implements ISelectExpression
     return $this->_alias !== null;
   }
 
-  public function setProperties()
+  public function setProperties(...$properties)
   {
-    $this->_properties = func_get_args();
+    $this->_properties = $properties;
   }
 
   public function setPropertyArray($properties)
@@ -48,10 +48,10 @@ class ConcatSelectExpression implements ISelectExpression
     . ($this->hasAlias() ? ' AS ' . $this->getAlias() : '');
   }
 
-  public static function create()
+  public static function create(...$properties)
   {
     $expression              = new static;
-    $expression->_properties = func_get_args();
+    $expression->_properties = $properties;
     return $expression;
   }
 }

@@ -6,12 +6,12 @@ use Packaged\QueryBuilder\Statement\IStatement;
 
 trait HavingTrait
 {
-  public function having()
+  public function having(...$expressions)
   {
     /**
      * @var $this IStatement
      */
-    $where = HavingClause::create(func_get_args());
+    $where = HavingClause::create(...$expressions);
     $this->addClause($where);
     return $this;
   }
