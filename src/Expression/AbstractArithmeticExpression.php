@@ -63,7 +63,7 @@ abstract class AbstractArithmeticExpression extends FieldExpression
    *
    * @return static
    */
-  public static function createWithTable($field, $table, $value)
+  public static function createWithTable($field, $table, $value = null)
   {
     $expression = parent::createWithTable($field, $table);
     /**
