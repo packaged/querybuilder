@@ -22,14 +22,17 @@ trait OrderByTrait
         {
           $orderClause->addField(FieldExpression::create($field), $order);
         }
-        else if(is_scalar($field))
+        else
         {
           $orderClause->addField(FieldExpression::create($order));
         }
-        else
-        {
-          $orderClause->addField(FieldExpression::create($field));
-        }
+      }
+    }
+    else if(func_num_args() > 1)
+    {
+      foreach(func_get_args() as $field)
+      {
+        $orderClause->addField(FieldExpression::create($field));
       }
     }
     else if(is_scalar($fields))

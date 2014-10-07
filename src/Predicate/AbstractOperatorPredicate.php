@@ -52,7 +52,7 @@ abstract class AbstractOperatorPredicate implements PredicateInterface
    */
   public function assemble()
   {
-    return $this->_field->assemble() . ' '
+    return $this->getField()->assemble() . ' '
     . $this->getOperator() . ' '
     . $this->getExpression()->assemble();
   }

@@ -33,6 +33,11 @@ class ValueExpression implements ExpressionInterface
       return $this->_value;
     }
 
+    if(is_array($this->_value))
+    {
+      return ArrayExpression::create($this->_value)->assemble();
+    }
+
     return '"' . $this->_value . '"';
   }
 

@@ -4,8 +4,10 @@ namespace Packaged\Tests\QueryBuilder\Clause;
 use Packaged\QueryBuilder\Clause\WhereClause;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
+use Packaged\QueryBuilder\Expression\ValueExpression;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Predicate\GreaterThanPredicate;
+use Packaged\QueryBuilder\Predicate\PredicateSet;
 
 class WhereClauseTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,5 +28,30 @@ class WhereClauseTest extends \PHPUnit_Framework_TestCase
       'WHERE one = "val" AND two > 5',
       $clause->assemble()
     );
+  }
+
+  /**
+   * @param $input
+   * @param $expect
+   *
+   * @dataProvider predicateData
+   */
+  public function testBuildPredicates($input, $expect)
+  {
+    $this->assertEquals($expect, WhereClause::buildPredicates($input));
+  }
+
+  public function predicateData()
+  {
+    $nameEq = (new EqualPredicate())->setField('name')
+      ->setExpression(ValueExpression::create('test'));
+    $set    = new PredicateSet();
+    $set->addPredicate($nameEq);
+
+    return [
+      [['name' => 'test'], [$nameEq]],
+      [[$nameEq], [$nameEq]],
+      [['AND' => ['name' => 'test']], [$set]],
+    ];
   }
 }

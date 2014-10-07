@@ -15,6 +15,14 @@ abstract class AbstractFieldClause implements ClauseInterface
     $this->_fields[] = $field;
   }
 
+  /**
+   * @return \Packaged\QueryBuilder\Expression\FieldExpression[]
+   */
+  public function getFields()
+  {
+    return $this->_fields;
+  }
+
   public function clearFields()
   {
     $this->_fields = [];

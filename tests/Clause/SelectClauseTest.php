@@ -22,6 +22,21 @@ class SelectClauseTest extends \PHPUnit_Framework_TestCase
     $clause->clearExpressions();
     $clause->addExpression(new NowSelectExpression());
     $this->assertEquals('SELECT NOW()', $clause->assemble());
+
+    $clause->clearExpressions();
+    $clause->addField('first');
+    $this->assertEquals('SELECT first', $clause->assemble());
+
+    $clause->clearExpressions();
+    $clause->addField(FieldSelectExpression::create('first'));
+    $this->assertEquals('SELECT first', $clause->assemble());
+
+    $clause->clearExpressions();
+    $clause->addField(new NowSelectExpression());
+    $this->assertEquals('SELECT NOW()', $clause->assemble());
+
+    $this->setExpectedException("InvalidArgumentException");
+    $clause->addField(new \stdClass());
   }
 
   public function testGettersAndSetters()

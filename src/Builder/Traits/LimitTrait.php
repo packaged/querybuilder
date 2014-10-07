@@ -1,7 +1,6 @@
 <?php
 namespace Packaged\QueryBuilder\Builder\Traits;
 
-use Packaged\QueryBuilder\Clause\FromClause;
 use Packaged\QueryBuilder\Clause\LimitClause;
 use Packaged\QueryBuilder\Statement\StatementInterface;
 
