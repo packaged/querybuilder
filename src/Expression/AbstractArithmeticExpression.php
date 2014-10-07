@@ -39,7 +39,7 @@ abstract class AbstractArithmeticExpression extends FieldExpression
     . $this->getExpression()->assemble();
   }
 
-  public static function create($field, $value)
+  public static function create($field, $value = null)
   {
     $expression = parent::create($field);
     /**
@@ -58,6 +58,7 @@ abstract class AbstractArithmeticExpression extends FieldExpression
 
   /**
    * @param $field
+   * @param $table
    * @param $value
    *
    * @return static
