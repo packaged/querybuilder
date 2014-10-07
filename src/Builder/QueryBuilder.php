@@ -14,4 +14,14 @@ class QueryBuilder
     $statement->addClause($select);
     return $statement;
   }
+
+  public static function selectDistinct()
+  {
+    $select = new SelectClause();
+    $select->setDistinct(true);
+    $select->addFields(func_get_args());
+    $statement = new QueryStatement();
+    $statement->addClause($select);
+    return $statement;
+  }
 }

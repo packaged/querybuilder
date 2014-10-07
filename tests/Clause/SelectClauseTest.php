@@ -42,6 +42,11 @@ class SelectClauseTest extends \PHPUnit_Framework_TestCase
       $clause->assemble()
     );
 
+    $clause->clearExpressions();
+    $clause->addField('first');
+    $clause->setDistinct(true);
+    $this->assertEquals('SELECT DISTINCT first', $clause->assemble());
+
     $this->setExpectedException("InvalidArgumentException");
     $clause->addField(new \stdClass());
   }

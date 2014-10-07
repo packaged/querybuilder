@@ -8,6 +8,18 @@ use Packaged\QueryBuilder\SelectExpression\ISelectExpression;
 class SelectClause implements IClause
 {
   protected $_expressions = [];
+  protected $_distinct = false;
+
+  public function setDistinct($distinct = true)
+  {
+    $this->_distinct = $distinct;
+    return $this;
+  }
+
+  public function isDistinct()
+  {
+    return (bool)$this->_distinct;
+  }
 
   public function addExpression(ISelectExpression $expression)
   {
@@ -47,12 +59,13 @@ class SelectClause implements IClause
    */
   public function assemble()
   {
+    $return = $this->getAction() . ($this->isDistinct() ? ' DISTINCT' : '');
     if(!$this->hasExpressions())
     {
-      return $this->getAction() . ' *';
+      return $return . ' *';
     }
 
-    return $this->getAction() . ' '
+    return $return . ' '
     . implode(', ', mpull($this->getExpressions(), 'assemble'));
   }
 

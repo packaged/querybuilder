@@ -15,6 +15,16 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
     );
   }
 
+  public function testSelectDistinct()
+  {
+    $query = QueryBuilder::selectDistinct('field', 'field2');
+
+    $this->assertEquals(
+      'SELECT DISTINCT field, field2',
+      $query->assemble()
+    );
+  }
+
   public function testFrom()
   {
     $query = QueryBuilder::select('field', 'field2');
