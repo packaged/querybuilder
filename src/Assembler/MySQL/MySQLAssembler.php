@@ -4,11 +4,10 @@ namespace Packaged\QueryBuilder\Assembler\MySQL;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\AbstractTableClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
-use Packaged\QueryBuilder\Statement\IStatementSegment;
 
 class MySQLAssembler extends QueryAssembler
 {
-  public function assembleSegment(IStatementSegment $segment)
+  public function assembleSegment($segment)
   {
     if($segment instanceof FieldExpression)
     {
