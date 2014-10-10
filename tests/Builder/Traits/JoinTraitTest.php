@@ -4,6 +4,7 @@ namespace Packaged\Tests\QueryBuilder\Builder\Traits;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Builder\Traits\JoinTrait;
 use Packaged\QueryBuilder\Clause\FromClause;
+use Packaged\QueryBuilder\Expression\TableExpression;
 use Packaged\QueryBuilder\Statement\AbstractStatement;
 
 class JoinTraitTest extends \PHPUnit_Framework_TestCase
@@ -11,8 +12,8 @@ class JoinTraitTest extends \PHPUnit_Framework_TestCase
   public function testCreate()
   {
     $class = new FinalJoinTrait();
-    $class->addClause((new FromClause())->setTableName('tbl'));
-    $class->join('tbl2', 'email');
+    $class->addClause((new FromClause())->setTable('tbl'));
+    $class->join(TableExpression::create('tbl2'), 'email');
     $this->assertEquals(
       "FROM tbl JOIN tbl2 ON tbl.email = tbl2.email",
       QueryAssembler::stringify($class)

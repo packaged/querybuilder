@@ -2,8 +2,8 @@
 namespace Packaged\QueryBuilder\Assembler\MySQL;
 
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
-use Packaged\QueryBuilder\Clause\AbstractTableClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
+use Packaged\QueryBuilder\Expression\TableExpression;
 
 class MySQLAssembler extends QueryAssembler
 {
@@ -13,9 +13,9 @@ class MySQLAssembler extends QueryAssembler
     {
       return $this->assembleField($segment);
     }
-    else if($segment instanceof AbstractTableClause)
+    else if($segment instanceof TableExpression)
     {
-      return $this->assembleAbstractTableClause($segment);
+      return $this->assembleTableExpression($segment);
     }
 
     return parent::assembleSegment($segment);
@@ -23,10 +23,10 @@ class MySQLAssembler extends QueryAssembler
 
   public function assembleField(FieldExpression $field)
   {
-    if($field->hasTableName())
+    if($field->hasTable())
     {
-      return '`' . $field->getTableName()
-      . '`.`' . $field->getField() . '`';
+      return $this->assembleTableExpression($field->getTable())
+      . '.`' . $field->getField() . '`';
     }
     else
     {
@@ -34,8 +34,8 @@ class MySQLAssembler extends QueryAssembler
     }
   }
 
-  public function assembleAbstractTableClause(AbstractTableClause $clause)
+  public function assembleTableExpression(TableExpression $expr)
   {
-    return $clause->getAction() . ' ' . '`' . $clause->getTableName() . '`';
+    return '`' . $expr->getTableName() . '`';
   }
 }

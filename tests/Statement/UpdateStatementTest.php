@@ -6,6 +6,7 @@ use Packaged\QueryBuilder\Clause\SetClause;
 use Packaged\QueryBuilder\Clause\UpdateClause;
 use Packaged\QueryBuilder\Clause\WhereClause;
 use Packaged\QueryBuilder\Expression\StringExpression;
+use Packaged\QueryBuilder\Expression\TableExpression;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Predicate\LikePredicate;
 use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
@@ -18,7 +19,7 @@ class UpdateStatementTest extends \PHPUnit_Framework_TestCase
     $statement = new UpdateStatement();
 
     $update = new UpdateClause();
-    $update->setTableName('tbl');
+    $update->setTable(TableExpression::create('tbl'));
     $statement->addClause($update);
     $this->assertEquals('UPDATE tbl', QueryAssembler::stringify($statement));
 

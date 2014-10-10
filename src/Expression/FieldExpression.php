@@ -17,20 +17,27 @@ class FieldExpression implements IExpression
     return $this->_field;
   }
 
-  public function setTableName($table)
+  public function setTable($table)
   {
-    $this->_table = $table;
+    if($table instanceof TableExpression)
+    {
+      $this->_table = $table;
+    }
+    else if($table !== null)
+    {
+      $this->_table = TableExpression::create($table);
+    }
     return $this;
   }
 
-  public function getTableName()
+  public function getTable()
   {
     return $this->_table;
   }
 
-  public function hasTableName()
+  public function hasTable()
   {
-    return !empty($this->_table);
+    return $this->_table !== null;
   }
 
   public static function create($field)
@@ -44,7 +51,7 @@ class FieldExpression implements IExpression
   {
     $expression = new static;
     $expression->setField($field);
-    $expression->setTableName($table);
+    $expression->setTable($table);
     return $expression;
   }
 }

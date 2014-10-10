@@ -8,6 +8,7 @@ use Packaged\QueryBuilder\Expression\IExpression;
 use Packaged\QueryBuilder\Expression\NowExpression;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
+use Packaged\QueryBuilder\Expression\TableExpression;
 use Packaged\QueryBuilder\Expression\UnixTimestampExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
 
@@ -28,6 +29,10 @@ class ExpressionAssembler extends AbstractSegmentAssembler
     if($this->_segment instanceof FieldExpression)
     {
       return $this->assembleFieldExpression($this->_segment);
+    }
+    else if($this->_segment instanceof TableExpression)
+    {
+      return $this->assembleTableExpression($this->_segment);
     }
     else if($this->_segment instanceof NumericExpression)
     {
@@ -108,7 +113,13 @@ class ExpressionAssembler extends AbstractSegmentAssembler
 
   public function assembleFieldExpression(FieldExpression $expr)
   {
-    return ($expr->hasTableName() ? $expr->getTableName() . '.' : '')
+    return ($expr->hasTable() ?
+      $this->assembleSegment($expr->getTable()) . '.' : '')
     . $expr->getField();
+  }
+
+  public function assembleTableExpression(TableExpression $expr)
+  {
+    return $expr->getTableName();
   }
 }

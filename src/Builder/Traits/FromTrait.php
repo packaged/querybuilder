@@ -13,7 +13,7 @@ trait FromTrait
      */
 
     $from = new FromClause();
-    $from->setTableName($table);
+    $from->setTable($table);
     $this->addClause($from);
     return $this;
   }

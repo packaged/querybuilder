@@ -10,7 +10,7 @@ class ReplaceClauseTest extends \PHPUnit_Framework_TestCase
   public function testAssemble()
   {
     $clause = new ReplaceClause();
-    $clause->setTableName('tester');
+    $clause->setTable('tester');
     $this->assertEquals(
       'REPLACE INTO tester ()',
       QueryAssembler::stringify($clause)

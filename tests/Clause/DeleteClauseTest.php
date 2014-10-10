@@ -9,7 +9,7 @@ class DeleteClauseTest extends \PHPUnit_Framework_TestCase
   public function testAssemble()
   {
     $clause = new DeleteClause();
-    $clause->setTableName('tester');
+    $clause->setTable('tester');
     $this->assertEquals(
       'DELETE FROM tester',
       QueryAssembler::stringify($clause)

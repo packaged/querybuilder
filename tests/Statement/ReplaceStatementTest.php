@@ -15,7 +15,7 @@ class ReplaceStatementTest extends \PHPUnit_Framework_TestCase
     $statement = new ReplaceStatement();
 
     $insert = new ReplaceClause();
-    $insert->setTableName('tbl');
+    $insert->setTable('tbl');
     $statement->addClause($insert);
     $this->assertEquals(
       'REPLACE INTO tbl ()',

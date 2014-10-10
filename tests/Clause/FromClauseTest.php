@@ -9,7 +9,7 @@ class FromClauseTest extends \PHPUnit_Framework_TestCase
   public function testAssemble()
   {
     $clause = new FromClause();
-    $clause->setTableName('tester');
+    $clause->setTable('tester');
     $this->assertEquals('FROM tester', QueryAssembler::stringify($clause));
   }
 }

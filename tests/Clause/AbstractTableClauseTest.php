@@ -9,14 +9,14 @@ class AbstractTableClauseTest extends \PHPUnit_Framework_TestCase
   public function testGettersAndSetters()
   {
     $clause = new FinalAbstractTableClause();
-    $clause->setTableName('testing');
-    $this->assertEquals('testing', $clause->getTableName());
+    $clause->setTable('testing');
+    $this->assertEquals('testing', $clause->getTable()->getTableName());
   }
 
   public function testAssemble()
   {
     $clause = new FinalAbstractTableClause();
-    $clause->setTableName('tester');
+    $clause->setTable('tester');
     $this->assertEquals('T tester', QueryAssembler::stringify($clause));
   }
 }

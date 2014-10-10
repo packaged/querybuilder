@@ -2,6 +2,7 @@
 namespace Packaged\QueryBuilder\Clause;
 
 use Packaged\QueryBuilder\Expression\FieldExpression;
+use Packaged\QueryBuilder\Expression\TableExpression;
 
 class JoinClause extends AbstractPredicateClause
 {
@@ -15,9 +16,13 @@ class JoinClause extends AbstractPredicateClause
     return $this;
   }
 
-  public function getTableName()
+  public function getTable()
   {
-    return $this->_table;
+    if($this->_table instanceof TableExpression)
+    {
+      return $this->_table;
+    }
+    return TableExpression::create($this->_table);
   }
 
   public function setSourceField($table, $field)

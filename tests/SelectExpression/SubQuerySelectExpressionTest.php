@@ -15,7 +15,7 @@ class SubQuerySelectExpressionTest extends \PHPUnit_Framework_TestCase
     $statement = new QueryStatement();
     $select    = (new SelectClause())->addExpression(new AllSelectExpression());
     $statement->addClause($select);
-    $from = (new FromClause())->setTableName('tbl');
+    $from = (new FromClause())->setTable('tbl');
     $statement->addClause($from);
     return $statement;
   }

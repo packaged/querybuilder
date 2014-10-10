@@ -64,7 +64,8 @@ class ClauseAssembler extends AbstractSegmentAssembler
 
   public function assembleJoinClause(JoinClause $clause)
   {
-    return $clause->getAction() . ' ' . $clause->getTableName() . ' ON '
+    return $clause->getAction() . ' '
+    . $this->assembleSegment($clause->getTable()) . ' ON '
     . $this->assembleSegment($clause->getSource()) . ' = '
     . $this->assembleSegment($clause->getDestination())
     . ($clause->hasPredicates() ?
@@ -105,7 +106,8 @@ class ClauseAssembler extends AbstractSegmentAssembler
 
   public function assembleAbstractTableClause(AbstractTableClause $clause)
   {
-    return $clause->getAction() . ' ' . $clause->getTableName();
+    return $clause->getAction() . ' '
+    . $this->assembleSegment($clause->getTable());
   }
 
   public function assembleValuesClause(ValuesClause $clause)

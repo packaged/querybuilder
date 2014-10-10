@@ -21,7 +21,7 @@ trait JoinTrait
     $from = $this->getClause('FROM');
     if($from instanceof FromClause)
     {
-      $sourceTable = $from->getTableName();
+      $sourceTable = $from->getTable()->getTableName();
     }
     else
     {

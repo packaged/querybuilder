@@ -15,7 +15,7 @@ class InsertStatementTest extends \PHPUnit_Framework_TestCase
     $statement = new InsertStatement();
 
     $insert = new InsertClause();
-    $insert->setTableName('tbl');
+    $insert->setTable('tbl');
     $statement->addClause($insert);
     $this->assertEquals(
       'INSERT INTO tbl ()',

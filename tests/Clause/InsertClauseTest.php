@@ -10,7 +10,7 @@ class InsertClauseTest extends \PHPUnit_Framework_TestCase
   public function testAssemble()
   {
     $clause = new InsertClause();
-    $clause->setTableName('tester');
+    $clause->setTable('tester');
     $this->assertEquals(
       'INSERT INTO tester ()',
       QueryAssembler::stringify($clause)
@@ -25,7 +25,7 @@ class InsertClauseTest extends \PHPUnit_Framework_TestCase
 
   public function testGettersAndSetters()
   {
-    $clause = new InsertClause();
+    $clause    = new InsertClause();
     $nameField = new FieldExpression();
     $nameField->setField('name');
     $idField = new FieldExpression();

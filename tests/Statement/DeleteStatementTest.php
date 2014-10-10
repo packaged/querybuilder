@@ -16,7 +16,7 @@ class DeleteStatementTest extends \PHPUnit_Framework_TestCase
     $statement = new DeleteStatement();
 
     $update = new DeleteClause();
-    $update->setTableName('tbl');
+    $update->setTable('tbl');
     $statement->addClause($update);
     $this->assertEquals(
       'DELETE FROM tbl',

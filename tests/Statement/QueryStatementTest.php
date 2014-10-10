@@ -30,7 +30,7 @@ class QueryStatementTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals('SELECT *', QueryAssembler::stringify($statement));
 
     $from = new FromClause();
-    $from->setTableName('tbl');
+    $from->setTable('tbl');
     $statement->addClause($from);
     $this->assertEquals(
       'SELECT * FROM tbl',

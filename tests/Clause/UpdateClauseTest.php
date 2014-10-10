@@ -9,7 +9,7 @@ class UpdateClauseTest extends \PHPUnit_Framework_TestCase
   public function testAssemble()
   {
     $clause = new UpdateClause();
-    $clause->setTableName('tester');
+    $clause->setTable('tester');
     $this->assertEquals('UPDATE tester', QueryAssembler::stringify($clause));
   }
 }
