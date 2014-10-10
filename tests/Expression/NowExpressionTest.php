@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Expression;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Expression\NowExpression;
 
 class NowExpressionTest extends \PHPUnit_Framework_TestCase
@@ -8,6 +9,6 @@ class NowExpressionTest extends \PHPUnit_Framework_TestCase
   public function testAssemble()
   {
     $expression = new NowExpression();
-    $this->assertEquals('NOW()', $expression->assemble());
+    $this->assertEquals('NOW()', QueryAssembler::stringify($expression));
   }
 }

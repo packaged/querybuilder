@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Clause;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\ReplaceClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 
@@ -10,10 +11,16 @@ class ReplaceClauseTest extends \PHPUnit_Framework_TestCase
   {
     $clause = new ReplaceClause();
     $clause->setTableName('tester');
-    $this->assertEquals('REPLACE INTO tester ()', $clause->assemble());
+    $this->assertEquals(
+      'REPLACE INTO tester ()',
+      QueryAssembler::stringify($clause)
+    );
 
     $clause->addField((new FieldExpression())->setField('id'));
-    $this->assertEquals('REPLACE INTO tester (id)', $clause->assemble());
+    $this->assertEquals(
+      'REPLACE INTO tester (id)',
+      QueryAssembler::stringify($clause)
+    );
   }
 
   public function testGettersAndSetters()

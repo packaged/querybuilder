@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\SelectExpression;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\UpperCaseSelectExpression;
 
 class UpperCaseSelectExpressionTest extends \PHPUnit_Framework_TestCase
@@ -9,8 +10,14 @@ class UpperCaseSelectExpressionTest extends \PHPUnit_Framework_TestCase
   {
     $selector = new UpperCaseSelectExpression();
     $selector->setField('fieldname');
-    $this->assertEquals('UCASE(fieldname)', $selector->assemble());
+    $this->assertEquals(
+      'UCASE(fieldname)',
+      QueryAssembler::stringify($selector)
+    );
     $selector->setAlias('upper');
-    $this->assertEquals('UCASE(fieldname) AS upper', $selector->assemble());
+    $this->assertEquals(
+      'UCASE(fieldname) AS upper',
+      QueryAssembler::stringify($selector)
+    );
   }
 }

@@ -1,6 +1,8 @@
 <?php
 namespace Packaged\QueryBuilder\Clause;
 
+use Packaged\QueryBuilder\Expression\FieldExpression;
+
 class JoinClause extends AbstractPredicateClause
 {
   protected $_table;
@@ -28,28 +30,22 @@ class JoinClause extends AbstractPredicateClause
     $this->_dest = [$table, $field];
   }
 
+  public function getSource()
+  {
+    return FieldExpression::createWithTable($this->_src[1], $this->_src[0]);
+  }
+
+  public function getDestination()
+  {
+    return FieldExpression::createWithTable($this->_dest[1], $this->_dest[0]);
+  }
+
   /**
    * @return string
    */
   public function getAction()
   {
     return 'JOIN';
-  }
-
-  /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
-   */
-  public function assemble()
-  {
-    return $this->getAction() . ' ' . $this->getTableName() . ' ON '
-    . $this->_src[0] . '.' . $this->_src[1] . ' = '
-    . $this->_dest[0] . '.' . $this->_dest[1]
-    . ($this->hasPredicates() ?
-      ' AND ' .
-      implode($this->getGlue(), mpull($this->getPredicates(), 'assemble'))
-      : '');
   }
 
   /**

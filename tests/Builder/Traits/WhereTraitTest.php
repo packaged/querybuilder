@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Builder\Traits;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Builder\Traits\WhereTrait;
 use Packaged\QueryBuilder\Statement\AbstractStatement;
 
@@ -12,14 +13,14 @@ class WhereTraitTest extends \PHPUnit_Framework_TestCase
     $class->where(['username' => 'test', 'status' => 'pending']);
     $this->assertEquals(
       'WHERE username = "test" AND status = "pending"',
-      $class->assemble()
+      QueryAssembler::stringify($class)
     );
 
     $class->orWhere(['username' => 'testing', 'status' => 'active']);
     $this->assertEquals(
       'WHERE (username = "test" AND status = "pending") '
       . 'OR (username = "testing" AND status = "active")',
-      $class->assemble()
+      QueryAssembler::stringify($class)
     );
   }
 

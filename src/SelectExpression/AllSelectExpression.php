@@ -11,14 +11,14 @@ class AllSelectExpression implements ISelectExpression
     return $this;
   }
 
-  /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
-   */
-  public function assemble()
+  public function getTable()
   {
-    return $this->_table === null ? '*' : $this->_table . '.*';
+    return $this->_table;
+  }
+
+  public function hasTable()
+  {
+    return $this->_table !== null;
   }
 
   /**

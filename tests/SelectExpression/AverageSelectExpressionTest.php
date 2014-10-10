@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\SelectExpression;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\AverageSelectExpression;
 
 class AverageSelectExpressionTest extends \PHPUnit_Framework_TestCase
@@ -9,8 +10,11 @@ class AverageSelectExpressionTest extends \PHPUnit_Framework_TestCase
   {
     $selector = new AverageSelectExpression();
     $selector->setField('fieldname');
-    $this->assertEquals('AVG(fieldname)', $selector->assemble());
+    $this->assertEquals('AVG(fieldname)', QueryAssembler::stringify($selector));
     $selector->setAlias('aver');
-    $this->assertEquals('AVG(fieldname) AS aver', $selector->assemble());
+    $this->assertEquals(
+      'AVG(fieldname) AS aver',
+      QueryAssembler::stringify($selector)
+    );
   }
 }

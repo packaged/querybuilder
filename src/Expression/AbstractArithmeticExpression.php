@@ -1,14 +1,29 @@
 <?php
 namespace Packaged\QueryBuilder\Expression;
 
-abstract class AbstractArithmeticExpression extends FieldExpression
+abstract class AbstractArithmeticExpression implements IExpression
 {
   /**
    * @var IExpression
    */
   protected $_value;
-
+  /**
+   * @var FieldExpression
+   */
+  protected $_field;
   protected $_defaultValue = null;
+
+  public function setField($field, $table = null)
+  {
+    $this->_field = is_scalar($field) ?
+      FieldExpression::createWithTable($field, $table) : $field;
+    return $this;
+  }
+
+  public function getField()
+  {
+    return $this->_field;
+  }
 
   /**
    * Operator e.g. +
@@ -27,21 +42,10 @@ abstract class AbstractArithmeticExpression extends FieldExpression
     return $this->_value ?: ValueExpression::create($this->_defaultValue);
   }
 
-  /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
-   */
-  public function assemble()
-  {
-    return parent::assemble() . ' '
-    . $this->getOperator() . ' '
-    . $this->getExpression()->assemble();
-  }
-
   public static function create($field, $value = null)
   {
-    $expression = parent::create($field);
+    $expression = new static;
+    $expression->setField($field);
     /**
      * @var $expression static
      */
@@ -65,7 +69,8 @@ abstract class AbstractArithmeticExpression extends FieldExpression
    */
   public static function createWithTable($field, $table, $value = null)
   {
-    $expression = parent::createWithTable($field, $table);
+    $expression = new static;
+    $expression->setField($field, $table);
     /**
      * @var $expression static
      */

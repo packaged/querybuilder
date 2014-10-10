@@ -12,10 +12,25 @@ class LimitClause implements IClause
     return $this;
   }
 
+  public function getLimit()
+  {
+    return (int)$this->_limit;
+  }
+
   public function setOffset($offset)
   {
     $this->_offset = $offset;
     return $this;
+  }
+
+  public function getOffset()
+  {
+    return (int)$this->_offset;
+  }
+
+  public function hasOffset()
+  {
+    return $this->_offset !== null;
   }
 
   /**
@@ -24,18 +39,6 @@ class LimitClause implements IClause
   public function getAction()
   {
     return 'LIMIT';
-  }
-
-  /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
-   */
-  public function assemble()
-  {
-    return $this->getAction() . ' '
-    . ($this->_offset !== null ? (int)$this->_offset . ',' : '')
-    . (int)$this->_limit;
   }
 
   /**

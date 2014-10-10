@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Clause;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\AbstractFieldClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 
@@ -10,12 +11,12 @@ class AbstractFieldClauseTest extends \PHPUnit_Framework_TestCase
   {
     $clause = new FinalAbstractFieldClause();
     $clause->addField((new FieldExpression())->setField('first'));
-    $this->assertEquals('T first', $clause->assemble());
+    $this->assertEquals('T first', QueryAssembler::stringify($clause));
     $clause->addField((new FieldExpression())->setField('second'));
-    $this->assertEquals('T first, second', $clause->assemble());
+    $this->assertEquals('T first, second', QueryAssembler::stringify($clause));
     $clause->clearFields();
     $clause->addField((new FieldExpression())->setField('third'));
-    $this->assertEquals('T third', $clause->assemble());
+    $this->assertEquals('T third', QueryAssembler::stringify($clause));
   }
 }
 

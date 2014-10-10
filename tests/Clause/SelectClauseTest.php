@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Clause;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\SelectClause;
 use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\NowSelectExpression;
@@ -10,42 +11,48 @@ class SelectClauseTest extends \PHPUnit_Framework_TestCase
   public function testAssemble()
   {
     $clause = new SelectClause();
-    $this->assertEquals('SELECT *', $clause->assemble());
+    $this->assertEquals('SELECT *', QueryAssembler::stringify($clause));
 
     $clause->addExpression((new FieldSelectExpression())->setField('one'));
-    $this->assertEquals('SELECT one', $clause->assemble());
+    $this->assertEquals('SELECT one', QueryAssembler::stringify($clause));
     $clause->addExpression(
       (new FieldSelectExpression())->setField('two')->setAlias('three')
     );
-    $this->assertEquals('SELECT one, two AS three', $clause->assemble());
+    $this->assertEquals(
+      'SELECT one, two AS three',
+      QueryAssembler::stringify($clause)
+    );
 
     $clause->clearExpressions();
     $clause->addExpression(new NowSelectExpression());
-    $this->assertEquals('SELECT NOW()', $clause->assemble());
+    $this->assertEquals('SELECT NOW()', QueryAssembler::stringify($clause));
 
     $clause->clearExpressions();
     $clause->addField('first');
-    $this->assertEquals('SELECT first', $clause->assemble());
+    $this->assertEquals('SELECT first', QueryAssembler::stringify($clause));
 
     $clause->clearExpressions();
     $clause->addField(FieldSelectExpression::create('first'));
-    $this->assertEquals('SELECT first', $clause->assemble());
+    $this->assertEquals('SELECT first', QueryAssembler::stringify($clause));
 
     $clause->clearExpressions();
     $clause->addField(new NowSelectExpression());
-    $this->assertEquals('SELECT NOW()', $clause->assemble());
+    $this->assertEquals('SELECT NOW()', QueryAssembler::stringify($clause));
 
     $clause->clearExpressions();
     $clause->addField(['full_name' => ['first', '" "', 'last']]);
     $this->assertEquals(
       'SELECT CONCAT(first," ",last) AS full_name',
-      $clause->assemble()
+      QueryAssembler::stringify($clause)
     );
 
     $clause->clearExpressions();
     $clause->addField('first');
     $clause->setDistinct(true);
-    $this->assertEquals('SELECT DISTINCT first', $clause->assemble());
+    $this->assertEquals(
+      'SELECT DISTINCT first',
+      QueryAssembler::stringify($clause)
+    );
 
     $this->setExpectedException("InvalidArgumentException");
     $clause->addField(new \stdClass());

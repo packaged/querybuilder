@@ -50,39 +50,18 @@ abstract class AbstractStatement implements IStatement
   abstract protected function _getOrder();
 
   /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
+   * @return IStatementSegment[]
    */
-  public function assemble()
+  public function getSegments()
   {
-    $compiled = [];
+    $ordered = [];
     foreach($this->_getOrder() as $order)
     {
       if(isset($this->_clauses[$order]))
       {
-        if(is_array($this->_clauses[$order]))
-        {
-          $compiled[] = implode(
-            $this->_getGlue($order),
-            mpull($this->_clauses[$order], 'assemble')
-          );
-        }
-        else
-        {
-          $compiled[] = $this->_clauses[$order]->assemble();
-        }
+        $ordered[$order] = $this->_clauses[$order];
       }
     }
-    return implode(' ', $compiled);
-  }
-
-  protected function _getGlue($order)
-  {
-    if($order === 'VALUES')
-    {
-      return ', ';
-    }
-    return ' ';
+    return $ordered;
   }
 }

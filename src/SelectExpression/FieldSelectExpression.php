@@ -3,10 +3,31 @@ namespace Packaged\QueryBuilder\SelectExpression;
 
 use Packaged\QueryBuilder\Expression\FieldExpression;
 
-class FieldSelectExpression extends FieldExpression
-  implements ISelectExpression
+class FieldSelectExpression implements ISelectExpression
 {
+  protected $_field;
   protected $_alias;
+
+  public function setField($field, $table = null)
+  {
+    if($field instanceof FieldExpression)
+    {
+      $this->_field = $field;
+    }
+    else
+    {
+      $this->_field = FieldExpression::createWithTable($field, $table);
+    }
+    return $this;
+  }
+
+  /**
+   * @return FieldExpression
+   */
+  public function getField()
+  {
+    return $this->_field;
+  }
 
   public function setAlias($alias)
   {
@@ -22,22 +43,6 @@ class FieldSelectExpression extends FieldExpression
   public function hasAlias()
   {
     return $this->_alias !== null;
-  }
-
-  /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
-   */
-  public function assemble()
-  {
-    return $this->_getFieldForAssemble()
-    . ($this->hasAlias() ? ' AS ' . $this->_alias : '');
-  }
-
-  protected function _getFieldForAssemble()
-  {
-    return $this->_field;
   }
 
   /**

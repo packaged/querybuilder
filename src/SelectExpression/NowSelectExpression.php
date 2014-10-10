@@ -3,7 +3,7 @@ namespace Packaged\QueryBuilder\SelectExpression;
 
 class NowSelectExpression extends FieldSelectExpression
 {
-  protected function _getFieldForAssemble()
+  public function getFunction()
   {
     return 'NOW()';
   }

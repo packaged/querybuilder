@@ -28,15 +28,9 @@ class FieldExpression implements IExpression
     return $this->_table;
   }
 
-  /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
-   */
-  public function assemble()
+  public function hasTableName()
   {
-    return (empty($this->_table) ? '' : $this->getTableName() . '.')
-    . $this->getField();
+    return !empty($this->_table);
   }
 
   public static function create($field)

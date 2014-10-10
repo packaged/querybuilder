@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Clause;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\InsertClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 
@@ -10,15 +11,21 @@ class InsertClauseTest extends \PHPUnit_Framework_TestCase
   {
     $clause = new InsertClause();
     $clause->setTableName('tester');
-    $this->assertEquals('INSERT INTO tester ()', $clause->assemble());
+    $this->assertEquals(
+      'INSERT INTO tester ()',
+      QueryAssembler::stringify($clause)
+    );
 
     $clause->addField((new FieldExpression())->setField('id'));
-    $this->assertEquals('INSERT INTO tester (id)', $clause->assemble());
+    $this->assertEquals(
+      'INSERT INTO tester (id)',
+      QueryAssembler::stringify($clause)
+    );
   }
 
   public function testGettersAndSetters()
   {
-    $clause    = new InsertClause();
+    $clause = new InsertClause();
     $nameField = new FieldExpression();
     $nameField->setField('name');
     $idField = new FieldExpression();

@@ -16,6 +16,11 @@ class FormatSelectExpression extends FunctionSelectExpression
     return $this->_precision;
   }
 
+  public function hasPrecision()
+  {
+    return $this->_precision > 0;
+  }
+
   /**
    * Aggregate function name e.g. SUM
    *
@@ -24,13 +29,6 @@ class FormatSelectExpression extends FunctionSelectExpression
   public function getFunctionName()
   {
     return 'FORMAT';
-  }
-
-  protected function _getFieldForAssemble()
-  {
-    return $this->getFunctionName() . '(' . $this->_field
-    . ($this->_precision > 0 ? ',' . $this->_precision : '')
-    . ')';
   }
 
   /**

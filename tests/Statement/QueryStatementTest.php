@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Statement;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\FromClause;
 use Packaged\QueryBuilder\Clause\GroupByClause;
 use Packaged\QueryBuilder\Clause\HavingClause;
@@ -26,19 +27,22 @@ class QueryStatementTest extends \PHPUnit_Framework_TestCase
     $select = new SelectClause();
     $select->addExpression(new AllSelectExpression());
     $statement->addClause($select);
-    $this->assertEquals('SELECT *', $statement->assemble());
+    $this->assertEquals('SELECT *', QueryAssembler::stringify($statement));
 
     $from = new FromClause();
     $from->setTableName('tbl');
     $statement->addClause($from);
-    $this->assertEquals('SELECT * FROM tbl', $statement->assemble());
+    $this->assertEquals(
+      'SELECT * FROM tbl',
+      QueryAssembler::stringify($statement)
+    );
 
     $where = new WhereClause();
     $where->addPredicate((new NotEqualPredicate())->setField('username'));
     $statement->addClause($where);
     $this->assertEquals(
       'SELECT * FROM tbl WHERE username IS NOT NULL',
-      $statement->assemble()
+      QueryAssembler::stringify($statement)
     );
 
     $where->addPredicate(
@@ -49,7 +53,7 @@ class QueryStatementTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(
       'SELECT * FROM tbl '
       . 'WHERE username IS NOT NULL AND name LIKE "Joh%"',
-      $statement->assemble()
+      QueryAssembler::stringify($statement)
     );
 
     $orderBy = new OrderByClause();
@@ -60,7 +64,7 @@ class QueryStatementTest extends \PHPUnit_Framework_TestCase
       'SELECT * FROM tbl '
       . 'WHERE username IS NOT NULL AND name LIKE "Joh%" '
       . 'ORDER BY user_id',
-      $statement->assemble()
+      QueryAssembler::stringify($statement)
     );
 
     $orderBy->addField((new FieldExpression())->setField('age'), 'DESC');
@@ -68,7 +72,7 @@ class QueryStatementTest extends \PHPUnit_Framework_TestCase
       'SELECT * FROM tbl '
       . 'WHERE username IS NOT NULL AND name LIKE "Joh%" '
       . 'ORDER BY user_id, age DESC',
-      $statement->assemble()
+      QueryAssembler::stringify($statement)
     );
 
     $groupBy = new GroupByClause();
@@ -79,7 +83,7 @@ class QueryStatementTest extends \PHPUnit_Framework_TestCase
       . 'WHERE username IS NOT NULL AND name LIKE "Joh%" '
       . 'GROUP BY role '
       . 'ORDER BY user_id, age DESC',
-      $statement->assemble()
+      QueryAssembler::stringify($statement)
     );
 
     $having = new HavingClause();
@@ -96,7 +100,7 @@ class QueryStatementTest extends \PHPUnit_Framework_TestCase
       . 'GROUP BY role '
       . 'HAVING tasks < 4 '
       . 'ORDER BY user_id, age DESC',
-      $statement->assemble()
+      QueryAssembler::stringify($statement)
     );
 
     $limit = new LimitClause();
@@ -111,7 +115,7 @@ class QueryStatementTest extends \PHPUnit_Framework_TestCase
       . 'HAVING tasks < 4 '
       . 'ORDER BY user_id, age DESC '
       . 'LIMIT 20,10',
-      $statement->assemble()
+      QueryAssembler::stringify($statement)
     );
   }
 }

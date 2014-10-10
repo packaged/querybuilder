@@ -45,15 +45,8 @@ abstract class AbstractOperatorPredicate implements IPredicate
     return $this->_value === null ? new ValueExpression() : $this->_value;
   }
 
-  /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
-   */
-  public function assemble()
+  public function isNullValue()
   {
-    return $this->getField()->assemble() . ' '
-    . $this->getOperator() . ' '
-    . $this->getExpression()->assemble();
+    return $this->_value === null;
   }
 }

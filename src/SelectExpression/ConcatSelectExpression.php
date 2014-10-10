@@ -1,6 +1,8 @@
 <?php
 namespace Packaged\QueryBuilder\SelectExpression;
 
+use Packaged\QueryBuilder\Expression\FieldExpression;
+
 /**
  * Fields to concat together should be specified individually into the contructor
  * and strings should be quoted before pushing through
@@ -28,24 +30,29 @@ class ConcatSelectExpression implements ISelectExpression
 
   public function setProperties(...$properties)
   {
-    $this->_properties = $properties;
+    return $this->setPropertyArray($properties);
   }
 
   public function setPropertyArray($properties)
   {
-    $this->_properties = $properties;
+    $this->_properties = [];
+    foreach($properties as $property)
+    {
+      if(contains_any($property, ['"', "'", ')']))
+      {
+        $this->_properties[] = $property;
+      }
+      else
+      {
+        $this->_properties[] = FieldExpression::create($property);
+      }
+    }
     return $this;
   }
 
-  /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
-   */
-  public function assemble()
+  public function getProperties()
   {
-    return 'CONCAT(' . implode(',', $this->_properties) . ')'
-    . ($this->hasAlias() ? ' AS ' . $this->getAlias() : '');
+    return $this->_properties;
   }
 
   public static function create(...$properties)

@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Clause;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\ValuesClause;
 use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
@@ -10,15 +11,18 @@ class ValuesClauseTest extends \PHPUnit_Framework_TestCase
   public function testAssemble()
   {
     $clause = new ValuesClause();
-    $this->assertEquals('VALUES ()', $clause->assemble());
+    $this->assertEquals('VALUES ()', QueryAssembler::stringify($clause));
 
     $clause->addExpression((new StringExpression())->setValue('one'));
-    $this->assertEquals('VALUES ("one")', $clause->assemble());
+    $this->assertEquals('VALUES ("one")', QueryAssembler::stringify($clause));
     $clause->addExpression(new ValueExpression());
-    $this->assertEquals('VALUES ("one", NULL)', $clause->assemble());
+    $this->assertEquals(
+      'VALUES ("one", NULL)',
+      QueryAssembler::stringify($clause)
+    );
 
     $clause->clearExpressions();
-    $this->assertEquals('VALUES ()', $clause->assemble());
+    $this->assertEquals('VALUES ()', QueryAssembler::stringify($clause));
   }
 
   public function testGettersAndSetters()

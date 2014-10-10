@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\SelectExpression;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\NowSelectExpression;
 
 class NowSelectExpressionTest extends \PHPUnit_Framework_TestCase
@@ -9,8 +10,11 @@ class NowSelectExpressionTest extends \PHPUnit_Framework_TestCase
   {
     $selector = new NowSelectExpression();
     $selector->setField('fieldname');
-    $this->assertEquals('NOW()', $selector->assemble());
+    $this->assertEquals('NOW()', QueryAssembler::stringify($selector));
     $selector->setAlias('current');
-    $this->assertEquals('NOW() AS current', $selector->assemble());
+    $this->assertEquals(
+      'NOW() AS current',
+      QueryAssembler::stringify($selector)
+    );
   }
 }

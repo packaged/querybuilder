@@ -1,6 +1,8 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\SelectExpression;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
+use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 
 class FieldSelectExpressionTest extends \PHPUnit_Framework_TestCase
@@ -9,29 +11,40 @@ class FieldSelectExpressionTest extends \PHPUnit_Framework_TestCase
   {
     $selector = new FieldSelectExpression();
     $selector->setField('fieldname');
-    $this->assertEquals('fieldname', $selector->assemble());
+    $this->assertEquals('fieldname', QueryAssembler::stringify($selector));
     $selector->setAlias('new_name');
-    $this->assertEquals('fieldname AS new_name', $selector->assemble());
+    $this->assertEquals(
+      'fieldname AS new_name',
+      QueryAssembler::stringify($selector)
+    );
   }
 
   public function testSettersAndGetters()
   {
     $selector = new FieldSelectExpression();
     $selector->setField('new_field');
-    $this->assertEquals('new_field', $selector->getField());
+    $this->assertEquals(
+      FieldExpression::create('new_field'),
+      $selector->getField()
+    );
     $selector->setAlias('alias');
     $this->assertEquals('alias', $selector->getAlias());
+
+    $field = FieldExpression::create('testfield');
+    $selector->setField($field);
+    $this->assertSame($field, $selector->getField());
   }
 
   public function testStatics()
   {
     $this->assertEquals(
       'fieldname',
-      FieldSelectExpression::create('fieldname')->assemble()
+      QueryAssembler::stringify(FieldSelectExpression::create('fieldname'))
     );
     $this->assertEquals(
       'fieldname AS new_name',
-      FieldSelectExpression::createWithAlias('fieldname', 'new_name')->assemble(
+      QueryAssembler::stringify(
+        FieldSelectExpression::createWithAlias('fieldname', 'new_name')
       )
     );
   }

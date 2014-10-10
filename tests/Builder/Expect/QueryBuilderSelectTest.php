@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Builder\Expect;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Builder\QueryBuilder;
 
 class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
@@ -11,7 +12,7 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
 
     $this->assertEquals(
       'SELECT field, field2',
-      $query->assemble()
+      QueryAssembler::stringify($query)
     );
   }
 
@@ -21,7 +22,7 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
 
     $this->assertEquals(
       'SELECT DISTINCT field, field2',
-      $query->assemble()
+      QueryAssembler::stringify($query)
     );
   }
 
@@ -33,7 +34,7 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(
       'SELECT field, field2'
       . ' FROM table',
-      $query->assemble()
+      QueryAssembler::stringify($query)
     );
   }
 
@@ -47,7 +48,7 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
       'SELECT field, field2'
       . ' FROM table'
       . ' JOIN details ON table.id = details.user_id',
-      $query->assemble()
+      QueryAssembler::stringify($query)
     );
   }
 
@@ -64,7 +65,7 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
       . ' FROM table'
       . ' JOIN details ON table.id = details.user_id'
       . ' JOIN emails ON table.email = emails.email',
-      $query->assemble()
+      QueryAssembler::stringify($query)
     );
   }
 
@@ -83,7 +84,7 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
       . ' JOIN details ON table.id = details.user_id'
       . ' JOIN emails ON table.email = emails.email'
       . ' JOIN comments ON table.id = comments.author AND comments.active = 1',
-      $query->assemble()
+      QueryAssembler::stringify($query)
     );
   }
 
@@ -103,7 +104,7 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
       . ' JOIN emails ON table.email = emails.email'
       . ' JOIN comments ON table.id = comments.author AND comments.active = 1'
       . ' WHERE username = "test"',
-      $query->assemble()
+      QueryAssembler::stringify($query)
     );
   }
 
@@ -124,7 +125,7 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
       . ' JOIN emails ON table.email = emails.email'
       . ' JOIN comments ON table.id = comments.author AND comments.active = 1'
       . ' WHERE username = "test" OR username = "tester"',
-      $query->assemble()
+      QueryAssembler::stringify($query)
     );
   }
 
@@ -147,7 +148,7 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
       . ' JOIN comments ON table.id = comments.author AND comments.active = 1'
       . ' WHERE username = "test" OR username = "tester"'
       . ' GROUP BY role',
-      $query->assemble()
+      QueryAssembler::stringify($query)
     );
   }
 
@@ -172,7 +173,7 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
       . ' WHERE username = "test" OR username = "tester"'
       . ' GROUP BY role'
       . ' ORDER BY id DESC',
-      $query->assemble()
+      QueryAssembler::stringify($query)
     );
   }
 
@@ -199,7 +200,7 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
       . ' GROUP BY role'
       . ' HAVING count = 23'
       . ' ORDER BY id DESC',
-      $query->assemble()
+      QueryAssembler::stringify($query)
     );
   }
 
@@ -228,7 +229,7 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
       . ' HAVING count = 23'
       . ' ORDER BY id DESC'
       . ' LIMIT 10',
-      $query->assemble()
+      QueryAssembler::stringify($query)
     );
   }
 
@@ -261,7 +262,7 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
       . ' AND'
       . ' (status = "active" OR status NOT IN ("inactive","suspended"))'
       ,
-      $query->assemble()
+      QueryAssembler::stringify($query)
     );
   }
 }

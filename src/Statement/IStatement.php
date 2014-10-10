@@ -8,4 +8,9 @@ interface IStatement extends IStatementSegment
   public function addClause(IClause $clause);
 
   public function getClause($action);
+
+  /**
+   * @return IStatementSegment[]
+   */
+  public function getSegments();
 }

@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\SelectExpression;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\LowerCaseSelectExpression;
 
 class LowerCaseSelectExpressionTest extends \PHPUnit_Framework_TestCase
@@ -9,8 +10,14 @@ class LowerCaseSelectExpressionTest extends \PHPUnit_Framework_TestCase
   {
     $selector = new LowerCaseSelectExpression();
     $selector->setField('fieldname');
-    $this->assertEquals('LCASE(fieldname)', $selector->assemble());
+    $this->assertEquals(
+      'LCASE(fieldname)',
+      QueryAssembler::stringify($selector)
+    );
     $selector->setAlias('lowe');
-    $this->assertEquals('LCASE(fieldname) AS lowe', $selector->assemble());
+    $this->assertEquals(
+      'LCASE(fieldname) AS lowe',
+      QueryAssembler::stringify($selector)
+    );
   }
 }

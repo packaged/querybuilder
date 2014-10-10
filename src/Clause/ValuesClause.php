@@ -47,18 +47,6 @@ class ValuesClause implements IClause
   }
 
   /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
-   */
-  public function assemble()
-  {
-    return $this->getAction() . ' ('
-    . implode(', ', mpull($this->_expressions, 'assemble'))
-    . ')';
-  }
-
-  /**
    * @return bool
    */
   public function allowMultiple()

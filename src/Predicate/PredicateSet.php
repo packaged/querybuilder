@@ -33,18 +33,6 @@ class PredicateSet implements IPredicate
     return !empty($this->_predicates);
   }
 
-  /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
-   */
-  public function assemble()
-  {
-    return '('
-    . implode($this->getGlue(), mpull($this->getPredicates(), 'assemble'))
-    . ')';
-  }
-
   public function getGlue()
   {
     return ' AND ';

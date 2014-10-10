@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Expression;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 
 class FieldExpressionTest extends \PHPUnit_Framework_TestCase
@@ -9,13 +10,13 @@ class FieldExpressionTest extends \PHPUnit_Framework_TestCase
   {
     $expression = new FieldExpression();
     $expression->setField('new_field');
-    $this->assertEquals('new_field', $expression->assemble());
+    $this->assertEquals('new_field', QueryAssembler::stringify($expression));
   }
 
   public function testSettersAndGetters()
   {
     $expression = new FieldExpression();
     $expression->setField('new_field');
-    $this->assertEquals('new_field', $expression->getField());
+    $this->assertEquals('new_field', QueryAssembler::stringify($expression));
   }
 }

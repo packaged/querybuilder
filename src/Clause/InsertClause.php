@@ -45,15 +45,4 @@ class InsertClause extends AbstractTableClause
   {
     return 'INSERT INTO';
   }
-
-  /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
-   */
-  public function assemble()
-  {
-    return parent::assemble() . ' ('
-    . implode(', ', mpull($this->_fields, 'assemble')) . ')';
-  }
 }

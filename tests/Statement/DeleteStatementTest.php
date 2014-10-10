@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Statement;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\DeleteClause;
 use Packaged\QueryBuilder\Clause\WhereClause;
 use Packaged\QueryBuilder\Expression\StringExpression;
@@ -17,14 +18,17 @@ class DeleteStatementTest extends \PHPUnit_Framework_TestCase
     $update = new DeleteClause();
     $update->setTableName('tbl');
     $statement->addClause($update);
-    $this->assertEquals('DELETE FROM tbl', $statement->assemble());
+    $this->assertEquals(
+      'DELETE FROM tbl',
+      QueryAssembler::stringify($statement)
+    );
 
     $where = new WhereClause();
     $where->addPredicate((new NotEqualPredicate())->setField('username'));
     $statement->addClause($where);
     $this->assertEquals(
       'DELETE FROM tbl WHERE username IS NOT NULL',
-      $statement->assemble()
+      QueryAssembler::stringify($statement)
     );
 
     $where->addPredicate(
@@ -35,7 +39,7 @@ class DeleteStatementTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(
       'DELETE FROM tbl '
       . 'WHERE username IS NOT NULL AND name LIKE "Joh%"',
-      $statement->assemble()
+      QueryAssembler::stringify($statement)
     );
   }
 }

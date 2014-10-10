@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Clause;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\AbstractPredicateClause;
 use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
@@ -40,13 +41,13 @@ class AbstractPredicateClauseTest extends \PHPUnit_Framework_TestCase
     $neq->setField('two')->setExpression($string);
 
     $clause->addPredicate($eq);
-    $this->assertEquals('T one = "val"', $clause->assemble());
+    $this->assertEquals('T one = "val"', QueryAssembler::stringify($clause));
 
     $clause->clearPredicates();
     $clause->setPredicates([$eq, $neq]);
     $this->assertEquals(
       'T one = "val" AND two <> "val"',
-      $clause->assemble()
+      QueryAssembler::stringify($clause)
     );
   }
 }

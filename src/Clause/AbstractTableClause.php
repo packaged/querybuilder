@@ -17,16 +17,6 @@ abstract class AbstractTableClause implements IClause
   }
 
   /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
-   */
-  public function assemble()
-  {
-    return $this->getAction() . ' ' . $this->getTableName();
-  }
-
-  /**
    * @return bool
    */
   public function allowMultiple()

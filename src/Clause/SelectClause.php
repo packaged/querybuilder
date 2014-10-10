@@ -52,23 +52,6 @@ class SelectClause implements IClause
     return !empty($this->_expressions);
   }
 
-  /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
-   */
-  public function assemble()
-  {
-    $return = $this->getAction() . ($this->isDistinct() ? ' DISTINCT' : '');
-    if(!$this->hasExpressions())
-    {
-      return $return . ' *';
-    }
-
-    return $return . ' '
-    . implode(', ', mpull($this->getExpressions(), 'assemble'));
-  }
-
   public function getAction()
   {
     return 'SELECT';

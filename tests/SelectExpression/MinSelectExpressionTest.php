@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\SelectExpression;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\MinSelectExpression;
 
 class MinSelectExpressionTest extends \PHPUnit_Framework_TestCase
@@ -9,8 +10,11 @@ class MinSelectExpressionTest extends \PHPUnit_Framework_TestCase
   {
     $selector = new MinSelectExpression();
     $selector->setField('fieldname');
-    $this->assertEquals('MIN(fieldname)', $selector->assemble());
+    $this->assertEquals('MIN(fieldname)', QueryAssembler::stringify($selector));
     $selector->setAlias('mn');
-    $this->assertEquals('MIN(fieldname) AS mn', $selector->assemble());
+    $this->assertEquals(
+      'MIN(fieldname) AS mn',
+      QueryAssembler::stringify($selector)
+    );
   }
 }

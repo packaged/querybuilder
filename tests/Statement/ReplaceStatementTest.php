@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Statement;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\ReplaceClause;
 use Packaged\QueryBuilder\Clause\ValuesClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
@@ -16,12 +17,18 @@ class ReplaceStatementTest extends \PHPUnit_Framework_TestCase
     $insert = new ReplaceClause();
     $insert->setTableName('tbl');
     $statement->addClause($insert);
-    $this->assertEquals('REPLACE INTO tbl ()', $statement->assemble());
+    $this->assertEquals(
+      'REPLACE INTO tbl ()',
+      QueryAssembler::stringify($statement)
+    );
 
     $insert->addField((new FieldExpression())->setField('id'));
     $insert->addField((new FieldExpression())->setField('name'));
 
-    $this->assertEquals('REPLACE INTO tbl (id, name)', $statement->assemble());
+    $this->assertEquals(
+      'REPLACE INTO tbl (id, name)',
+      QueryAssembler::stringify($statement)
+    );
 
     $values = new ValuesClause();
     $values->addExpression(new ValueExpression());
@@ -31,7 +38,7 @@ class ReplaceStatementTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(
       'REPLACE INTO tbl (id, name) '
       . 'VALUES (NULL, "Test")',
-      $statement->assemble()
+      QueryAssembler::stringify($statement)
     );
   }
 }

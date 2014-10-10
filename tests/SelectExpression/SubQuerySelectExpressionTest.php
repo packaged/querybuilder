@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\SelectExpression;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\FromClause;
 use Packaged\QueryBuilder\Clause\SelectClause;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
@@ -25,13 +26,20 @@ class SubQuerySelectExpressionTest extends \PHPUnit_Framework_TestCase
 
     $selector = new SubQuerySelectExpression();
     $selector->setQuery($statement, 'query');
-    $this->assertEquals('(SELECT * FROM tbl) AS query', $selector->assemble());
+    $this->assertEquals(
+      '(SELECT * FROM tbl) AS query',
+      QueryAssembler::stringify($selector)
+    );
 
     $selector = new SubQuerySelectExpression();
     $selector->setQuery($statement);
     $this->assertEquals(
-      '(SELECT * FROM tbl) AS ' . substr(md5($statement->assemble()), 0, 6),
-      $selector->assemble()
+      '(SELECT * FROM tbl) AS ' . substr(
+        md5(QueryAssembler::stringify($statement)),
+        0,
+        6
+      ),
+      QueryAssembler::stringify($selector)
     );
   }
 
@@ -40,11 +48,17 @@ class SubQuerySelectExpressionTest extends \PHPUnit_Framework_TestCase
     $statement = $this->_basicQuery();
     $this->assertEquals(
       '(SELECT * FROM tbl) AS query',
-      SubQuerySelectExpression::create($statement, 'query')->assemble()
+      QueryAssembler::stringify(
+        SubQuerySelectExpression::create($statement, 'query')
+      )
     );
     $this->assertEquals(
-      '(SELECT * FROM tbl) AS ' . substr(md5($statement->assemble()), 0, 6),
-      SubQuerySelectExpression::create($statement)->assemble()
+      '(SELECT * FROM tbl) AS ' . substr(
+        md5(QueryAssembler::stringify($statement)),
+        0,
+        6
+      ),
+      QueryAssembler::stringify(SubQuerySelectExpression::create($statement))
     );
   }
 }

@@ -18,6 +18,21 @@ class SubStringSelectExpression extends FunctionSelectExpression
     return $length;
   }
 
+  public function getLength()
+  {
+    return $this->_length;
+  }
+
+  public function getStartPosition()
+  {
+    return $this->_position;
+  }
+
+  public function hasLength()
+  {
+    return $this->_length !== null;
+  }
+
   /**
    * Aggregate function name e.g. SUM
    *
@@ -26,15 +41,6 @@ class SubStringSelectExpression extends FunctionSelectExpression
   public function getFunctionName()
   {
     return 'SUBSTRING';
-  }
-
-  protected function _getFieldForAssemble()
-  {
-    return $this->getFunctionName()
-    . '(' . $this->_field
-    . ',' . $this->_position
-    . ($this->_length !== null ? ',' . $this->_length : '')
-    . ')';
   }
 
   public static function create(

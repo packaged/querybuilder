@@ -9,9 +9,4 @@ abstract class FunctionSelectExpression extends FieldSelectExpression
    * @return string
    */
   abstract public function getFunctionName();
-
-  protected function _getFieldForAssemble()
-  {
-    return $this->getFunctionName() . '(' . $this->_field . ')';
-  }
 }

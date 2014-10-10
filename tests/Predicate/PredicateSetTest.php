@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Predicate;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Expression\ValueExpression;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
@@ -43,7 +44,7 @@ class PredicateSetTest extends \PHPUnit_Framework_TestCase
 
     $this->assertEquals(
       '(first = "val1" AND second <> "val1")',
-      $set->assemble()
+      QueryAssembler::stringify($set)
     );
   }
 }

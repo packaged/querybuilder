@@ -27,21 +27,8 @@ class OrderByClause extends AbstractFieldClause
     $this->_order = [];
   }
 
-  /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
-   */
-  public function assemble()
+  public function getOrder($field, $default = 'ASC')
   {
-    $orders = [];
-    foreach($this->_fields as $field)
-    {
-      $orders[] = trim(
-        $field->getField() . ' '
-        . idx($this->_order, $field->getField(), '')
-      );
-    }
-    return $this->getAction() . ' ' . implode(', ', $orders);
+    return idx($this->_order, $field, $default);
   }
 }

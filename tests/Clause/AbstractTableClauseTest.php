@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Clause;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\AbstractTableClause;
 
 class AbstractTableClauseTest extends \PHPUnit_Framework_TestCase
@@ -16,7 +17,7 @@ class AbstractTableClauseTest extends \PHPUnit_Framework_TestCase
   {
     $clause = new FinalAbstractTableClause();
     $clause->setTableName('tester');
-    $this->assertEquals('T tester', $clause->assemble());
+    $this->assertEquals('T tester', QueryAssembler::stringify($clause));
   }
 }
 

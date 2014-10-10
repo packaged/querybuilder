@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\SelectExpression;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\LengthSelectExpression;
 
 class LengthSelectExpressionTest extends \PHPUnit_Framework_TestCase
@@ -9,8 +10,11 @@ class LengthSelectExpressionTest extends \PHPUnit_Framework_TestCase
   {
     $selector = new LengthSelectExpression();
     $selector->setField('fieldname');
-    $this->assertEquals('LEN(fieldname)', $selector->assemble());
+    $this->assertEquals('LEN(fieldname)', QueryAssembler::stringify($selector));
     $selector->setAlias('ln');
-    $this->assertEquals('LEN(fieldname) AS ln', $selector->assemble());
+    $this->assertEquals(
+      'LEN(fieldname) AS ln',
+      QueryAssembler::stringify($selector)
+    );
   }
 }

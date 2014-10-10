@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Statement;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\SetClause;
 use Packaged\QueryBuilder\Clause\UpdateClause;
 use Packaged\QueryBuilder\Clause\WhereClause;
@@ -19,14 +20,14 @@ class UpdateStatementTest extends \PHPUnit_Framework_TestCase
     $update = new UpdateClause();
     $update->setTableName('tbl');
     $statement->addClause($update);
-    $this->assertEquals('UPDATE tbl', $statement->assemble());
+    $this->assertEquals('UPDATE tbl', QueryAssembler::stringify($statement));
 
     $where = new WhereClause();
     $where->addPredicate((new NotEqualPredicate())->setField('username'));
     $statement->addClause($where);
     $this->assertEquals(
       'UPDATE tbl WHERE username IS NOT NULL',
-      $statement->assemble()
+      QueryAssembler::stringify($statement)
     );
 
     $set = new SetClause();
@@ -45,7 +46,7 @@ class UpdateStatementTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(
       'UPDATE tbl SET username = "john" '
       . 'WHERE username IS NOT NULL AND name LIKE "Joh%"',
-      $statement->assemble()
+      QueryAssembler::stringify($statement)
     );
   }
 }

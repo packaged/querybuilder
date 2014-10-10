@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\SelectExpression;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 
 class AllSelectExpressionTest extends \PHPUnit_Framework_TestCase
@@ -8,17 +9,20 @@ class AllSelectExpressionTest extends \PHPUnit_Framework_TestCase
   public function testAssemble()
   {
     $selector = new AllSelectExpression();
-    $this->assertEquals('*', $selector->assemble());
+    $this->assertEquals('*', QueryAssembler::stringify($selector));
     $selector->setTable('test');
-    $this->assertEquals('test.*', $selector->assemble());
+    $this->assertEquals('test.*', QueryAssembler::stringify($selector));
   }
 
   public function testStatics()
   {
-    $this->assertEquals('*', AllSelectExpression::create()->assemble());
+    $this->assertEquals(
+      '*',
+      QueryAssembler::stringify(AllSelectExpression::create())
+    );
     $this->assertEquals(
       'table.*',
-      AllSelectExpression::create('table')->assemble()
+      QueryAssembler::stringify(AllSelectExpression::create('table'))
     );
   }
 }

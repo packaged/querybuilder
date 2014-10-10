@@ -16,31 +16,6 @@ class ValueExpression implements IExpression
     return $this->_value;
   }
 
-  /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
-   */
-  public function assemble()
-  {
-    if($this->_value === null)
-    {
-      return 'NULL';
-    }
-
-    if(is_numeric($this->_value))
-    {
-      return $this->_value;
-    }
-
-    if(is_array($this->_value))
-    {
-      return ArrayExpression::create($this->_value)->assemble();
-    }
-
-    return '"' . $this->_value . '"';
-  }
-
   public static function create($value)
   {
     $expression = new static;

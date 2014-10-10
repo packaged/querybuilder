@@ -8,7 +8,7 @@ class UnixTimestampExpression implements IExpression
    *
    * @return string
    */
-  public function assemble()
+  public function getFunction()
   {
     return 'UNIX_TIMESTAMP()';
   }

@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Clause;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\OrderByClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 
@@ -10,14 +11,23 @@ class OrderByClauseTest extends \PHPUnit_Framework_TestCase
   {
     $clause = new OrderByClause();
     $clause->addField((new FieldExpression())->setField('first'));
-    $this->assertEquals('ORDER BY first', $clause->assemble());
+    $this->assertEquals('ORDER BY first', QueryAssembler::stringify($clause));
     $clause->clearFields();
     $clause->addField((new FieldExpression())->setField('first'), 'ASC');
-    $this->assertEquals('ORDER BY first ASC', $clause->assemble());
+    $this->assertEquals(
+      'ORDER BY first ASC',
+      QueryAssembler::stringify($clause)
+    );
     $clause->clearFields();
     $clause->addField((new FieldExpression())->setField('first'), 'DESC');
-    $this->assertEquals('ORDER BY first DESC', $clause->assemble());
+    $this->assertEquals(
+      'ORDER BY first DESC',
+      QueryAssembler::stringify($clause)
+    );
     $clause->addField((new FieldExpression())->setField('second'), 'ASC');
-    $this->assertEquals('ORDER BY first DESC, second ASC', $clause->assemble());
+    $this->assertEquals(
+      'ORDER BY first DESC, second ASC',
+      QueryAssembler::stringify($clause)
+    );
   }
 }

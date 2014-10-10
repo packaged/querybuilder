@@ -2,7 +2,6 @@
 namespace Packaged\QueryBuilder\Clause;
 
 use Packaged\QueryBuilder\Predicate\IPredicate;
-use Packaged\QueryBuilder\Predicate\PredicateSet;
 
 abstract class AbstractPredicateClause implements IClause
 {
@@ -39,27 +38,6 @@ abstract class AbstractPredicateClause implements IClause
   public function getGlue()
   {
     return ' AND ';
-  }
-
-  /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
-   */
-  public function assemble()
-  {
-    if(count($this->_predicates) === 1
-      && head($this->_predicates) instanceof PredicateSet
-    )
-    {
-      return $this->getAction() . ' '
-      . substr(head($this->_predicates)->assemble(), 1, -1);
-    }
-    else
-    {
-      return $this->getAction() . ' '
-      . implode($this->getGlue(), mpull($this->getPredicates(), 'assemble'));
-    }
   }
 
   /**

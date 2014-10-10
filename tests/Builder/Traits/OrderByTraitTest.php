@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Builder\Traits;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Builder\Traits\OrderByTrait;
 use Packaged\QueryBuilder\Clause\OrderByClause;
 use Packaged\QueryBuilder\Statement\AbstractStatement;
@@ -11,18 +12,21 @@ class OrderByTraitTest extends \PHPUnit_Framework_TestCase
   {
     $class = new FinalOrderByTrait();
     $class->orderBy('one');
-    $this->assertEquals("ORDER BY one", $this->_getClause($class)->assemble());
+    $this->assertEquals(
+      "ORDER BY one",
+      QueryAssembler::stringify($this->_getClause($class))
+    );
 
     $class->orderBy('one', 'two');
     $this->assertEquals(
       "ORDER BY one, two",
-      $this->_getClause($class)->assemble()
+      QueryAssembler::stringify($this->_getClause($class))
     );
 
     $class->orderBy(['one', 'two', 'three' => 'ASC']);
     $this->assertEquals(
       "ORDER BY one, two, three ASC",
-      $this->_getClause($class)->assemble()
+      QueryAssembler::stringify($this->_getClause($class))
     );
   }
 

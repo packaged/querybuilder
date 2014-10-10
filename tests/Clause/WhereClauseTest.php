@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Clause;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\WhereClause;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
@@ -19,14 +20,17 @@ class WhereClauseTest extends \PHPUnit_Framework_TestCase
       (new StringExpression())->setValue('val')
     );
     $clause->addPredicate($eq);
-    $this->assertEquals('WHERE one = "val"', $clause->assemble());
+    $this->assertEquals(
+      'WHERE one = "val"',
+      QueryAssembler::stringify($clause)
+    );
 
     $eq = new GreaterThanPredicate();
     $eq->setField('two')->setExpression((new NumericExpression())->setValue(5));
     $clause->addPredicate($eq);
     $this->assertEquals(
       'WHERE one = "val" AND two > 5',
-      $clause->assemble()
+      QueryAssembler::stringify($clause)
     );
   }
 

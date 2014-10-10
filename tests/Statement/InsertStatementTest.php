@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Statement;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\InsertClause;
 use Packaged\QueryBuilder\Clause\ValuesClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
@@ -16,12 +17,18 @@ class InsertStatementTest extends \PHPUnit_Framework_TestCase
     $insert = new InsertClause();
     $insert->setTableName('tbl');
     $statement->addClause($insert);
-    $this->assertEquals('INSERT INTO tbl ()', $statement->assemble());
+    $this->assertEquals(
+      'INSERT INTO tbl ()',
+      QueryAssembler::stringify($statement)
+    );
 
     $insert->addField((new FieldExpression())->setField('id'));
     $insert->addField((new FieldExpression())->setField('name'));
 
-    $this->assertEquals('INSERT INTO tbl (id, name)', $statement->assemble());
+    $this->assertEquals(
+      'INSERT INTO tbl (id, name)',
+      QueryAssembler::stringify($statement)
+    );
 
     $values = new ValuesClause();
     $values->addExpression(new ValueExpression());
@@ -31,7 +38,7 @@ class InsertStatementTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(
       'INSERT INTO tbl (id, name) '
       . 'VALUES (NULL, "Test")',
-      $statement->assemble()
+      QueryAssembler::stringify($statement)
     );
   }
 }

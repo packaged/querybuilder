@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\SelectExpression;
 
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\SubStringSelectExpression;
 
 class SubStringSelectExpressionTest extends \PHPUnit_Framework_TestCase
@@ -9,18 +10,24 @@ class SubStringSelectExpressionTest extends \PHPUnit_Framework_TestCase
   {
     $selector = new SubStringSelectExpression();
     $selector->setField('fieldname');
-    $this->assertEquals('SUBSTRING(fieldname,0)', $selector->assemble());
+    $this->assertEquals(
+      'SUBSTRING(fieldname,0)',
+      QueryAssembler::stringify($selector)
+    );
     $selector->setAlias('new');
-    $this->assertEquals('SUBSTRING(fieldname,0) AS new', $selector->assemble());
+    $this->assertEquals(
+      'SUBSTRING(fieldname,0) AS new',
+      QueryAssembler::stringify($selector)
+    );
     $selector->setStartPosition(10);
     $this->assertEquals(
       'SUBSTRING(fieldname,10) AS new',
-      $selector->assemble()
+      QueryAssembler::stringify($selector)
     );
     $selector->setLength(5);
     $this->assertEquals(
       'SUBSTRING(fieldname,10,5) AS new',
-      $selector->assemble()
+      QueryAssembler::stringify($selector)
     );
   }
 
@@ -28,20 +35,25 @@ class SubStringSelectExpressionTest extends \PHPUnit_Framework_TestCase
   {
     $this->assertEquals(
       'SUBSTRING(fieldname,0)',
-      SubStringSelectExpression::create('fieldname')->assemble()
+      QueryAssembler::stringify(SubStringSelectExpression::create('fieldname'))
     );
     $this->assertEquals(
       'SUBSTRING(fieldname,0) AS new',
-      SubStringSelectExpression::createWithAlias('fieldname', 'new')->assemble()
+      QueryAssembler::stringify(
+        SubStringSelectExpression::createWithAlias('fieldname', 'new')
+      )
     );
     $this->assertEquals(
       'SUBSTRING(fieldname,10) AS new',
-      SubStringSelectExpression::create('fieldname', 10, null, 'new')->assemble(
+      QueryAssembler::stringify(
+        SubStringSelectExpression::create('fieldname', 10, null, 'new')
       )
     );
     $this->assertEquals(
       'SUBSTRING(fieldname,10,5) AS new',
-      SubStringSelectExpression::create('fieldname', 10, 5, 'new')->assemble()
+      QueryAssembler::stringify(
+        SubStringSelectExpression::create('fieldname', 10, 5, 'new')
+      )
     );
   }
 }

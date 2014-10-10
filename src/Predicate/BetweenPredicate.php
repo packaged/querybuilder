@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Predicate;
 
+use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\IExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
 
@@ -14,11 +15,15 @@ class BetweenPredicate implements IPredicate
    * @var IExpression
    */
   protected $_rangeEnd;
+  /**
+   * @var FieldExpression
+   */
   protected $_field;
 
   public function setField($field)
   {
-    $this->_field = $field;
+    $this->_field = is_scalar($field) ?
+      FieldExpression::create($field) : $field;
     return $this;
   }
 
@@ -49,18 +54,5 @@ class BetweenPredicate implements IPredicate
   public function getRangeValues()
   {
     return [$this->_rangeStart, $this->_rangeEnd];
-  }
-
-  /**
-   * Assemble the segment into a usable part of a query
-   *
-   * @return string
-   */
-  public function assemble()
-  {
-    return $this->_field . ' BETWEEN '
-    . $this->getRangeStart()->assemble()
-    . ' AND '
-    . $this->getRangeEnd()->assemble();
   }
 }
