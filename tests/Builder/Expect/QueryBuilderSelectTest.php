@@ -108,6 +108,27 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
     );
   }
 
+  public function testWhereEmpty()
+  {
+    $query = QueryBuilder::select();
+    $query->from('table');
+    $query->where([]);
+
+    $this->assertEquals(
+      'SELECT * FROM table',
+      QueryAssembler::stringify($query)
+    );
+
+    $query = QueryBuilder::select();
+    $query->from('table');
+    $query->where();
+
+    $this->assertEquals(
+      'SELECT * FROM table',
+      QueryAssembler::stringify($query)
+    );
+  }
+
   public function testOrWhere()
   {
     $query = QueryBuilder::select('field', 'field2');

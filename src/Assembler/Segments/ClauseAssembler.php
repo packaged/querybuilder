@@ -138,6 +138,11 @@ class ClauseAssembler extends AbstractSegmentAssembler
 
   public function assemblePredicateClause(AbstractPredicateClause $clause)
   {
+    if(!$clause->hasPredicates())
+    {
+      return '';
+    }
+
     if(count($clause->getPredicates()) === 1
       && head($clause->getPredicates()) instanceof PredicateSet
     )

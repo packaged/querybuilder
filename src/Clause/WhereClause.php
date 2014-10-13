@@ -22,10 +22,13 @@ class WhereClause extends AbstractPredicateClause
     return 'WHERE';
   }
 
-  public static function create(array $predicated)
+  public static function create(array $predicated = null)
   {
     $clause = new static;
-    $clause->setPredicates(static::buildPredicates($predicated));
+    if($predicated !== null)
+    {
+      $clause->setPredicates(static::buildPredicates($predicated));
+    }
     return $clause;
   }
 
