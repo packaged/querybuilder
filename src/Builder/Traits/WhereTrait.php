@@ -13,7 +13,7 @@ trait WhereTrait
     /**
      * @var $this IStatement
      */
-    $where = WhereClause::create(...$expressions);
+    $where = WhereClause::create($expressions);
     $this->addClause($where);
     return $this;
   }

@@ -11,7 +11,7 @@ trait HavingTrait
     /**
      * @var $this IStatement
      */
-    $where = HavingClause::create(...$expressions);
+    $where = HavingClause::create($expressions);
     $this->addClause($where);
     return $this;
   }
