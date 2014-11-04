@@ -96,7 +96,9 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
   {
     return $field->getFunctionName()
     . '('
-    . $this->getAssembler()->assembleSegment($field->getField())
+    . ($field->getField() === null ?
+      '*'
+      : $this->getAssembler()->assembleSegment($field->getField()))
     . ')'
     . ($field->hasAlias() ? ' AS ' . $field->getAlias() : '');
   }

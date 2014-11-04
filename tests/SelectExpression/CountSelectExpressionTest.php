@@ -9,6 +9,10 @@ class CountSelectExpressionTest extends \PHPUnit_Framework_TestCase
   public function testAssemble()
   {
     $selector = new CountSelectExpression();
+    $this->assertEquals(
+      'COUNT(*)',
+      QueryAssembler::stringify($selector)
+    );
     $selector->setField('fieldname');
     $this->assertEquals(
       'COUNT(fieldname)',
