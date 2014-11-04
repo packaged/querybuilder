@@ -10,6 +10,20 @@ interface IStatement extends IStatementSegment
   public function getClause($action);
 
   /**
+   * @param $action
+   *
+   * @return bool
+   */
+  public function hasClause($action);
+
+  /**
+   * @param $action
+   *
+   * @return self
+   */
+  public function removeClause($action);
+
+  /**
    * @return IStatementSegment[]
    */
   public function getSegments();
