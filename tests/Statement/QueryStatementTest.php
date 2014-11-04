@@ -118,4 +118,16 @@ class QueryStatementTest extends \PHPUnit_Framework_TestCase
       QueryAssembler::stringify($statement)
     );
   }
+
+  public function testClause()
+  {
+    $statement = new QueryStatement();
+    $this->assertFalse($statement->hasClause('SELECT'));
+    $select = new SelectClause();
+    $statement->addClause($select);
+    $this->assertSame($select, $statement->getClause('SELECT'));
+    $this->assertTrue($statement->hasClause('SELECT'));
+    $statement->removeClause('SELECT');
+    $this->assertFalse($statement->hasClause('SELECT'));
+  }
 }

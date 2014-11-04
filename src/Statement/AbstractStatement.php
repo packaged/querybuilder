@@ -47,6 +47,29 @@ abstract class AbstractStatement implements IStatement
     return isset($this->_clauses[$key]) ? $this->_clauses[$key] : null;
   }
 
+  /**
+   * @param $action
+   *
+   * @return bool
+   */
+  public function hasClause($action)
+  {
+    $key = $this->_makeKey($action);
+    return isset($this->_clauses[$key]);
+  }
+
+  /**
+   * @param $action
+   *
+   * @return self
+   */
+  public function removeClause($action)
+  {
+    $key = $this->_makeKey($action);
+    unset($this->_clauses[$key]);
+    return $this;
+  }
+
   abstract protected function _getOrder();
 
   /**
