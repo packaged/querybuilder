@@ -2,7 +2,9 @@
 namespace Packaged\Tests\QueryBuilder\Expression;
 
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
+use Packaged\QueryBuilder\Assembler\Segments\ExpressionAssembler;
 use Packaged\QueryBuilder\Expression\AbstractArithmeticExpression;
+use Packaged\QueryBuilder\Expression\IExpression;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
 
@@ -59,6 +61,16 @@ class AbstractArithmeticExpressionTest extends \PHPUnit_Framework_TestCase
       )
     );
   }
+
+  /**
+   * @expectedException \RuntimeException
+   * @expectedExceptionMessage Unsupported segment
+   */
+  public function testUnknown()
+  {
+    $assembler = new ExpressionAssembler(new UnknownExpression());
+    $assembler->assemble();
+  }
 }
 
 class FinalAbstractArithmeticExpression extends AbstractArithmeticExpression
@@ -71,4 +83,8 @@ class FinalAbstractArithmeticExpression extends AbstractArithmeticExpression
   {
     return 'T';
   }
+}
+
+class UnknownExpression implements IExpression
+{
 }

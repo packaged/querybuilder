@@ -2,6 +2,7 @@
 namespace Packaged\Tests\QueryBuilder\Assembler\CQL;
 
 use Packaged\QueryBuilder\Assembler\CQL\CqlAssembler;
+use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Predicate\BetweenPredicate;
@@ -39,6 +40,16 @@ class CqlAssemblerTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(
       '("field" >= \'abc\' AND "field" <= \'def\')',
       CqlAssembler::stringify($predicate)
+    );
+  }
+
+  public function testTableName()
+  {
+    $this->assertEquals(
+      '"mytable"."myfield"',
+      CqlAssembler::stringify(
+        FieldExpression::createWithTable('myfield', 'mytable')
+      )
     );
   }
 }

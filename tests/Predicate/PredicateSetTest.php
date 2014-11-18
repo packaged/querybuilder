@@ -34,7 +34,9 @@ class PredicateSetTest extends \PHPUnit_Framework_TestCase
   public function testAssemble()
   {
     $set = new PredicateSet();
-    $eq  = new EqualPredicate();
+    $this->assertEquals('', QueryAssembler::stringify($set));
+
+    $eq = new EqualPredicate();
     $eq->setField("first")->setExpression(ValueExpression::create('val1'));
     $neq = new NotEqualPredicate();
     $neq->setField("second")->setExpression(ValueExpression::create('val1'));

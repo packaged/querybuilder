@@ -2,10 +2,12 @@
 namespace Packaged\Tests\QueryBuilder\Predicate;
 
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
+use Packaged\QueryBuilder\Assembler\Segments\PredicateAssembler;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Predicate\AbstractOperatorPredicate;
+use Packaged\QueryBuilder\Predicate\IPredicate;
 
 class AbstractOperatorPredicateTest extends \PHPUnit_Framework_TestCase
 {
@@ -38,6 +40,16 @@ class AbstractOperatorPredicateTest extends \PHPUnit_Framework_TestCase
       $predicate->getExpression()
     );
   }
+
+  /**
+   * @expectedException \RuntimeException
+   * @expectedExceptionMessage Unsupported segment
+   */
+  public function testUnknown()
+  {
+    $assembler = new PredicateAssembler(new UnknownPredicate());
+    $assembler->assemble();
+  }
 }
 
 class FinalAbstractOperatorPredicateTest extends AbstractOperatorPredicate
@@ -50,4 +62,8 @@ class FinalAbstractOperatorPredicateTest extends AbstractOperatorPredicate
   {
     return 'T';
   }
+}
+
+class UnknownPredicate implements IPredicate
+{
 }
