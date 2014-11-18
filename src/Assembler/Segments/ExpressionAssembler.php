@@ -98,7 +98,9 @@ class ExpressionAssembler extends AbstractSegmentAssembler
 
     if(is_numeric($expression->getValue()))
     {
-      return $expression->getValue();
+      return $this->assembleNumericExpression(
+        NumericExpression::create($expression->getValue())
+      );
     }
 
     if(is_array($expression->getValue()))
@@ -108,7 +110,9 @@ class ExpressionAssembler extends AbstractSegmentAssembler
       );
     }
 
-    return '"' . $expression->getValue() . '"';
+    return $this->assembleStringExpression(
+      StringExpression::create($expression->getValue())
+    );
   }
 
   public function assembleFieldExpression(FieldExpression $expr)
