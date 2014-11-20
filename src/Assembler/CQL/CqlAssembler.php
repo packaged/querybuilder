@@ -9,12 +9,17 @@ use Packaged\QueryBuilder\Predicate\BetweenPredicate;
 use Packaged\QueryBuilder\Predicate\GreaterThanOrEqualPredicate;
 use Packaged\QueryBuilder\Predicate\LessThanOrEqualPredicate;
 use Packaged\QueryBuilder\Predicate\PredicateSet;
+use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 
 class CqlAssembler extends MySQLAssembler
 {
   public function assembleSegment($segment)
   {
-    if($segment instanceof BetweenPredicate)
+    if($segment instanceof AllSelectExpression)
+    {
+      $segment->setTable(null);
+    }
+    else if($segment instanceof BetweenPredicate)
     {
       return $this->assembleBetween($segment);
     }

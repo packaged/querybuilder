@@ -6,6 +6,7 @@ use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Predicate\BetweenPredicate;
+use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 
 class CqlAssemblerTest extends \PHPUnit_Framework_TestCase
 {
@@ -41,6 +42,14 @@ class CqlAssemblerTest extends \PHPUnit_Framework_TestCase
       '("field" >= \'abc\' AND "field" <= \'def\')',
       CqlAssembler::stringify($predicate)
     );
+  }
+
+  public function testAllSelect()
+  {
+    $selector = new AllSelectExpression();
+    $this->assertEquals('*', CqlAssembler::stringify($selector));
+    $selector->setTable('test');
+    $this->assertEquals('*', CqlAssembler::stringify($selector));
   }
 
   public function testTableName()
