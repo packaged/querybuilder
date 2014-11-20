@@ -58,4 +58,16 @@ class WhereClauseTest extends \PHPUnit_Framework_TestCase
       [['AND' => ['name' => 'test']], [$set]],
     ];
   }
+
+  public function testNullBuilder()
+  {
+    $this->assertEquals(
+      "WHERE name IS NULL AND description IS NOT NULL",
+      QueryAssembler::stringify(
+        WhereClause::create(
+          ['name' => null, 'NOT' => ['description' => null]]
+        )
+      )
+    );
+  }
 }

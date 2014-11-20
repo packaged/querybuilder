@@ -47,6 +47,14 @@ abstract class AbstractOperatorPredicate implements IPredicate
 
   public function isNullValue()
   {
-    return $this->_value === null;
+    if($this->_value === null)
+    {
+      return true;
+    }
+    else if($this->_value instanceof ValueExpression)
+    {
+      return $this->_value->getValue() === null;
+    }
+    return false;
   }
 }
