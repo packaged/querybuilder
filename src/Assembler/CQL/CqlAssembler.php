@@ -2,6 +2,7 @@
 namespace Packaged\QueryBuilder\Assembler\CQL;
 
 use Packaged\QueryBuilder\Assembler\MySQL\MySQLAssembler;
+use Packaged\QueryBuilder\Clause\CQL\AllowFilteringClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\TableExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
@@ -15,7 +16,11 @@ class CqlAssembler extends MySQLAssembler
 {
   public function assembleSegment($segment)
   {
-    if($segment instanceof AllSelectExpression)
+    if($segment instanceof AllowFilteringClause)
+    {
+      return 'ALLOW FILTERING';
+    }
+    else if($segment instanceof AllSelectExpression)
     {
       $segment->setTable(null);
     }
