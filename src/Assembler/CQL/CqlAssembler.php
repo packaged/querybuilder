@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Assembler\CQL;
 
-use Packaged\QueryBuilder\Assembler\MySQL\MySQLAssembler;
+use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\CQL\AllowFilteringClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\TableExpression;
@@ -12,11 +12,19 @@ use Packaged\QueryBuilder\Predicate\LessThanOrEqualPredicate;
 use Packaged\QueryBuilder\Predicate\PredicateSet;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 
-class CqlAssembler extends MySQLAssembler
+class CqlAssembler extends QueryAssembler
 {
   public function assembleSegment($segment)
   {
-    if($segment instanceof AllowFilteringClause)
+    if($segment instanceof FieldExpression)
+    {
+      return $this->assembleField($segment);
+    }
+    else if($segment instanceof TableExpression)
+    {
+      return $this->assembleTableExpression($segment);
+    }
+    else if($segment instanceof AllowFilteringClause)
     {
       return 'ALLOW FILTERING';
     }

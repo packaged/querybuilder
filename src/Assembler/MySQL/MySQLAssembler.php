@@ -3,6 +3,7 @@ namespace Packaged\QueryBuilder\Assembler\MySQL;
 
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Expression\FieldExpression;
+use Packaged\QueryBuilder\Expression\MatchExpression;
 use Packaged\QueryBuilder\Expression\TableExpression;
 
 class MySQLAssembler extends QueryAssembler
@@ -16,6 +17,10 @@ class MySQLAssembler extends QueryAssembler
     else if($segment instanceof TableExpression)
     {
       return $this->assembleTableExpression($segment);
+    }
+    else if($segment instanceof MatchExpression)
+    {
+      return $this->assembleMatchExpression($segment);
     }
 
     return parent::assembleSegment($segment);
@@ -37,5 +42,19 @@ class MySQLAssembler extends QueryAssembler
   public function assembleTableExpression(TableExpression $expr)
   {
     return '`' . $expr->getTableName() . '`';
+  }
+
+  public function assembleMatchExpression(MatchExpression $expr)
+  {
+    $fields = [];
+    foreach($expr->getFields() as $field)
+    {
+      $fields[] = $this->assembleSegment($field);
+    }
+    return sprintf(
+      'MATCH (%s) AGAINST (%s)',
+      implode(',', $fields),
+      $this->assembleSegment($expr->getValue())
+    );
   }
 }

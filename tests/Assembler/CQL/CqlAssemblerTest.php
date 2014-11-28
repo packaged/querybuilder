@@ -5,6 +5,7 @@ use Packaged\QueryBuilder\Assembler\CQL\CqlAssembler;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
+use Packaged\QueryBuilder\Expression\TableExpression;
 use Packaged\QueryBuilder\Predicate\BetweenPredicate;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 
@@ -59,6 +60,14 @@ class CqlAssemblerTest extends \PHPUnit_Framework_TestCase
       CqlAssembler::stringify(
         FieldExpression::createWithTable('myfield', 'mytable')
       )
+    );
+  }
+
+  public function testTableExpression()
+  {
+    $this->assertEquals(
+      '"testTable"',
+      CqlAssembler::stringify(TableExpression::create('testTable'))
     );
   }
 }
