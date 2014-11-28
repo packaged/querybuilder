@@ -19,5 +19,17 @@ class MatchExpressionTest extends \PHPUnit_Framework_TestCase
       'MATCH (`table1`.`field1`,`table2`.`field2`) AGAINST ("this is a test search")',
       MySQLAssembler::stringify($expression)
     );
+
+    $expression->setSearchModifier(MatchExpression::BOOLEAN_MODE);
+    $this->assertEquals(
+      'MATCH (`table1`.`field1`,`table2`.`field2`) AGAINST ("this is a test search" IN BOOLEAN MODE)',
+      MySQLAssembler::stringify($expression)
+    );
+
+    $expression->setSearchModifier(MatchExpression::WITH_QUERY_EXPANSION);
+    $this->assertEquals(
+      'MATCH (`table1`.`field1`,`table2`.`field2`) AGAINST ("this is a test search" WITH QUERY EXPANSION)',
+      MySQLAssembler::stringify($expression)
+    );
   }
 }

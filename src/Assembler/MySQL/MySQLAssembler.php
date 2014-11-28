@@ -51,10 +51,24 @@ class MySQLAssembler extends QueryAssembler
     {
       $fields[] = $this->assembleSegment($field);
     }
+
+    switch($expr->getSearchModifier())
+    {
+      case MatchExpression::BOOLEAN_MODE:
+        $modifier = ' IN BOOLEAN MODE';
+        break;
+      case MatchExpression::WITH_QUERY_EXPANSION:
+        $modifier = ' WITH QUERY EXPANSION';
+        break;
+      default:
+        $modifier = '';
+    }
+
     return sprintf(
-      'MATCH (%s) AGAINST (%s)',
+      'MATCH (%s) AGAINST (%s%s)',
       implode(',', $fields),
-      $this->assembleSegment($expr->getValue())
+      $this->assembleSegment($expr->getValue()),
+      $modifier
     );
   }
 }
