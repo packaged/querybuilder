@@ -18,7 +18,47 @@ trait WhereTrait
     return $this;
   }
 
+  public function andWhere(...$expressions)
+  {
+    $currentSet = $this->_getCurrentSet();
+    $newSet     = $this->_getNewSet($expressions);
+
+    $finalSet = new PredicateSet();
+    $finalSet->addPredicate($currentSet);
+    $finalSet->addPredicate($newSet);
+
+    /**
+     * @var $this  IStatement
+     * @var $where WhereClause
+     */
+    $where = $this->getClause('WHERE');
+    $where->clearPredicates();
+    $where->addPredicate($finalSet);
+    $this->addClause($where);
+    return $this;
+  }
+
   public function orWhere(...$expressions)
+  {
+    $currentSet = $this->_getCurrentSet();
+    $newSet     = $this->_getNewSet($expressions);
+
+    $finalSet = new OrPredicateSet();
+    $finalSet->addPredicate($currentSet);
+    $finalSet->addPredicate($newSet);
+
+    /**
+     * @var $this  IStatement
+     * @var $where WhereClause
+     */
+    $where = $this->getClause('WHERE');
+    $where->clearPredicates();
+    $where->addPredicate($finalSet);
+    $this->addClause($where);
+    return $this;
+  }
+
+  private function _getCurrentSet()
   {
     /**
      * @var $this  IStatement
@@ -42,6 +82,11 @@ trait WhereTrait
       $currentSet->setPredicates($where->getPredicates());
     }
 
+    return $currentSet;
+  }
+
+  private function _getNewSet(...$expressions)
+  {
     $newPredicates = WhereClause::buildPredicates($expressions);
     if(count($newPredicates) === 1)
     {
@@ -52,14 +97,6 @@ trait WhereTrait
       $newSet = new PredicateSet();
       $newSet->setPredicates($newPredicates);
     }
-
-    $finalSet = new OrPredicateSet();
-    $finalSet->addPredicate($currentSet);
-    $finalSet->addPredicate($newSet);
-
-    $where->clearPredicates();
-    $where->addPredicate($finalSet);
-    $this->addClause($where);
-    return $this;
+    return $newSet;
   }
 }

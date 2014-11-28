@@ -22,6 +22,14 @@ class WhereTraitTest extends \PHPUnit_Framework_TestCase
       . 'OR (username = "testing" AND status = "active")',
       QueryAssembler::stringify($class)
     );
+
+    $class->andWhere(['username' => 'tested', 'status' => 'disabled']);
+    $this->assertEquals(
+      'WHERE ((username = "test" AND status = "pending") '
+      . 'OR (username = "testing" AND status = "active")) '
+      . 'AND (username = "tested" AND status = "disabled")',
+      QueryAssembler::stringify($class)
+    );
   }
 
   public function testException()
