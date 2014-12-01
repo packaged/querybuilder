@@ -37,7 +37,7 @@ class WhereTraitTest extends \PHPUnit_Framework_TestCase
     $class = new FinalWhereTrait();
     $this->setExpectedException(
       'RuntimeException',
-      'You can only use orWhere after specifying a where clause'
+      'You can only use andWhere and orWhere after specifying a where clause'
     );
     $class->orWhere();
   }
