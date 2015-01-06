@@ -5,6 +5,7 @@ use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\SetClause;
 use Packaged\QueryBuilder\Clause\UpdateClause;
 use Packaged\QueryBuilder\Clause\WhereClause;
+use Packaged\QueryBuilder\Expression\Like\EndsWithExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Expression\TableExpression;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
@@ -41,7 +42,7 @@ class UpdateStatementTest extends \PHPUnit_Framework_TestCase
 
     $where->addPredicate(
       (new LikePredicate())->setField('name')->setExpression(
-        (new StringExpression())->setValue('Joh%')
+        EndsWithExpression::create('Joh')
       )
     );
     $this->assertEquals(

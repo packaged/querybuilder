@@ -4,7 +4,7 @@ namespace Packaged\Tests\QueryBuilder\Statement;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\DeleteClause;
 use Packaged\QueryBuilder\Clause\WhereClause;
-use Packaged\QueryBuilder\Expression\StringExpression;
+use Packaged\QueryBuilder\Expression\Like\EndsWithExpression;
 use Packaged\QueryBuilder\Predicate\LikePredicate;
 use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
 use Packaged\QueryBuilder\Statement\DeleteStatement;
@@ -33,7 +33,7 @@ class DeleteStatementTest extends \PHPUnit_Framework_TestCase
 
     $where->addPredicate(
       (new LikePredicate())->setField('name')->setExpression(
-        (new StringExpression())->setValue('Joh%')
+        EndsWithExpression::create('Joh')
       )
     );
     $this->assertEquals(
