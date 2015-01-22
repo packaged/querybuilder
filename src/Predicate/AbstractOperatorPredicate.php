@@ -1,8 +1,8 @@
 <?php
 namespace Packaged\QueryBuilder\Predicate;
 
-use Packaged\QueryBuilder\Expression\IExpression;
 use Packaged\QueryBuilder\Expression\FieldExpression;
+use Packaged\QueryBuilder\Expression\IExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
 
 abstract class AbstractOperatorPredicate implements IPredicate
@@ -21,6 +21,22 @@ abstract class AbstractOperatorPredicate implements IPredicate
    * @return string
    */
   abstract public function getOperator();
+
+  public static function create($field, $value)
+  {
+    $predicate = new static;
+    $predicate->setField($field);
+    if($value instanceof IExpression)
+    {
+      $expression = $value;
+    }
+    else
+    {
+      $expression = ValueExpression::create($value);
+    }
+    $predicate->setExpression($expression);
+    return $predicate;
+  }
 
   public function setField($field)
   {

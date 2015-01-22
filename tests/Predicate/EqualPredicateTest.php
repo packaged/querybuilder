@@ -19,5 +19,14 @@ class EqualPredicateTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals('field = 1', QueryAssembler::stringify($predicate));
     $predicate->setExpression((new StringExpression())->setValue('abc'));
     $this->assertEquals('field = "abc"', QueryAssembler::stringify($predicate));
+
+    $predicate = EqualPredicate::create('field', null);
+    $this->assertEquals('field IS NULL', QueryAssembler::stringify($predicate));
+    $predicate = EqualPredicate::create('field', 1);
+    $this->assertEquals('field = 1', QueryAssembler::stringify($predicate));
+    $predicate = EqualPredicate::create('field', '1');
+    $this->assertEquals('field = 1', QueryAssembler::stringify($predicate));
+    $predicate = EqualPredicate::create('field', 'abc');
+    $this->assertEquals('field = "abc"', QueryAssembler::stringify($predicate));
   }
 }

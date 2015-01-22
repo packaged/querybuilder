@@ -54,6 +54,21 @@ class LikePredicateTest extends \PHPUnit_Framework_TestCase
       'field LIKE "a%bc"',
       QueryAssembler::stringify($predicate)
     );
+
+    $predicate = LikePredicate::create('field', 'a%bc');
+    $this->assertEquals(
+      'field LIKE "a%bc"',
+      QueryAssembler::stringify($predicate)
+    );
+
+    $predicate = LikePredicate::create(
+      'field',
+      StartsWithExpression::create('abc')
+    );
+    $this->assertEquals(
+      'field LIKE "%abc"',
+      QueryAssembler::stringify($predicate)
+    );
   }
 
   /**

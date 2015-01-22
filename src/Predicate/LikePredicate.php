@@ -24,4 +24,13 @@ class LikePredicate extends AbstractOperatorPredicate
     $this->_value = $value;
     return $this;
   }
+
+  public static function create($field, $value)
+  {
+    if(is_scalar($value))
+    {
+      $value = CustomLikeExpression::create($value);
+    }
+    return parent::create($field, $value);
+  }
 }
