@@ -19,28 +19,17 @@ class UpdateStatementTest extends \PHPUnit_Framework_TestCase
   {
     $statement = new UpdateStatement();
 
-    $update = new UpdateClause();
-    $update->setTable(TableExpression::create('tbl'));
-    $statement->addClause($update);
+    $statement->update(TableExpression::create('tbl'));
     $this->assertEquals('UPDATE tbl', QueryAssembler::stringify($statement));
 
-    $where = new WhereClause();
-    $where->addPredicate((new NotEqualPredicate())->setField('username'));
-    $statement->addClause($where);
+    $statement->where(['NOT' => ['username' => null]]);
     $this->assertEquals(
       'UPDATE tbl WHERE username IS NOT NULL',
       QueryAssembler::stringify($statement)
     );
 
-    $set = new SetClause();
-    $set->addPredicate(
-      (new EqualPredicate())->setField('username')->setExpression(
-        (new StringExpression())->setValue('john')
-      )
-    );
-    $statement->addClause($set);
-
-    $where->addPredicate(
+    $statement->set('username', 'john');
+    $statement->andWhere(
       (new LikePredicate())->setField('name')->setExpression(
         EndsWithExpression::create('Joh')
       )
