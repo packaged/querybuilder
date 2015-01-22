@@ -8,6 +8,7 @@ use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Expression\TableExpression;
 use Packaged\QueryBuilder\Predicate\BetweenPredicate;
+use Packaged\QueryBuilder\Predicate\InPredicate;
 use Packaged\QueryBuilder\Predicate\PredicateSet;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\CountSelectExpression;
@@ -101,6 +102,15 @@ class CqlAssemblerTest extends \PHPUnit_Framework_TestCase
   {
     $predicate = (new CountSelectExpression())->setAlias('c');
     $this->assertEquals('COUNT(*)', CqlAssembler::stringify($predicate));
+  }
+
+  public function testArrayExpression()
+  {
+    $predicate = InPredicate::create('field', [1, 2, 3]);
+    $this->assertEquals(
+      "\"field\" IN ('1','2','3')",
+      CqlAssembler::stringify($predicate)
+    );
   }
 
   public function testTableExpression()
