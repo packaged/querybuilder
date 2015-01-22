@@ -11,18 +11,27 @@ use Packaged\QueryBuilder\Predicate\GreaterThanOrEqualPredicate;
 use Packaged\QueryBuilder\Predicate\LessThanOrEqualPredicate;
 use Packaged\QueryBuilder\Predicate\PredicateSet;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
+use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 
 class CqlAssembler extends QueryAssembler
 {
   public function assembleSegment($segment)
   {
-    if($segment instanceof FieldExpression)
+    if($segment instanceof FieldSelectExpression)
+    {
+      return $this->assembleFieldSelect($segment);
+    }
+    elseif($segment instanceof FieldExpression)
     {
       return $this->assembleField($segment);
     }
     else if($segment instanceof TableExpression)
     {
       return $this->assembleTableExpression($segment);
+    }
+    else if($segment instanceof PredicateSet)
+    {
+      return $this->assemblePredicateSet($segment);
     }
     else if($segment instanceof AllowFilteringClause)
     {
@@ -56,6 +65,33 @@ class CqlAssembler extends QueryAssembler
     {
       return '"' . $field->getField() . '"';
     }
+  }
+
+  public function assemblePredicateSet(PredicateSet $predicate)
+  {
+    if(!$predicate->hasPredicates())
+    {
+      return '';
+    }
+
+    $predicates = $predicate->getPredicates();
+    foreach($predicates as $p)
+    {
+      if($p instanceof PredicateSet)
+      {
+        throw new \Exception('Cannot have multiple predicate sets in CQL');
+      }
+    }
+
+    return implode(
+      $predicate->getGlue(),
+      $this->assembleSegments($predicates)
+    );
+  }
+
+  public function assembleFieldSelect(FieldSelectExpression $field)
+  {
+    return '"' . $field->getField()->getField() . '"';
   }
 
   public function assembleTableExpression(TableExpression $expr)
