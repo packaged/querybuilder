@@ -41,6 +41,18 @@ class BetweenPredicateTest extends \PHPUnit_Framework_TestCase
       'field BETWEEN "abc" AND "def"',
       QueryAssembler::stringify($predicate)
     );
+
+    $predicate = BetweenPredicate::create('field', 123, 456);
+    $this->assertEquals(
+      'field BETWEEN 123 AND 456',
+      QueryAssembler::stringify($predicate)
+    );
+
+    $predicate = BetweenPredicate::create('field', 'abc', 'def');
+    $this->assertEquals(
+      'field BETWEEN "abc" AND "def"',
+      QueryAssembler::stringify($predicate)
+    );
   }
 
   public function testGettersAndSetters()

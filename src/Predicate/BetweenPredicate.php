@@ -20,6 +20,24 @@ class BetweenPredicate implements IPredicate
    */
   protected $_field;
 
+  public static function create($field, $start, $end)
+  {
+    $predicate = new static;
+    $predicate->setField($field);
+
+    if(is_scalar($start))
+    {
+      $start = ValueExpression::create($start);
+    }
+    if(is_scalar($end))
+    {
+      $end = ValueExpression::create($end);
+    }
+
+    $predicate->setValues($start, $end);
+    return $predicate;
+  }
+
   public function setField($field)
   {
     $this->_field = is_scalar($field) ?
@@ -37,7 +55,7 @@ class BetweenPredicate implements IPredicate
   )
   {
     $this->_rangeStart = $start;
-    $this->_rangeEnd   = $end;
+    $this->_rangeEnd = $end;
     return $this;
   }
 
