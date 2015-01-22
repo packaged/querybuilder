@@ -10,6 +10,7 @@ use Packaged\QueryBuilder\Expression\TableExpression;
 use Packaged\QueryBuilder\Predicate\BetweenPredicate;
 use Packaged\QueryBuilder\Predicate\PredicateSet;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
+use Packaged\QueryBuilder\SelectExpression\CountSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 
 class CqlAssemblerTest extends \PHPUnit_Framework_TestCase
@@ -94,6 +95,12 @@ class CqlAssemblerTest extends \PHPUnit_Framework_TestCase
     $where = WhereClause::create();
     $where->addPredicate(new PredicateSet());
     $this->assertEquals('WHERE ', CqlAssembler::stringify($where));
+  }
+
+  public function testCountExpression()
+  {
+    $predicate = (new CountSelectExpression())->setAlias('c');
+    $this->assertEquals('COUNT(*)', CqlAssembler::stringify($predicate));
   }
 
   public function testTableExpression()

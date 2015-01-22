@@ -19,9 +19,10 @@ class CqlAssembler extends QueryAssembler
   {
     if($segment instanceof FieldSelectExpression)
     {
-      return $this->assembleFieldSelect($segment);
+      $segment->setAlias(null);
     }
-    elseif($segment instanceof FieldExpression)
+
+    if($segment instanceof FieldExpression)
     {
       return $this->assembleField($segment);
     }
@@ -87,11 +88,6 @@ class CqlAssembler extends QueryAssembler
       $predicate->getGlue(),
       $this->assembleSegments($predicates)
     );
-  }
-
-  public function assembleFieldSelect(FieldSelectExpression $field)
-  {
-    return '"' . $field->getField()->getField() . '"';
   }
 
   public function assembleTableExpression(TableExpression $expr)
