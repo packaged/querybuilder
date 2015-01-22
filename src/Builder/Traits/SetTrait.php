@@ -2,7 +2,6 @@
 namespace Packaged\QueryBuilder\Builder\Traits;
 
 use Packaged\QueryBuilder\Clause\SetClause;
-use Packaged\QueryBuilder\Expression\ValueExpression;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Statement\IStatement;
 
@@ -21,11 +20,7 @@ trait SetTrait
       $this->addClause($set);
     }
 
-    $set->addPredicate(
-      (new EqualPredicate())->setField($field)->setExpression(
-        ValueExpression::create($value)
-      )
-    );
+    $set->addPredicate(EqualPredicate::create($field, $value)->forceOperator());
 
     return $this;
   }

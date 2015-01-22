@@ -22,6 +22,12 @@ abstract class AbstractOperatorPredicate implements IPredicate
    */
   abstract public function getOperator();
 
+  /**
+   * @param $field
+   * @param $value
+   *
+   * @return static
+   */
   public static function create($field, $value)
   {
     $predicate = new static;

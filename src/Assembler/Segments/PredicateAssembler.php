@@ -72,7 +72,7 @@ class PredicateAssembler extends AbstractSegmentAssembler
 
   public function assembleEqualPredicate(EqualPredicate $predicate)
   {
-    if($predicate->isNullValue())
+    if($predicate->isNullValue() && !$predicate->isOperatorForced())
     {
       return $this->assembleSegment($predicate->getField()) . ' IS NULL';
     }

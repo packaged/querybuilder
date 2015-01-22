@@ -29,6 +29,7 @@ class UpdateStatementTest extends \PHPUnit_Framework_TestCase
     );
 
     $statement->set('username', 'john');
+
     $statement->andWhere(
       (new LikePredicate())->setField('name')->setExpression(
         EndsWithExpression::create('Joh')
@@ -36,6 +37,13 @@ class UpdateStatementTest extends \PHPUnit_Framework_TestCase
     );
     $this->assertEquals(
       'UPDATE tbl SET username = "john" '
+      . 'WHERE username IS NOT NULL AND name LIKE "Joh%"',
+      QueryAssembler::stringify($statement)
+    );
+
+    $statement->set('bob', null);
+    $this->assertEquals(
+      'UPDATE tbl SET username = "john", bob = NULL '
       . 'WHERE username IS NOT NULL AND name LIKE "Joh%"',
       QueryAssembler::stringify($statement)
     );
