@@ -5,6 +5,7 @@ use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\MatchExpression;
 use Packaged\QueryBuilder\Expression\TableExpression;
+use Packaged\QueryBuilder\SelectExpression\MatchSelectExpression;
 
 class MySQLAssembler extends QueryAssembler
 {
@@ -64,11 +65,21 @@ class MySQLAssembler extends QueryAssembler
         $modifier = '';
     }
 
+    $alias = '';
+    if($expr instanceof MatchSelectExpression)
+    {
+      if($expr->hasAlias())
+      {
+        $alias = ' AS `' . $expr->getAlias() . '`';
+      }
+    }
+
     return sprintf(
-      'MATCH (%s) AGAINST (%s%s)',
+      'MATCH (%s) AGAINST (%s%s)%s',
       implode(',', $fields),
       $this->assembleSegment($expr->getValue()),
-      $modifier
+      $modifier,
+      $alias
     );
   }
 }
