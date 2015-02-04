@@ -82,13 +82,24 @@ class CqlAssemblerTest extends \PHPUnit_Framework_TestCase
    * @expectedException \Exception
    * @expectedExceptionMessage Cannot have multiple predicate sets in CQL
    */
-  public function testMultiplePredicates()
+  public function testMultiplePredicatesFail()
   {
     $where = WhereClause::create();
     $set = new PredicateSet();
     $set->addPredicate(new PredicateSet());
     $where->addPredicate($set);
     CqlAssembler::stringify($where);
+  }
+
+  public function testMultiplePredicates()
+  {
+    $where = WhereClause::create(
+      ['AND' => ['field1' => 'value1', 'field2' => 'value2']]
+    );
+    $this->assertEquals(
+      "WHERE \"field1\" = 'value1' AND \"field2\" = 'value2'",
+      CqlAssembler::stringify($where)
+    );
   }
 
   public function testNoPredicates()

@@ -147,12 +147,14 @@ class ClauseAssembler extends AbstractSegmentAssembler
       && head($clause->getPredicates()) instanceof PredicateSet
     )
     {
-      return $clause->getAction() . ' '
-      . substr(
-        $this->getAssembler()->assembleSegment(head($clause->getPredicates())),
-        1,
-        -1
+      $assembled = $this->getAssembler()->assembleSegment(
+        head($clause->getPredicates())
       );
+      if(starts_with($assembled, '(') && ends_with($assembled, ')'))
+      {
+        $assembled = substr($assembled, 1, -1);
+      }
+      return $clause->getAction() . ' ' . $assembled;
     }
     else
     {
