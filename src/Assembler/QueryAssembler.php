@@ -39,15 +39,20 @@ class QueryAssembler
     }
   }
 
-  public function assemble()
+  public function assemble($reassemble = false)
   {
-    $this->_query = '';
-    $this->_parameters = [];
-    if($this->_statement === null)
+    if($reassemble || (!$this->_query))
     {
-      throw new \Exception("You must construct the assembler with a statement");
+      $this->_query = '';
+      $this->_parameters = [];
+      if($this->_statement === null)
+      {
+        throw new \Exception(
+          "You must construct the assembler with a statement"
+        );
+      }
+      $this->_query = $this->assembleSegment($this->_statement);
     }
-    $this->_query = $this->assembleSegment($this->_statement);
     return $this;
   }
 
@@ -102,11 +107,6 @@ class QueryAssembler
     return $this->_forPrepare;
   }
 
-  public function getParameters()
-  {
-    return $this->_parameters;
-  }
-
   public function addParameter($value)
   {
     if($value instanceof ValueExpression)
@@ -115,6 +115,16 @@ class QueryAssembler
     }
     $this->_parameters[] = $value;
     return $this;
+  }
+
+  public function getParameters()
+  {
+    return $this->_parameters;
+  }
+
+  public function getQuery()
+  {
+    return $this->_query;
   }
 
   public static function stringify(IStatementSegment $segment)
