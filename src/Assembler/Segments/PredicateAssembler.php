@@ -48,11 +48,24 @@ class PredicateAssembler extends AbstractSegmentAssembler
 
   public function assembleBetweenPredicate(BetweenPredicate $predicate)
   {
+    $assembler = $this->getAssembler();
+    if($assembler->isForPrepare())
+    {
+      $start = $end = '?';
+      $assembler->addParameter($predicate->getRangeStart());
+      $assembler->addParameter($predicate->getRangeEnd());
+    }
+    else
+    {
+      $start = $this->assembleSegment($predicate->getRangeStart());
+      $end = $this->assembleSegment($predicate->getRangeEnd());
+    }
+
     return $this->assembleSegment($predicate->getField())
     . ' BETWEEN '
-    . $this->assembleSegment($predicate->getRangeStart())
+    . $start
     . ' AND '
-    . $this->assembleSegment($predicate->getRangeEnd());
+    . $end;
   }
 
   public function assemblePredicateSet(PredicateSet $predicate)
@@ -62,12 +75,10 @@ class PredicateAssembler extends AbstractSegmentAssembler
       return '';
     }
 
-    return '('
-    . implode(
+    return '(' . implode(
       $predicate->getGlue(),
       $this->assembleSegments($predicate->getPredicates())
-    )
-    . ')';
+    ) . ')';
   }
 
   public function assembleEqualPredicate(EqualPredicate $predicate)
@@ -92,12 +103,23 @@ class PredicateAssembler extends AbstractSegmentAssembler
 
   public function assembleOperator(AbstractOperatorPredicate $predicate)
   {
+    $assembler = $this->getAssembler();
+    if($this->getAssembler()->isForPrepare())
+    {
+      $value = '?';
+      $assembler->addParameter($predicate->getExpression());
+    }
+    else
+    {
+      $value = $this->assembleSegment($predicate->getExpression());
+    }
+
     return implode(
       ' ',
       [
         $this->assembleSegment($predicate->getField()),
         $predicate->getOperator(),
-        $this->assembleSegment($predicate->getExpression()),
+        $value
       ]
     );
   }

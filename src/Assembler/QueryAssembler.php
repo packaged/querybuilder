@@ -9,6 +9,7 @@ use Packaged\QueryBuilder\Assembler\Segments\SelectExpressionAssembler;
 use Packaged\QueryBuilder\Assembler\Segments\StatementAssembler;
 use Packaged\QueryBuilder\Clause\IClause;
 use Packaged\QueryBuilder\Expression\IExpression;
+use Packaged\QueryBuilder\Expression\ValueExpression;
 use Packaged\QueryBuilder\Predicate\IPredicate;
 use Packaged\QueryBuilder\SelectExpression\ISelectExpression;
 use Packaged\QueryBuilder\Statement\IStatement;
@@ -21,8 +22,8 @@ class QueryAssembler
    */
   protected $_statement;
   protected $_forPrepare = true;
-  protected $_parameters = [];
-  protected $_namedParameters = [];
+  protected $_parameters;
+  protected $_query;
 
   /**
    * @param IStatement $statement
@@ -30,22 +31,29 @@ class QueryAssembler
    */
   public function __construct(IStatement $statement = null, $forPrepare = true)
   {
-    $this->_statement  = $statement;
+    $this->_statement = $statement;
     $this->_forPrepare = $forPrepare;
+    if($statement)
+    {
+      $this->assemble();
+    }
   }
 
   public function assemble()
   {
+    $this->_query = '';
+    $this->_parameters = [];
     if($this->_statement === null)
     {
       throw new \Exception("You must construct the assembler with a statement");
     }
-    return $this->assembleSegment($this->_statement);
+    $this->_query = $this->assembleSegment($this->_statement);
+    return $this;
   }
 
   public function __toString()
   {
-    return $this->assemble();
+    return $this->assemble()->_query;
   }
 
   public function assembleSegment($segment)
@@ -99,20 +107,18 @@ class QueryAssembler
     return $this->_parameters;
   }
 
-  public function getNamedParameters()
+  public function addParameter($value)
   {
-    return $this->_namedParameters;
-  }
-
-  public function addParameter($name, $value)
-  {
-    $this->_parameters[]           = $value;
-    $this->_namedParameters[$name] = $value;
+    if($value instanceof ValueExpression)
+    {
+      $value = $value->getValue();
+    }
+    $this->_parameters[] = $value;
     return $this;
   }
 
   public static function stringify(IStatementSegment $segment)
   {
-    return (new static)->assembleSegment($segment);
+    return (new static(null, false))->assembleSegment($segment);
   }
 }

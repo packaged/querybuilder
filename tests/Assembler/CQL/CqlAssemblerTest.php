@@ -48,6 +48,14 @@ class CqlAssemblerTest extends \PHPUnit_Framework_TestCase
       '"field" >= \'abc\' AND "field" <= \'def\'',
       CqlAssembler::stringify($predicate)
     );
+
+    $set = new PredicateSet();
+    $set->addPredicate($predicate);
+    $set->addPredicate(BetweenPredicate::create('field2', 123, 456));
+    $this->assertEquals(
+      '"field" >= \'abc\' AND "field" <= \'def\' AND "field2" >= 123 AND "field2" <= 456',
+      CqlAssembler::stringify($set)
+    );
   }
 
   public function testAllSelect()

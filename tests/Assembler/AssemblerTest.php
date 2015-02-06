@@ -4,6 +4,9 @@ namespace Packaged\Tests\QueryBuilder\Assembler;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\IClause;
 use Packaged\QueryBuilder\Clause\SelectClause;
+use Packaged\QueryBuilder\Predicate\BetweenPredicate;
+use Packaged\QueryBuilder\Predicate\EqualPredicate;
+use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
 use Packaged\QueryBuilder\Statement\IStatement;
 use Packaged\QueryBuilder\Statement\QueryStatement;
 
@@ -24,9 +27,33 @@ class AssemblerTest extends \PHPUnit_Framework_TestCase
   {
     $stm = new QueryStatement();
     $stm->addClause(new SelectClause())->from('mytable');
+    $stm->where(EqualPredicate::create('field1', 'value1'));
+
     $assembler = new QueryAssembler($stm, false);
+    $this->assertEmpty($assembler->getParameters());
     $this->assertFalse($assembler->isForPrepare());
-    $this->assertEquals('SELECT * FROM mytable', (string)$assembler);
+    $this->assertEquals(
+      'SELECT * FROM mytable WHERE field1 = "value1"',
+      (string)$assembler
+    );
+
+    $stm->andWhere(
+      [
+        'AND' => [
+          EqualPredicate::create('field2', null),
+          NotEqualPredicate::create('field3', null)
+        ],
+        'OR'  => BetweenPredicate::create('field4', 123, 456)
+      ]
+    );
+    $assembler = new QueryAssembler($stm, true);
+    $this->assertNotEmpty($assembler->getParameters());
+    $this->assertTrue($assembler->isForPrepare());
+    $this->assertEquals(
+      'SELECT * FROM mytable WHERE field1 = ? AND ((field2 IS NULL AND field3 IS NOT NULL) AND field4 BETWEEN ? AND ?)',
+      (string)$assembler
+    );
+    $this->assertEquals(['value1', 123, 456], $assembler->getParameters());
   }
 
   /**
@@ -42,12 +69,11 @@ class AssemblerTest extends \PHPUnit_Framework_TestCase
   public function testParameters()
   {
     $assembler = new QueryAssembler();
-    $assembler->addParameter('test', 'value');
-    $assembler->addParameter('test2', 'value2');
+    $assembler->addParameter('value');
+    $assembler->addParameter('value2');
 
-    $result = ['test' => 'value', 'test2' => 'value2'];
-    $this->assertEquals(array_values($result), $assembler->getParameters());
-    $this->assertEquals($result, $assembler->getNamedParameters());
+    $result = ['value', 'value2'];
+    $this->assertEquals($result, $assembler->getParameters());
   }
 }
 
