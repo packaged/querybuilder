@@ -67,17 +67,24 @@ class ExpressionAssembler extends AbstractSegmentAssembler
 
   public function assembleArrayExpression(ArrayExpression $expr)
   {
-    return '("' . implode('","', $expr->getValue()) . '")';
+    $values = [];
+    foreach($expr->getValue() as $value)
+    {
+      $values[] = $this->_assemblePrepared(ValueExpression::create($value))
+        ?: '"' . $value . '"';
+    }
+
+    return '(' . implode(',', $values) . ')';
   }
 
   public function assembleStringExpression(StringExpression $expr)
   {
-    return '"' . $expr->getValue() . '"';
+    return $this->_assemblePrepared($expr) ?: '"' . $expr->getValue() . '"';
   }
 
   public function assembleNumericExpression(NumericExpression $expr)
   {
-    return $expr->getValue();
+    return $this->_assemblePrepared($expr) ?: $expr->getValue();
   }
 
   public function assembleArithmeticExpression(

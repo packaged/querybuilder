@@ -3,6 +3,7 @@ namespace Packaged\QueryBuilder\Assembler\Segments;
 
 use Packaged\Helpers\Strings;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
+use Packaged\QueryBuilder\Expression\ValueExpression;
 use Packaged\QueryBuilder\Statement\IStatementSegment;
 
 abstract class AbstractSegmentAssembler
@@ -50,6 +51,17 @@ abstract class AbstractSegmentAssembler
   public function assembleSegment($segment)
   {
     return $this->getAssembler()->assembleSegment($segment);
+  }
+
+  protected function _assemblePrepared($expr)
+  {
+    $assembler = $this->getAssembler();
+    if($expr instanceof ValueExpression && $assembler->isForPrepare())
+    {
+      $assembler->addParameter($expr);
+      return '?';
+    }
+    return false;
   }
 
   /**

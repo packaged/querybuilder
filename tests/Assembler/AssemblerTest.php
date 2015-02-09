@@ -2,8 +2,10 @@
 namespace Packaged\Tests\QueryBuilder\Assembler;
 
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
+use Packaged\QueryBuilder\Builder\QueryBuilder;
 use Packaged\QueryBuilder\Clause\IClause;
 use Packaged\QueryBuilder\Clause\SelectClause;
+use Packaged\QueryBuilder\Expression\TableExpression;
 use Packaged\QueryBuilder\Predicate\BetweenPredicate;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
@@ -74,6 +76,18 @@ class AssemblerTest extends \PHPUnit_Framework_TestCase
 
     $result = ['value', 'value2'];
     $this->assertEquals($result, $assembler->getParameters());
+  }
+
+  public function testAssembler()
+  {
+    $assembler = new QueryAssembler(
+      QueryBuilder::insert(TableExpression::create('tbl'), 'field')
+        ->values('value')
+    );
+    $this->assertEquals(
+      'INSERT INTO tbl (field) VALUES (?)',
+      $assembler->getQuery()
+    );
   }
 }
 

@@ -2,6 +2,7 @@
 namespace Packaged\Tests\QueryBuilder\Expression;
 
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
+use Packaged\QueryBuilder\Builder\QueryBuilder;
 use Packaged\QueryBuilder\Expression\IncrementExpression;
 
 class IncrementExpressionTest extends \PHPUnit_Framework_TestCase
@@ -29,5 +30,14 @@ class IncrementExpressionTest extends \PHPUnit_Framework_TestCase
       'new_field + 1',
       QueryAssembler::stringify($expression)
     );
+
+    $stmt = QueryBuilder::update('tbl');
+    $stmt->set('inc_field', $expression);
+    $qa = new QueryAssembler($stmt);
+    $this->assertEquals(
+      'UPDATE tbl SET inc_field = new_field + ?',
+      $qa->getQuery()
+    );
+    $this->assertEquals([1], $qa->getParameters());
   }
 }
