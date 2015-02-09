@@ -3,6 +3,7 @@ namespace Packaged\QueryBuilder\Assembler\CQL;
 
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\CQL\AllowFilteringClause;
+use Packaged\QueryBuilder\Clause\CQL\TtlClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\TableExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
@@ -34,6 +35,10 @@ class CqlAssembler extends QueryAssembler
     {
       return $this->assemblePredicateSet($segment);
     }
+    else if($segment instanceof TtlClause)
+    {
+      return $this->assembleTtlClause($segment);
+    }
     else if($segment instanceof AllowFilteringClause)
     {
       return 'ALLOW FILTERING';
@@ -54,6 +59,12 @@ class CqlAssembler extends QueryAssembler
     }
 
     return parent::assembleSegment($segment);
+  }
+
+  public function assembleTtlClause(TtlClause $clause)
+  {
+    return $clause->getAction() . ' '
+    . $this->assembleSegment($clause->getTtl());
   }
 
   public function assembleField(FieldExpression $field)

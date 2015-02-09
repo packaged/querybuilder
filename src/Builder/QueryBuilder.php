@@ -10,11 +10,21 @@ use Packaged\QueryBuilder\Statement\UpdateStatement;
 
 class QueryBuilder
 {
+  protected static function _getQueryStatement()
+  {
+    return new QueryStatement();
+  }
+
+  protected static function _getInsertStatement()
+  {
+    return new InsertStatement();
+  }
+
   public static function select(...$expressions)
   {
     $select = new SelectClause();
     $select->addFields($expressions);
-    $statement = new QueryStatement();
+    $statement = static::_getQueryStatement();
     $statement->addClause($select);
     return $statement;
   }
@@ -24,7 +34,7 @@ class QueryBuilder
     $select = new SelectClause();
     $select->setDistinct(true);
     $select->addFields($expressions);
-    $statement = new QueryStatement();
+    $statement = static::_getQueryStatement();
     $statement->addClause($select);
     return $statement;
   }
@@ -42,7 +52,7 @@ class QueryBuilder
 
   public static function insertInto($table, ...$fields)
   {
-    $statement = new InsertStatement();
+    $statement = static::_getInsertStatement();
     $statement->insertInto($table, ...$fields);
     return $statement;
   }
