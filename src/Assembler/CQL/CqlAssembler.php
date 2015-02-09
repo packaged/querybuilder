@@ -49,6 +49,7 @@ class CqlAssembler extends QueryAssembler
     else if($segment instanceof ValueExpression)
     {
       $assembler = new CqlExpressionAssembler($segment);
+      $assembler->setAssembler($this);
       return $assembler->assemble();
     }
 
