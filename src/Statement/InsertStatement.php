@@ -9,6 +9,6 @@ class InsertStatement extends AbstractStatement
 
   protected function _getOrder()
   {
-    return ['INSERTINTO', 'VALUES'];
+    return ['INSERTINTO', 'VALUES', 'ONDUPLICATEKEYUPDATE'];
   }
 }

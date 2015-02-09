@@ -40,10 +40,10 @@ class QueryBuilder
     return $statement;
   }
 
-  public static function insert($table, ...$fields)
+  public static function insertInto($table, ...$fields)
   {
     $statement = new InsertStatement();
-    $statement->insert($table, ...$fields);
+    $statement->insertInto($table, ...$fields);
     return $statement;
   }
 

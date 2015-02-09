@@ -81,7 +81,7 @@ class AssemblerTest extends \PHPUnit_Framework_TestCase
   public function testAssembler()
   {
     $assembler = new QueryAssembler(
-      QueryBuilder::insert(TableExpression::create('tbl'), 'field')
+      QueryBuilder::insertInto(TableExpression::create('tbl'), 'field')
         ->values('value')
     );
     $this->assertEquals(

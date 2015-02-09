@@ -1,15 +1,17 @@
 <?php
 namespace Packaged\QueryBuilder\Builder\Traits;
 
+use Packaged\QueryBuilder\Clause\DuplicateKeyClause;
 use Packaged\QueryBuilder\Clause\InsertClause;
 use Packaged\QueryBuilder\Clause\ValuesClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
+use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Statement\IStatement;
 
 trait InsertTrait
 {
-  public function insert($table, ...$fields)
+  public function insertInto($table, ...$fields)
   {
 
     /**
@@ -47,6 +49,25 @@ trait InsertTrait
       }
       $clause->addExpression($value);
     }
+    return $this;
+  }
+
+  public function onDuplicate($field, $value)
+  {
+    /**
+     * @var $this     IStatement
+     * @var $clause   DuplicateKeyClause
+     */
+    $clause = $this->getClause('ONDUPLICATEKEYUPDATE');
+    if($clause === null)
+    {
+      $clause = new DuplicateKeyClause();
+      $this->addClause($clause);
+    }
+
+    $clause->addPredicate(
+      EqualPredicate::create($field, $value)->forceOperator()
+    );
     return $this;
   }
 }
