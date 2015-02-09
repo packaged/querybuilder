@@ -2,29 +2,23 @@
 namespace Packaged\Tests\QueryBuilder\Statement;
 
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
-use Packaged\QueryBuilder\Clause\SetClause;
-use Packaged\QueryBuilder\Clause\UpdateClause;
-use Packaged\QueryBuilder\Clause\WhereClause;
+use Packaged\QueryBuilder\Builder\QueryBuilder;
 use Packaged\QueryBuilder\Expression\Like\EndsWithExpression;
-use Packaged\QueryBuilder\Expression\StringExpression;
-use Packaged\QueryBuilder\Expression\TableExpression;
-use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Predicate\LikePredicate;
-use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
-use Packaged\QueryBuilder\Statement\UpdateStatement;
 
 class UpdateStatementTest extends \PHPUnit_Framework_TestCase
 {
   public function testAssemble()
   {
-    $statement = new UpdateStatement();
-
-    $statement->update(TableExpression::create('tbl'));
-    $this->assertEquals('UPDATE tbl', QueryAssembler::stringify($statement));
+    $statement = QueryBuilder::update('tbl', ['field1' => 'value1']);
+    $this->assertEquals(
+      'UPDATE tbl SET field1 = "value1"',
+      QueryAssembler::stringify($statement)
+    );
 
     $statement->where(['NOT' => ['username' => null]]);
     $this->assertEquals(
-      'UPDATE tbl WHERE username IS NOT NULL',
+      'UPDATE tbl SET field1 = "value1" WHERE username IS NOT NULL',
       QueryAssembler::stringify($statement)
     );
 
@@ -36,14 +30,14 @@ class UpdateStatementTest extends \PHPUnit_Framework_TestCase
       )
     );
     $this->assertEquals(
-      'UPDATE tbl SET username = "john" '
+      'UPDATE tbl SET field1 = "value1", username = "john" '
       . 'WHERE username IS NOT NULL AND name LIKE "Joh%"',
       QueryAssembler::stringify($statement)
     );
 
     $statement->set('bob', null);
     $this->assertEquals(
-      'UPDATE tbl SET username = "john", bob = NULL '
+      'UPDATE tbl SET field1 = "value1", username = "john", bob = NULL '
       . 'WHERE username IS NOT NULL AND name LIKE "Joh%"',
       QueryAssembler::stringify($statement)
     );

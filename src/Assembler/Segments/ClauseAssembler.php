@@ -15,6 +15,8 @@ use Packaged\QueryBuilder\Predicate\PredicateSet;
 
 class ClauseAssembler extends AbstractSegmentAssembler
 {
+  const MULTIPLE_VALUES = 'multiple_values';
+
   public function __construct(IClause $clause)
   {
     $this->_segment = $clause;
@@ -112,9 +114,17 @@ class ClauseAssembler extends AbstractSegmentAssembler
 
   public function assembleValuesClause(ValuesClause $clause)
   {
-    return $clause->getAction() . ' ('
-    . implode(', ', $this->assembleSegments($clause->getExpressions()))
-    . ')';
+    $assembled = '('
+      . implode(', ', $this->assembleSegments($clause->getExpressions()))
+      . ')';
+
+    $assembler = $this->getAssembler();
+    if($assembler->getData(self::MULTIPLE_VALUES))
+    {
+      return $assembled;
+    }
+    $assembler->setData(self::MULTIPLE_VALUES, true);
+    return $clause->getAction() . ' ' . $assembled;
   }
 
   public function assembleOrderByClause(OrderByClause $clause)

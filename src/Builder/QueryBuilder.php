@@ -4,7 +4,9 @@ namespace Packaged\QueryBuilder\Builder;
 use Packaged\QueryBuilder\Clause\DeleteClause;
 use Packaged\QueryBuilder\Clause\SelectClause;
 use Packaged\QueryBuilder\Statement\DeleteStatement;
+use Packaged\QueryBuilder\Statement\InsertStatement;
 use Packaged\QueryBuilder\Statement\QueryStatement;
+use Packaged\QueryBuilder\Statement\UpdateStatement;
 
 class QueryBuilder
 {
@@ -34,6 +36,27 @@ class QueryBuilder
     if(!empty($expressions))
     {
       $statement->where(...$expressions);
+    }
+    return $statement;
+  }
+
+  public static function insert($table, ...$fields)
+  {
+    $statement = new InsertStatement();
+    $statement->insert($table, ...$fields);
+    return $statement;
+  }
+
+  public static function update($table, array $keyValues = null)
+  {
+    $statement = new UpdateStatement();
+    $statement->update($table);
+    if(!empty($keyValues))
+    {
+      foreach($keyValues as $field => $value)
+      {
+        $statement->set($field, $value);
+      }
     }
     return $statement;
   }

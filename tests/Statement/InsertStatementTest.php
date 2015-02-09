@@ -2,42 +2,44 @@
 namespace Packaged\Tests\QueryBuilder\Statement;
 
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
-use Packaged\QueryBuilder\Clause\InsertClause;
-use Packaged\QueryBuilder\Clause\ValuesClause;
+use Packaged\QueryBuilder\Builder\QueryBuilder;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
-use Packaged\QueryBuilder\Statement\InsertStatement;
 
 class InsertStatementTest extends \PHPUnit_Framework_TestCase
 {
   public function testAssemble()
   {
-    $statement = new InsertStatement();
-
-    $insert = new InsertClause();
-    $insert->setTable('tbl');
-    $statement->addClause($insert);
+    $statement = QueryBuilder::insert('tbl');
     $this->assertEquals(
       'INSERT INTO tbl ()',
       QueryAssembler::stringify($statement)
     );
 
-    $insert->addField((new FieldExpression())->setField('id'));
-    $insert->addField((new FieldExpression())->setField('name'));
+    $statement = QueryBuilder::insert('tbl', 'field');
+    $this->assertEquals(
+      'INSERT INTO tbl (field)',
+      QueryAssembler::stringify($statement)
+    );
+
+    $statement->insert('tbl', FieldExpression::create('id'), 'name');
 
     $this->assertEquals(
       'INSERT INTO tbl (id, name)',
       QueryAssembler::stringify($statement)
     );
 
-    $values = new ValuesClause();
-    $values->addExpression(new ValueExpression());
-    $values->addExpression((new ValueExpression())->setValue("Test"));
-    $statement->addClause($values);
-
+    $statement->values(null, ValueExpression::create('Test'));
     $this->assertEquals(
       'INSERT INTO tbl (id, name) '
       . 'VALUES (NULL, "Test")',
+      QueryAssembler::stringify($statement)
+    );
+
+    $statement->values('row2v1', 'row2v2');
+    $this->assertEquals(
+      'INSERT INTO tbl (id, name) '
+      . 'VALUES (NULL, "Test"), ("row2v1", "row2v2")',
       QueryAssembler::stringify($statement)
     );
   }

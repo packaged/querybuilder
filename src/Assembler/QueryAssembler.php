@@ -24,6 +24,7 @@ class QueryAssembler
   protected $_forPrepare = true;
   protected $_parameters;
   protected $_query;
+  protected $_data;
 
   /**
    * @param IStatement $statement
@@ -37,6 +38,20 @@ class QueryAssembler
     {
       $this->assemble();
     }
+  }
+
+  public function getData($key)
+  {
+    if(isset($this->_data[$key]))
+    {
+      return $this->_data[$key];
+    }
+    return null;
+  }
+
+  public function setData($key, $data)
+  {
+    $this->_data[$key] = $data;
   }
 
   public function assemble($reassemble = false)
