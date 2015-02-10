@@ -3,6 +3,7 @@ namespace Packaged\QueryBuilder\Assembler\Segments;
 
 use Packaged\QueryBuilder\Expression\AbstractArithmeticExpression;
 use Packaged\QueryBuilder\Expression\ArrayExpression;
+use Packaged\QueryBuilder\Expression\BooleanExpression;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\IExpression;
 use Packaged\QueryBuilder\Expression\NowExpression;
@@ -86,6 +87,12 @@ class ExpressionAssembler extends AbstractSegmentAssembler
     return $this->_assemblePrepared($expr) ?: $expr->getValue();
   }
 
+  public function assembleBooleanExpression(BooleanExpression $expr)
+  {
+    return $this->_assemblePrepared($expr)
+      ?: ($expr->getValue() ? 'true' : 'false');
+  }
+
   public function assembleArithmeticExpression(
     AbstractArithmeticExpression $predicate
   )
@@ -101,6 +108,13 @@ class ExpressionAssembler extends AbstractSegmentAssembler
     if($value === null)
     {
       return 'NULL';
+    }
+
+    if(is_bool($value))
+    {
+      return $this->assembleBooleanExpression(
+        BooleanExpression::create($value)
+      );
     }
 
     if(is_numeric($value))
