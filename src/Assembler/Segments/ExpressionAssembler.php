@@ -107,7 +107,7 @@ class ExpressionAssembler extends AbstractSegmentAssembler
     $value = $expression->getValue();
     if($value === null)
     {
-      return 'NULL';
+      return $this->_assemblePrepared($expression) ?: 'NULL';
     }
 
     if(is_bool($value))
