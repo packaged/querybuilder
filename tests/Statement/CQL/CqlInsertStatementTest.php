@@ -15,5 +15,12 @@ class CqlInsertStatementTest extends \PHPUnit_Framework_TestCase
       'INSERT INTO "tbl" ("field1", "field2") VALUES (\'value1\', \'value2\') USING TTL 50',
       CqlAssembler::stringify($stmt)
     );
+
+    $assembler = new CqlAssembler($stmt);
+    $this->assertEquals(
+      'INSERT INTO "tbl" ("field1", "field2") VALUES (?, ?) USING TTL ?',
+      $assembler->getQuery()
+    );
+    $this->assertEquals(['value1', 'value2', 50], $assembler->getParameters());
   }
 }

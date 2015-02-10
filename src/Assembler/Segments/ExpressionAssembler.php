@@ -73,7 +73,6 @@ class ExpressionAssembler extends AbstractSegmentAssembler
       $values[] = $this->_assemblePrepared(ValueExpression::create($value))
         ?: '"' . $value . '"';
     }
-
     return '(' . implode(',', $values) . ')';
   }
 
