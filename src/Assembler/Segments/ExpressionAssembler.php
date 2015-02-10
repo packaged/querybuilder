@@ -89,8 +89,8 @@ class ExpressionAssembler extends AbstractSegmentAssembler
 
   public function assembleBooleanExpression(BooleanExpression $expr)
   {
-    return $this->_assemblePrepared($expr)
-      ?: ($expr->getValue() ? 'true' : 'false');
+    return $this->_assemblePrepared((int)$expr->getValue())
+      ?: (int)$expr->getValue();
   }
 
   public function assembleArithmeticExpression(
