@@ -9,9 +9,7 @@ class CqlInsertStatement extends InsertStatement
 {
   protected function _getOrder()
   {
-    $order = parent::_getOrder();
-    $order[] = 'USINGTTL';
-    return $order;
+    return ['INSERTINTO', 'VALUES', 'USINGTTL'];
   }
 
   public function usingTtl($ttl)
