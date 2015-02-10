@@ -98,27 +98,28 @@ class ExpressionAssembler extends AbstractSegmentAssembler
 
   public function assembleValueExpression(ValueExpression $expression)
   {
-    if($expression->getValue() === null)
+    $value = $expression->getValue();
+    if($value === null)
     {
       return 'NULL';
     }
 
-    if(is_numeric($expression->getValue()))
+    if(is_numeric($value))
     {
       return $this->assembleNumericExpression(
-        NumericExpression::create($expression->getValue())
+        NumericExpression::create($value)
       );
     }
 
-    if(is_array($expression->getValue()))
+    if(is_array($value))
     {
       return $this->assembleArrayExpression(
-        ArrayExpression::create($expression->getValue())
+        ArrayExpression::create($value)
       );
     }
 
     return $this->assembleStringExpression(
-      StringExpression::create($expression->getValue())
+      StringExpression::create($value)
     );
   }
 
