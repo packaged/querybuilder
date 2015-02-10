@@ -3,7 +3,7 @@ namespace Packaged\QueryBuilder\Assembler\CQL;
 
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\CQL\AllowFilteringClause;
-use Packaged\QueryBuilder\Clause\CQL\TtlClause;
+use Packaged\QueryBuilder\Clause\CQL\UsingClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\TableExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
@@ -35,9 +35,9 @@ class CqlAssembler extends QueryAssembler
     {
       return $this->assemblePredicateSet($segment);
     }
-    else if($segment instanceof TtlClause)
+    else if($segment instanceof UsingClause)
     {
-      return $this->assembleTtlClause($segment);
+      return $this->assembleUsingClause($segment);
     }
     else if($segment instanceof AllowFilteringClause)
     {
@@ -61,10 +61,18 @@ class CqlAssembler extends QueryAssembler
     return parent::assembleSegment($segment);
   }
 
-  public function assembleTtlClause(TtlClause $clause)
+  public function assembleUsingClause(UsingClause $clause)
   {
-    return $clause->getAction() . ' '
-    . $this->assembleSegment($clause->getTtl());
+    $parts = [];
+    if($clause->getTtl())
+    {
+      $parts[] = 'TTL ' . $this->assembleSegment($clause->getTtl());
+    }
+    if($clause->getTimestamp())
+    {
+      $parts[] = 'TIMESTAMP ' . $this->assembleSegment($clause->getTimestamp());
+    }
+    return $parts ? $clause->getAction() . ' ' . implode(' AND ', $parts) : '';
   }
 
   public function assembleField(FieldExpression $field)

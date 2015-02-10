@@ -2,14 +2,14 @@
 namespace Packaged\QueryBuilder\Statement\CQL;
 
 use Packaged\QueryBuilder\Builder\Traits\CQL\UsingTrait;
-use Packaged\QueryBuilder\Statement\InsertStatement;
+use Packaged\QueryBuilder\Statement\UpdateStatement;
 
-class CqlInsertStatement extends InsertStatement
+class CqlUpdateStatement extends UpdateStatement
 {
   use UsingTrait;
 
   protected function _getOrder()
   {
-    return ['INSERTINTO', 'VALUES', 'USING'];
+    return ['UPDATE', 'USING', 'SET', 'WHERE', 'LIMIT'];
   }
 }

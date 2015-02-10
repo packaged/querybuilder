@@ -20,6 +20,11 @@ class QueryBuilder
     return new InsertStatement();
   }
 
+  protected static function _getUpdateStatement()
+  {
+    return new UpdateStatement();
+  }
+
   public static function select(...$expressions)
   {
     $select = new SelectClause();
@@ -59,7 +64,7 @@ class QueryBuilder
 
   public static function update($table, array $keyValues = null)
   {
-    $statement = new UpdateStatement();
+    $statement = static::_getUpdateStatement();
     $statement->update($table);
     if(!empty($keyValues))
     {

@@ -4,9 +4,10 @@ namespace Packaged\QueryBuilder\Clause\CQL;
 use Packaged\QueryBuilder\Clause\IClause;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 
-class TtlClause implements IClause
+class UsingClause implements IClause
 {
   protected $_ttl;
+  protected $_timestamp;
 
   public function setTtl(NumericExpression $ttl)
   {
@@ -19,12 +20,23 @@ class TtlClause implements IClause
     return $this->_ttl;
   }
 
+  public function setTimestamp(NumericExpression $timestamp)
+  {
+    $this->_timestamp = $timestamp;
+    return $this;
+  }
+
+  public function getTimestamp()
+  {
+    return $this->_timestamp;
+  }
+
   /**
    * @return string
    */
   public function getAction()
   {
-    return 'USING TTL';
+    return 'USING';
   }
 
   /**

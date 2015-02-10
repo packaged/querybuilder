@@ -11,7 +11,6 @@ trait SetTrait
   {
     /**
      * @var $this  IStatement
-     * @var $set   SetClause
      */
     $set = $this->getClause('SET');
     if($set === null)
