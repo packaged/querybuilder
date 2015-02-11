@@ -12,31 +12,31 @@ class BooleanExpressionTest extends \PHPUnit_Framework_TestCase
   {
     $expression = new BooleanExpression();
     $expression->setValue(true);
-    $this->assertEquals(1, QueryAssembler::stringify($expression));
+    $this->assertEquals('true', QueryAssembler::stringify($expression));
     $expression->setValue(1);
-    $this->assertEquals(1, QueryAssembler::stringify($expression));
+    $this->assertEquals('true', QueryAssembler::stringify($expression));
     $expression->setValue('abc');
-    $this->assertEquals(1, QueryAssembler::stringify($expression));
+    $this->assertEquals('true', QueryAssembler::stringify($expression));
 
     $expression->setValue(false);
-    $this->assertEquals(0, QueryAssembler::stringify($expression));
+    $this->assertEquals('false', QueryAssembler::stringify($expression));
     $expression->setValue(0);
-    $this->assertEquals(0, QueryAssembler::stringify($expression));
+    $this->assertEquals('false', QueryAssembler::stringify($expression));
     $expression->setValue('');
-    $this->assertEquals(0, QueryAssembler::stringify($expression));
+    $this->assertEquals('false', QueryAssembler::stringify($expression));
 
     $stmt = QueryBuilder::update('tbl', ['field' => $expression]);
     $assembler = new QueryAssembler($stmt);
     $this->assertEquals('UPDATE tbl SET field = ?', $assembler->getQuery());
-    $this->assertEquals([0], $assembler->getParameters());
+    $this->assertEquals([false], $assembler->getParameters());
   }
 
   public function testBooleanValue()
   {
     $expression = new ValueExpression();
     $expression->setValue(true);
-    $this->assertEquals(1, QueryAssembler::stringify($expression));
+    $this->assertEquals('true', QueryAssembler::stringify($expression));
     $expression->setValue(false);
-    $this->assertEquals(0, QueryAssembler::stringify($expression));
+    $this->assertEquals('false', QueryAssembler::stringify($expression));
   }
 }
