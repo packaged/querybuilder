@@ -88,9 +88,16 @@ class ClauseAssembler extends AbstractSegmentAssembler
 
   public function assembleLimitClause(LimitClause $clause)
   {
-    return $clause->getAction() . ' '
-    . ($clause->hasOffset() ? $clause->getOffset() . ',' : '')
-    . $clause->getLimit();
+    $assembled = $clause->getAction() . ' ';
+    if($clause->hasOffset())
+    {
+      $assembled .= $this->_assemblePrepared($clause->getOffset())
+        ?: $clause->getOffset();
+      $assembled .= ',';
+    }
+    $assembled .= $this->_assemblePrepared($clause->getLimit())
+      ?: $clause->getLimit();
+    return $assembled;
   }
 
   public function assembleSelectClause(SelectClause $clause)
