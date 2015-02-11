@@ -117,7 +117,7 @@ class ExpressionAssembler extends AbstractSegmentAssembler
       );
     }
 
-    if(is_int($value))
+    if(is_int($value) || is_double($value) || is_float($value))
     {
       return $this->assembleNumericExpression(
         NumericExpression::create($value)
