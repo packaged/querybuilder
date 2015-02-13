@@ -18,9 +18,11 @@ class InPredicateTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals('field IN NULL', QueryAssembler::stringify($predicate));
     $predicate->setExpression((new NumericExpression())->setValue(1));
     $this->assertEquals('field IN 1', QueryAssembler::stringify($predicate));
-    $predicate->setExpression(ArrayExpression::create(['1', 2, 3]));
+    $predicate->setExpression(
+      ArrayExpression::create(['1', 'my "quoted" test', 3])
+    );
     $this->assertEquals(
-      'field IN ("1","2","3")',
+      'field IN ("1","my \"quoted\" test","3")',
       QueryAssembler::stringify($predicate)
     );
     $predicate->setExpression(ValueExpression::create([4]));
@@ -29,7 +31,9 @@ class InPredicateTest extends \PHPUnit_Framework_TestCase
       QueryAssembler::stringify($predicate)
     );
 
-    $predicate->setExpression(ArrayExpression::create(['1', 2, 3]));
+    $predicate->setExpression(
+      ArrayExpression::create(['1', 'my "quoted" test', 3])
+    );
     $stmt = QueryBuilder::select(AllSelectExpression::create());
     $stmt->where($predicate);
     $assembler = new QueryAssembler($stmt);
@@ -37,6 +41,9 @@ class InPredicateTest extends \PHPUnit_Framework_TestCase
       'SELECT * WHERE field IN (?,?,?)',
       $assembler->getQuery()
     );
-    $this->assertEquals(['1', 2, 3], $assembler->getParameters());
+    $this->assertEquals(
+      ['1', 'my "quoted" test', 3],
+      $assembler->getParameters()
+    );
   }
 }

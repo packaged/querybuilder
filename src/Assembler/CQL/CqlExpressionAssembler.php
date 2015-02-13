@@ -10,7 +10,8 @@ class CqlExpressionAssembler extends ExpressionAssembler
 {
   public function assembleStringExpression(StringExpression $expr)
   {
-    return $this->_assemblePrepared($expr) ?: "'" . $expr->getValue() . "'";
+    return $this->_assemblePrepared($expr)
+      ?: "'" . addcslashes($expr->getValue(), "'") . "'";
   }
 
   public function assembleArrayExpression(ArrayExpression $expr)
@@ -19,7 +20,7 @@ class CqlExpressionAssembler extends ExpressionAssembler
     foreach($expr->getValue() as $value)
     {
       $values[] = $this->_assemblePrepared(ValueExpression::create($value))
-        ?: "'" . $value . "'";
+        ?: "'" . addcslashes($value, "'") . "'";
     }
     return '(' . implode(',', $values) . ')';
   }
