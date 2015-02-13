@@ -2,9 +2,12 @@
 namespace Packaged\Tests\QueryBuilder\Expression;
 
 use Packaged\QueryBuilder\Assembler\MySQL\MySQLAssembler;
+use Packaged\QueryBuilder\Builder\QueryBuilder;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\MatchExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
+use Packaged\QueryBuilder\Predicate\GreaterThanPredicate;
+use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 
 class MatchExpressionTest extends \PHPUnit_Framework_TestCase
 {
@@ -30,6 +33,19 @@ class MatchExpressionTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(
       'MATCH (`table1`.`field1`,`table2`.`field2`) AGAINST ("this is a test search" WITH QUERY EXPANSION)',
       MySQLAssembler::stringify($expression)
+    );
+
+    $expression->setSearchModifier(MatchExpression::BOOLEAN_MODE);
+    $stmt = QueryBuilder::select(AllSelectExpression::create())->from('tbl')
+      ->where(GreaterThanPredicate::create($expression, 0))->limit(5);
+    $assembler = new MySQLAssembler($stmt);
+    $this->assertEquals(
+      'SELECT * FROM `tbl` WHERE MATCH (`table1`.`field1`,`table2`.`field2`) AGAINST (? IN BOOLEAN MODE) > ? LIMIT ?',
+      $assembler->getQuery()
+    );
+    $this->assertEquals(
+      ['this is a test search', 0, 5],
+      $assembler->getParameters()
     );
   }
 }

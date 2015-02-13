@@ -91,14 +91,12 @@ class PredicateAssembler extends AbstractSegmentAssembler
 
   public function assembleOperator(AbstractOperatorPredicate $predicate)
   {
-    $value = $this->assembleSegment($predicate->getExpression());
-
     return implode(
       ' ',
       [
         $this->assembleSegment($predicate->getField()),
         $predicate->getOperator(),
-        $value
+        $this->assembleSegment($predicate->getExpression())
       ]
     );
   }
