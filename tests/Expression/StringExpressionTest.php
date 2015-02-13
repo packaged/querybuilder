@@ -16,10 +16,14 @@ class StringExpressionTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals('"abc"', QueryAssembler::stringify($expression));
     $expression->setValue('a"b"c');
     $this->assertEquals('"a\"b\"c"', QueryAssembler::stringify($expression));
-    
+
     $expression->setValue('a"b"c');
-    $this->assertEquals('\'a"b"c\'', CqlAssembler::stringify($expression));
+    $this->assertEquals("'a\"b\"c'", CqlAssembler::stringify($expression));
     $expression->setValue("a'b'c");
-    $this->assertEquals("'a\\'b\\'c'", CqlAssembler::stringify($expression));
+    $this->assertEquals("'a''b''c'", CqlAssembler::stringify($expression));
+    $expression->setValue("a''b''c");
+    $this->assertEquals("'a''''b''''c'", CqlAssembler::stringify($expression));
+    $expression->setValue("'a'b'c'");
+    $this->assertEquals("'''a''b''c'''", CqlAssembler::stringify($expression));
   }
 }

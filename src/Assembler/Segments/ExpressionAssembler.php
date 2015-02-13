@@ -69,7 +69,7 @@ class ExpressionAssembler extends AbstractSegmentAssembler
   public function assembleStringExpression(StringExpression $expr)
   {
     return $this->_assemblePrepared($expr)
-      ?: '"' . addcslashes($expr->getValue(), '"') . '"';
+      ?: $this->_quoteString($expr->getValue());
   }
 
   public function assembleArrayExpression(ArrayExpression $expr)
@@ -78,9 +78,14 @@ class ExpressionAssembler extends AbstractSegmentAssembler
     foreach($expr->getValue() as $value)
     {
       $values[] = $this->_assemblePrepared(ValueExpression::create($value))
-        ?: '"' . addcslashes($value, '"') . '"';
+        ?: $this->_quoteString($value);
     }
     return '(' . implode(',', $values) . ')';
+  }
+
+  protected function _quoteString($string)
+  {
+    return '"' . addcslashes($string, '"') . '"';
   }
 
   public function assembleNumericExpression(NumericExpression $expr)
