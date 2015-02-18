@@ -23,5 +23,10 @@ class CountSelectExpressionTest extends \PHPUnit_Framework_TestCase
       'COUNT(fieldname) AS cnt',
       QueryAssembler::stringify($selector)
     );
+    $selector->setDistinct();
+    $this->assertEquals(
+      'COUNT(DISTINCT fieldname) AS cnt',
+      QueryAssembler::stringify($selector)
+    );
   }
 }

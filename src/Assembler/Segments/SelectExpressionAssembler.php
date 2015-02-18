@@ -3,6 +3,7 @@ namespace Packaged\QueryBuilder\Assembler\Segments;
 
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\ConcatSelectExpression;
+use Packaged\QueryBuilder\SelectExpression\CountSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\FormatSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\FunctionSelectExpression;
@@ -50,6 +51,10 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
     {
       return $this->assembleFormatSelectExpression($this->_segment);
     }
+    else if($this->_segment instanceof CountSelectExpression)
+    {
+      return $this->assembleCountFunction($this->_segment);
+    }
     else if($this->_segment instanceof FunctionSelectExpression)
     {
       return $this->assembleFunction($this->_segment);
@@ -96,6 +101,18 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
   {
     return $field->getFunctionName()
     . '('
+    . ($field->getField() === null ?
+      '*'
+      : $this->getAssembler()->assembleSegment($field->getField()))
+    . ')'
+    . ($field->hasAlias() ? ' AS ' . $field->getAlias() : '');
+  }
+
+  public function assembleCountFunction(CountSelectExpression $field)
+  {
+    return $field->getFunctionName()
+    . '('
+    . ($field->isDistinct() ? 'DISTINCT ' : '')
     . ($field->getField() === null ?
       '*'
       : $this->getAssembler()->assembleSegment($field->getField()))
