@@ -4,6 +4,7 @@ namespace Packaged\Tests\QueryBuilder\Assembler\MySQL;
 use Packaged\QueryBuilder\Assembler\MySQL\MySQLAssembler;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\TableExpression;
+use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 
 class MySQLAssemblerTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,6 +30,16 @@ class MySQLAssemblerTest extends \PHPUnit_Framework_TestCase
       '`myfield`',
       MySQLAssembler::stringify(
         FieldExpression::create('myfield')
+      )
+    );
+  }
+
+  public function testSelectField()
+  {
+    $this->assertEquals(
+      '`myfield` AS `unique`',
+      MySQLAssembler::stringify(
+        FieldSelectExpression::createWithAlias('myfield', 'unique')
       )
     );
   }

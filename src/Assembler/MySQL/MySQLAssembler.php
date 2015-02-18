@@ -5,6 +5,7 @@ use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\MatchExpression;
 use Packaged\QueryBuilder\Expression\TableExpression;
+use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\MatchSelectExpression;
 
 class MySQLAssembler extends QueryAssembler
@@ -14,6 +15,10 @@ class MySQLAssembler extends QueryAssembler
     if($segment instanceof FieldExpression)
     {
       return $this->assembleField($segment);
+    }
+    else if($segment instanceof FieldSelectExpression)
+    {
+      return $this->assembleFieldSelect($segment);
     }
     else if($segment instanceof TableExpression)
     {
@@ -32,17 +37,28 @@ class MySQLAssembler extends QueryAssembler
     if($field->hasTable())
     {
       return $this->assembleTableExpression($field->getTable())
-      . '.`' . $field->getField() . '`';
+      . '.' . $this->_escape($field->getField());
     }
     else
     {
-      return '`' . $field->getField() . '`';
+      return $this->_escape($field->getField());
     }
+  }
+
+  public function assembleFieldSelect(FieldSelectExpression $field)
+  {
+    return $this->assembleSegment($field->getField())
+    . ($field->hasAlias() ? ' AS ' . $this->_escape($field->getAlias()) : '');
+  }
+
+  protected function _escape($entity)
+  {
+    return '`' . $entity . '`';
   }
 
   public function assembleTableExpression(TableExpression $expr)
   {
-    return '`' . $expr->getTableName() . '`';
+    return $this->_escape($expr->getTableName());
   }
 
   public function assembleMatchExpression(MatchExpression $expr)
