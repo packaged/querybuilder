@@ -11,7 +11,7 @@ class StringExpressionTest extends \PHPUnit_Framework_TestCase
   {
     $expression = new StringExpression();
     $expression->setValue(1);
-    $this->assertEquals('"1"', QueryAssembler::stringify($expression));
+    $this->assertEquals('1', QueryAssembler::stringify($expression));
     $expression->setValue('abc');
     $this->assertEquals('"abc"', QueryAssembler::stringify($expression));
     $expression->setValue('a"b"c');

@@ -22,15 +22,6 @@ class CqlAssembler extends QueryAssembler
     {
       $segment->setAlias(null);
     }
-
-    if($segment instanceof FieldExpression)
-    {
-      return $this->assembleField($segment);
-    }
-    else if($segment instanceof TableExpression)
-    {
-      return $this->assembleTableExpression($segment);
-    }
     else if($segment instanceof PredicateSet)
     {
       return $this->assemblePredicateSet($segment);
@@ -51,12 +42,6 @@ class CqlAssembler extends QueryAssembler
     {
       return $this->assembleBetween($segment);
     }
-    else if($segment instanceof ValueExpression)
-    {
-      $assembler = new CqlExpressionAssembler($segment);
-      $assembler->setAssembler($this);
-      return $assembler->assemble();
-    }
 
     return parent::assembleSegment($segment);
   }
@@ -73,19 +58,6 @@ class CqlAssembler extends QueryAssembler
       $parts[] = 'TIMESTAMP ' . $this->assembleSegment($clause->getTimestamp());
     }
     return $parts ? $clause->getAction() . ' ' . implode(' AND ', $parts) : '';
-  }
-
-  public function assembleField(FieldExpression $field)
-  {
-    if($field->hasTable())
-    {
-      return $this->assembleTableExpression($field->getTable())
-      . '."' . $field->getField() . '"';
-    }
-    else
-    {
-      return '"' . $field->getField() . '"';
-    }
   }
 
   public function assemblePredicateSet(PredicateSet $predicate)
@@ -110,11 +82,6 @@ class CqlAssembler extends QueryAssembler
     );
   }
 
-  public function assembleTableExpression(TableExpression $expr)
-  {
-    return '"' . $expr->getTableName() . '"';
-  }
-
   public function assembleBetween(BetweenPredicate $betweenPredicate)
   {
     $gte = new GreaterThanOrEqualPredicate();
@@ -128,5 +95,15 @@ class CqlAssembler extends QueryAssembler
     $set->addPredicate($gte);
     $set->addPredicate($lte);
     return $this->assembleSegment($set);
+  }
+
+  public function escapeField($field)
+  {
+    return '"' . str_replace('"', '""', $field) . '"';
+  }
+
+  public function escapeValue($value)
+  {
+    return "'" . str_replace("'", "''", $value) . "'";
   }
 }

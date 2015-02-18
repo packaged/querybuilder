@@ -21,7 +21,7 @@ class NotLikePredicateTest extends \PHPUnit_Framework_TestCase
     );
     $predicate->setExpression(CustomLikeExpression::create(1));
     $this->assertEquals(
-      'field NOT LIKE "1"',
+      'field NOT LIKE 1',
       QueryAssembler::stringify($predicate)
     );
     $predicate->setExpression(CustomLikeExpression::create('1'));

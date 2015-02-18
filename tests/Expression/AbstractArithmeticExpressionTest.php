@@ -30,7 +30,7 @@ class AbstractArithmeticExpressionTest extends \PHPUnit_Framework_TestCase
       )
     );
     $this->assertEquals(
-      'field_name T "5"',
+      'field_name T 5',
       QueryAssembler::stringify(
         FinalAbstractArithmeticExpression::create(
           'field_name',
@@ -51,7 +51,7 @@ class AbstractArithmeticExpressionTest extends \PHPUnit_Framework_TestCase
     );
 
     $this->assertEquals(
-      'tbl.field_name T "5"',
+      'tbl.field_name T 5',
       QueryAssembler::stringify(
         FinalAbstractArithmeticExpression::createWithTable(
           'field_name',

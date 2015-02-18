@@ -69,13 +69,13 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
   public function assembleNowSelectExpression(NowSelectExpression $expr)
   {
     return $expr->getFunction()
-    . ($expr->hasAlias() ? ' AS ' . $expr->getAlias() : '');
+    . ($expr->hasAlias() ? ' AS ' . $this->escapeField($expr->getAlias()) : '');
   }
 
   public function assembleSubQueryExpression(SubQuerySelectExpression $expr)
   {
     return '(' . $this->assembleSegment($expr->getQuery())
-    . ') AS ' . $expr->getAlias();
+    . ') AS ' . $this->escapeField($expr->getAlias());
   }
 
   public function assembleConcatSelectExpression(ConcatSelectExpression $expr)
@@ -83,18 +83,22 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
     return 'CONCAT('
     . implode(',', $this->assembleSegments($expr->getProperties()))
     . ')'
-    . ($expr->hasAlias() ? ' AS ' . $expr->getAlias() : '');
+    . ($expr->hasAlias() ? ' AS ' . $this->escapeField($expr->getAlias()) : '');
   }
 
   public function assembleAllSelectExpression(AllSelectExpression $expr)
   {
-    return $expr->hasTable() ? $expr->getTable() . '.*' : '*';
+    return $expr->hasTable() ? $this->escapeField(
+        $expr->getTable()
+      ) . '.*' : '*';
   }
 
   public function assembleField(FieldSelectExpression $field)
   {
     return $this->assembleSegment($field->getField())
-    . ($field->hasAlias() ? ' AS ' . $field->getAlias() : '');
+    . ($field->hasAlias() ? ' AS ' . $this->escapeField(
+        $field->getAlias()
+      ) : '');
   }
 
   public function assembleFunction(FunctionSelectExpression $field)
@@ -105,7 +109,9 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
       '*'
       : $this->getAssembler()->assembleSegment($field->getField()))
     . ')'
-    . ($field->hasAlias() ? ' AS ' . $field->getAlias() : '');
+    . ($field->hasAlias() ? ' AS ' . $this->escapeField(
+        $field->getAlias()
+      ) : '');
   }
 
   public function assembleCountFunction(CountSelectExpression $field)
@@ -117,7 +123,9 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
       '*'
       : $this->getAssembler()->assembleSegment($field->getField()))
     . ')'
-    . ($field->hasAlias() ? ' AS ' . $field->getAlias() : '');
+    . ($field->hasAlias() ? ' AS ' . $this->escapeField(
+        $field->getAlias()
+      ) : '');
   }
 
   public function assembleFormatSelectExpression(FormatSelectExpression $expr)
@@ -127,7 +135,7 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
     . $this->getAssembler()->assembleSegment($expr->getField())
     . ($expr->hasPrecision() ? ',' . $expr->getPrecision() : '')
     . ')'
-    . ($expr->hasAlias() ? ' AS ' . $expr->getAlias() : '');
+    . ($expr->hasAlias() ? ' AS ' . $this->escapeField($expr->getAlias()) : '');
   }
 
   public function assembleSubStringSelectExpression(
@@ -140,6 +148,6 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
     . ',' . $expr->getStartPosition()
     . ($expr->hasLength() ? ',' . $expr->getLength() : '')
     . ')'
-    . ($expr->hasAlias() ? ' AS ' . $expr->getAlias() : '');
+    . ($expr->hasAlias() ? ' AS ' . $this->escapeField($expr->getAlias()) : '');
   }
 }

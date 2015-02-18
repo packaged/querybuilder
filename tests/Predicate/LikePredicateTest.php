@@ -21,7 +21,7 @@ class LikePredicateTest extends \PHPUnit_Framework_TestCase
     );
     $predicate->setExpression(CustomLikeExpression::create(1));
     $this->assertEquals(
-      'field LIKE "1"',
+      'field LIKE 1',
       QueryAssembler::stringify($predicate)
     );
     $predicate->setExpression(CustomLikeExpression::create('1'));

@@ -22,12 +22,12 @@ class InPredicateTest extends \PHPUnit_Framework_TestCase
       ArrayExpression::create(['1', 'my "quoted" test', 3])
     );
     $this->assertEquals(
-      'field IN ("1","my \"quoted\" test","3")',
+      'field IN ("1","my \"quoted\" test",3)',
       QueryAssembler::stringify($predicate)
     );
     $predicate->setExpression(ValueExpression::create([4]));
     $this->assertEquals(
-      'field IN ("4")',
+      'field IN (4)',
       QueryAssembler::stringify($predicate)
     );
 

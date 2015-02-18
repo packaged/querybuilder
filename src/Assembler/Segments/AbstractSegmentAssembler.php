@@ -77,4 +77,18 @@ abstract class AbstractSegmentAssembler
       ucwords(Strings::humanize(class_shortname(get_called_class())))
     );
   }
+
+  public function escapeField($field)
+  {
+    return $this->getAssembler()->escapeField($field);
+  }
+
+  public function escapeValue($value)
+  {
+    if(is_int($value) || is_float($value) || is_double($value))
+    {
+      return $value;
+    }
+    return $this->getAssembler()->escapeValue($value);
+  }
 }

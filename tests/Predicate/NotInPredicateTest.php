@@ -24,12 +24,12 @@ class NotInPredicateTest extends \PHPUnit_Framework_TestCase
     );
     $predicate->setExpression(ArrayExpression::create(['1', 2, 3]));
     $this->assertEquals(
-      'field NOT IN ("1","2","3")',
+      'field NOT IN ("1",2,3)',
       QueryAssembler::stringify($predicate)
     );
     $predicate->setExpression(ValueExpression::create([4]));
     $this->assertEquals(
-      'field NOT IN ("4")',
+      'field NOT IN (4)',
       QueryAssembler::stringify($predicate)
     );
   }

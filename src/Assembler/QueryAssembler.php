@@ -146,4 +146,14 @@ class QueryAssembler
   {
     return (new static(null, false))->assembleSegment($segment);
   }
+
+  public function escapeField($field)
+  {
+    return $field;
+  }
+
+  public function escapeValue($value)
+  {
+    return '"' . addcslashes($value, '"') . '"';
+  }
 }

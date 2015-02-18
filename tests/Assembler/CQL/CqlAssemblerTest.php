@@ -127,7 +127,7 @@ class CqlAssemblerTest extends \PHPUnit_Framework_TestCase
   {
     $predicate = InPredicate::create('field', [1, 2, 3]);
     $this->assertEquals(
-      "\"field\" IN ('1','2','3')",
+      "\"field\" IN (1,2,3)",
       CqlAssembler::stringify($predicate)
     );
   }
