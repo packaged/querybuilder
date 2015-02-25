@@ -4,26 +4,9 @@ namespace Packaged\QueryBuilder\Expression;
 abstract class AbstractArithmeticExpression implements IExpression
 {
   /**
-   * @var IExpression
+   * @var IExpression[]
    */
-  protected $_value;
-  /**
-   * @var FieldExpression
-   */
-  protected $_field;
-  protected $_defaultValue = null;
-
-  public function setField($field, $table = null)
-  {
-    $this->_field = is_scalar($field) ?
-      FieldExpression::createWithTable($field, $table) : $field;
-    return $this;
-  }
-
-  public function getField()
-  {
-    return $this->_field;
-  }
+  protected $_values = [];
 
   /**
    * Operator e.g. +
@@ -31,56 +14,30 @@ abstract class AbstractArithmeticExpression implements IExpression
    */
   abstract public function getOperator();
 
-  public function setExpression(IExpression $value)
+  public function addExpression(IExpression $value)
   {
-    $this->_value = $value;
+    $this->_values[] = $value;
     return $this;
   }
 
-  public function getExpression()
+  public function getExpressions()
   {
-    return $this->_value ?: ValueExpression::create($this->_defaultValue);
+    return $this->_values;
   }
 
-  public static function create($field, $value = null)
+  public static function create(...$values)
   {
     $expression = new static;
-    $expression->setField($field);
-    /**
-     * @var $expression static
-     */
-    if($value instanceof IExpression)
+    foreach($values as $value)
     {
-      $expression->setExpression($value);
-    }
-    else
-    {
-      $expression->setExpression(ValueExpression::create($value));
-    }
-    return $expression;
-  }
-
-  /**
-   * @param $field
-   * @param $table
-   * @param $value
-   *
-   * @return static
-   */
-  public static function createWithTable($field, $table, $value = null)
-  {
-    $expression = new static;
-    $expression->setField($field, $table);
-    /**
-     * @var $expression static
-     */
-    if($value instanceof IExpression)
-    {
-      $expression->setExpression($value);
-    }
-    else
-    {
-      $expression->setExpression(ValueExpression::create($value));
+      if($value instanceof IExpression)
+      {
+        $expression->addExpression($value);
+      }
+      else
+      {
+        $expression->addExpression(ValueExpression::create($value));
+      }
     }
     return $expression;
   }

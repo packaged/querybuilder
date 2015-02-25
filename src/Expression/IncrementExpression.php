@@ -1,13 +1,20 @@
 <?php
 namespace Packaged\QueryBuilder\Expression;
 
-class IncrementExpression extends AdditionExpression
+class IncrementExpression extends CounterExpression
 {
-  protected $_defaultValue = 0;
-
   public function setIncrementValue($increment = 1)
   {
-    $this->setExpression(NumericExpression::create($increment));
+    $this->setValue(NumericExpression::create($increment));
     return $this;
+  }
+
+  /**
+   * Operator e.g. +
+   * @return string
+   */
+  public function getOperator()
+  {
+    return '+';
   }
 }

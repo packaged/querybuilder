@@ -3,13 +3,16 @@ namespace Packaged\Tests\QueryBuilder\Expression;
 
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Expression\DecrementExpression;
+use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 
 class DecrementExpressionTest extends \PHPUnit_Framework_TestCase
 {
   public function testAssemble()
   {
-    $expression = new DecrementExpression();
-    $expression->setField('new_field');
+    $expression = DecrementExpression::create(
+      FieldSelectExpression::create('new_field'),
+      0
+    );
     $this->assertEquals(
       'new_field - 0',
       QueryAssembler::stringify($expression)

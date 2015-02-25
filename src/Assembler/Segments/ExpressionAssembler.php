@@ -4,6 +4,7 @@ namespace Packaged\QueryBuilder\Assembler\Segments;
 use Packaged\QueryBuilder\Expression\AbstractArithmeticExpression;
 use Packaged\QueryBuilder\Expression\ArrayExpression;
 use Packaged\QueryBuilder\Expression\BooleanExpression;
+use Packaged\QueryBuilder\Expression\CounterExpression;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\IExpression;
 use Packaged\QueryBuilder\Expression\NowExpression;
@@ -55,6 +56,10 @@ class ExpressionAssembler extends AbstractSegmentAssembler
     {
       return $this->assembleArithmeticExpression($this->_segment);
     }
+    else if($this->_segment instanceof CounterExpression)
+    {
+      return $this->assembleCounterExpression($this->_segment);
+    }
     else if($this->_segment instanceof NowExpression)
     {
       return $this->_segment->getFunction();
@@ -94,13 +99,23 @@ class ExpressionAssembler extends AbstractSegmentAssembler
       ?: ($expr->getValue() ? 'true' : 'false');
   }
 
+  public function assembleCounterExpression(CounterExpression $expr)
+  {
+    return $this->assembleSegment($expr->getField())
+    . ' ' . $expr->getOperator() . ' '
+    . $this->assembleSegment($expr->getValue());
+  }
+
   public function assembleArithmeticExpression(
-    AbstractArithmeticExpression $predicate
+    AbstractArithmeticExpression $expr
   )
   {
-    return $this->assembleSegment($predicate->getField()) . ' '
-    . $predicate->getOperator() . ' '
-    . $this->assembleSegment($predicate->getExpression());
+    $values = [];
+    foreach($expr->getExpressions() as $value)
+    {
+      $values[] = $this->assembleSegment($value);
+    }
+    return '(' . implode(' ' . $expr->getOperator() . ' ', $values) . ')';
   }
 
   public function assembleValueExpression(ValueExpression $expression)

@@ -1,13 +1,11 @@
 <?php
 namespace Packaged\QueryBuilder\Expression;
 
-class DecrementExpression extends SubtractExpression
+class DecrementExpression extends CounterExpression
 {
-  protected $_defaultValue = 0;
-
   public function setDecrementValue($decrement = 1)
   {
-    $this->setExpression(NumericExpression::create($decrement));
+    $this->setValue(NumericExpression::create($decrement));
     return $this;
   }
 

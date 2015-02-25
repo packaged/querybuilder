@@ -11,7 +11,7 @@ class ArithmeticTest extends \PHPUnit_Framework_TestCase
   public function testArithmetic()
   {
     $this->assertEquals(
-      '5 + 10 - 5',
+      '(5 + (10 - 5))',
       QueryAssembler::stringify(
         AdditionExpression::create(
           5,
@@ -21,7 +21,7 @@ class ArithmeticTest extends \PHPUnit_Framework_TestCase
     );
 
     $this->assertEquals(
-      'SUM(amt) + 10 - 5',
+      '(SUM(amt) + (10 - 5))',
       QueryAssembler::stringify(
         AdditionExpression::create(
           SumSelectExpression::create('amt'),

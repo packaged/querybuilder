@@ -12,7 +12,7 @@ class SetClauseTest extends \PHPUnit_Framework_TestCase
   public function testAssemble()
   {
     $clause = new SetClause();
-    $eq     = new EqualPredicate();
+    $eq = new EqualPredicate();
     $eq->setField('one')->setExpression(
       (new StringExpression())->setValue('val')
     );
@@ -21,7 +21,7 @@ class SetClauseTest extends \PHPUnit_Framework_TestCase
 
     $inc = new EqualPredicate();
     $inc->setField('two')->setExpression(
-      (new IncrementExpression())->setField('two')->setIncrementValue(5)
+      IncrementExpression::create('two', 5)
     );
     $clause->addPredicate($inc);
     $this->assertEquals(
