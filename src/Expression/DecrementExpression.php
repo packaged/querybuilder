@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Expression;
 
-class DecrementExpression extends AbstractArithmeticExpression
+class DecrementExpression extends SubtractExpression
 {
   protected $_defaultValue = 0;
 

@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Expression;
 
-class IncrementExpression extends AbstractArithmeticExpression
+class IncrementExpression extends AdditionExpression
 {
   protected $_defaultValue = 0;
 
@@ -9,14 +9,5 @@ class IncrementExpression extends AbstractArithmeticExpression
   {
     $this->setExpression(NumericExpression::create($increment));
     return $this;
-  }
-
-  /**
-   * Operator e.g. +
-   * @return string
-   */
-  public function getOperator()
-  {
-    return '+';
   }
 }
