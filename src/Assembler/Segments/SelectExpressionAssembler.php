@@ -4,6 +4,7 @@ namespace Packaged\QueryBuilder\Assembler\Segments;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\ConcatSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\CountSelectExpression;
+use Packaged\QueryBuilder\SelectExpression\ExpressionSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\FormatSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\FunctionSelectExpression;
@@ -59,11 +60,21 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
     {
       return $this->assembleFunction($this->_segment);
     }
+    else if($this->_segment instanceof ExpressionSelectExpression)
+    {
+      return $this->assembleExpressionSelect($this->_segment);
+    }
     else if($this->_segment instanceof FieldSelectExpression)
     {
       return $this->assembleField($this->_segment);
     }
     return parent::assemble();
+  }
+
+  public function assembleExpressionSelect(ExpressionSelectExpression $expr)
+  {
+    return $this->assembleSegment($expr->getExpression())
+    . ($expr->hasAlias() ? ' AS ' . $this->escapeField($expr->getAlias()) : '');
   }
 
   public function assembleNowSelectExpression(NowSelectExpression $expr)
