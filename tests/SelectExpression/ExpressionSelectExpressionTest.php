@@ -10,7 +10,7 @@ use Packaged\QueryBuilder\SelectExpression\SumSelectExpression;
 
 class ExpressionSelectExpressionTest extends \PHPUnit_Framework_TestCase
 {
-  public function testExpression()
+  public function testExpressionSelectExpression()
   {
     $this->assertEquals(
       '(SUM(field1) + SUM(field2)) AS sum_field',

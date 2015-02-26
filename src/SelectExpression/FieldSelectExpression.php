@@ -2,15 +2,18 @@
 namespace Packaged\QueryBuilder\SelectExpression;
 
 use Packaged\QueryBuilder\Expression\FieldExpression;
+use Packaged\QueryBuilder\Expression\IExpression;
+use Packaged\QueryBuilder\SelectExpression\Traits\AliasTrait;
 
 class FieldSelectExpression implements ISelectExpression
 {
+  use AliasTrait;
+
   protected $_field;
-  protected $_alias;
 
   public function setField($field, $table = null)
   {
-    if($field instanceof FieldExpression)
+    if($field === null || $field instanceof IExpression)
     {
       $this->_field = $field;
     }
@@ -27,22 +30,6 @@ class FieldSelectExpression implements ISelectExpression
   public function getField()
   {
     return $this->_field;
-  }
-
-  public function setAlias($alias)
-  {
-    $this->_alias = $alias;
-    return $this;
-  }
-
-  public function getAlias()
-  {
-    return $this->_alias;
-  }
-
-  public function hasAlias()
-  {
-    return $this->_alias !== null;
   }
 
   /**

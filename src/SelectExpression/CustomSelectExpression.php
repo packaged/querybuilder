@@ -1,17 +1,18 @@
 <?php
 namespace Packaged\QueryBuilder\SelectExpression;
 
-class ExpressionSelectExpression extends FieldSelectExpression
+class CustomSelectExpression extends FieldSelectExpression
 {
-  protected $_expression;
+  protected $_field;
 
   public function setField($field, $table = null)
   {
-    $this->_expression = $field;
+    $this->_field = $field;
+    return $this;
   }
 
   public function getField()
   {
-    return $this->_expression;
+    return $this->_field;
   }
 }

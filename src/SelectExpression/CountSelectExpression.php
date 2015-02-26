@@ -25,4 +25,9 @@ class CountSelectExpression extends FunctionSelectExpression
   {
     return 'COUNT';
   }
+
+  public static function create($field = null)
+  {
+    return parent::create($field);
+  }
 }

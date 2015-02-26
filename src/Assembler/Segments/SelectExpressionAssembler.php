@@ -4,6 +4,7 @@ namespace Packaged\QueryBuilder\Assembler\Segments;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\ConcatSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\CountSelectExpression;
+use Packaged\QueryBuilder\SelectExpression\CustomSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\ExpressionSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\FormatSelectExpression;
@@ -64,6 +65,10 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
     {
       return $this->assembleExpressionSelect($this->_segment);
     }
+    else if($this->_segment instanceof CustomSelectExpression)
+    {
+      return $this->assembleCustomSelect($this->_segment);
+    }
     else if($this->_segment instanceof FieldSelectExpression)
     {
       return $this->assembleField($this->_segment);
@@ -71,9 +76,15 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
     return parent::assemble();
   }
 
+  public function assembleCustomSelect(CustomSelectExpression $expr)
+  {
+    return $expr->getField()
+    . ($expr->hasAlias() ? ' AS ' . $this->escapeField($expr->getAlias()) : '');
+  }
+
   public function assembleExpressionSelect(ExpressionSelectExpression $expr)
   {
-    return $this->assembleSegment($expr->getExpression())
+    return $this->assembleSegment($expr->getField())
     . ($expr->hasAlias() ? ' AS ' . $this->escapeField($expr->getAlias()) : '');
   }
 
@@ -107,22 +118,19 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
   public function assembleField(FieldSelectExpression $field)
   {
     return $this->assembleSegment($field->getField())
-    . ($field->hasAlias() ? ' AS ' . $this->escapeField(
-        $field->getAlias()
-      ) : '');
+    . ($field->hasAlias()
+      ? ' AS ' . $this->escapeField($field->getAlias()) : '');
   }
 
   public function assembleFunction(FunctionSelectExpression $field)
   {
     return $field->getFunctionName()
     . '('
-    . ($field->getField() === null ?
-      '*'
-      : $this->getAssembler()->assembleSegment($field->getField()))
+    . ($field->getField() === null || $field instanceof AllSelectExpression
+      ? '*' : $this->getAssembler()->assembleSegment($field->getField()))
     . ')'
-    . ($field->hasAlias() ? ' AS ' . $this->escapeField(
-        $field->getAlias()
-      ) : '');
+    . ($field->hasAlias()
+      ? ' AS ' . $this->escapeField($field->getAlias()) : '');
   }
 
   public function assembleCountFunction(CountSelectExpression $field)

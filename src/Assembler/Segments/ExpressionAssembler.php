@@ -4,9 +4,11 @@ namespace Packaged\QueryBuilder\Assembler\Segments;
 use Packaged\QueryBuilder\Expression\AbstractArithmeticExpression;
 use Packaged\QueryBuilder\Expression\ArrayExpression;
 use Packaged\QueryBuilder\Expression\BooleanExpression;
+use Packaged\QueryBuilder\Expression\CaseExpression;
 use Packaged\QueryBuilder\Expression\CounterExpression;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\IExpression;
+use Packaged\QueryBuilder\Expression\IfExpression;
 use Packaged\QueryBuilder\Expression\NowExpression;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
@@ -52,6 +54,14 @@ class ExpressionAssembler extends AbstractSegmentAssembler
     {
       return $this->assembleValueExpression($this->_segment);
     }
+    else if($this->_segment instanceof CaseExpression)
+    {
+      return $this->assembleCaseExpression($this->_segment);
+    }
+    else if($this->_segment instanceof IfExpression)
+    {
+      return $this->assembleIfExpression($this->_segment);
+    }
     else if($this->_segment instanceof AbstractArithmeticExpression)
     {
       return $this->assembleArithmeticExpression($this->_segment);
@@ -69,6 +79,24 @@ class ExpressionAssembler extends AbstractSegmentAssembler
       return $this->_segment->getFunction();
     }
     return parent::assemble();
+  }
+
+  public function assembleCaseExpression(CaseExpression $expr)
+  {
+    return 'CASE WHEN(' . $this->assembleSegment($expr->getExpression()) . ')'
+    . ' THEN ' . $this->escapeValue($expr->getTrueValue())
+    . ' ELSE ' . $this->escapeValue($expr->getFalseValue())
+    . ' END';
+  }
+
+  public function assembleIfExpression(IfExpression $expr)
+  {
+    $sections = [
+      $this->assembleSegment($expr->getExpression()),
+      $this->escapeValue($expr->getTrueValue()),
+      $this->escapeValue($expr->getFalseValue()),
+    ];
+    return 'IF(' . implode(',', $sections) . ')';
   }
 
   public function assembleStringExpression(StringExpression $expr)

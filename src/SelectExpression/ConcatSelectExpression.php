@@ -2,6 +2,7 @@
 namespace Packaged\QueryBuilder\SelectExpression;
 
 use Packaged\QueryBuilder\Expression\FieldExpression;
+use Packaged\QueryBuilder\SelectExpression\Traits\AliasTrait;
 
 /**
  * Fields to concat together should be specified individually into the contructor
@@ -9,24 +10,9 @@ use Packaged\QueryBuilder\Expression\FieldExpression;
  */
 class ConcatSelectExpression implements ISelectExpression
 {
-  protected $_alias;
+  use AliasTrait;
+
   protected $_properties;
-
-  public function setAlias($alias)
-  {
-    $this->_alias = $alias;
-    return $this;
-  }
-
-  public function getAlias()
-  {
-    return $this->_alias;
-  }
-
-  public function hasAlias()
-  {
-    return $this->_alias !== null;
-  }
 
   public function setProperties(...$properties)
   {
@@ -57,7 +43,7 @@ class ConcatSelectExpression implements ISelectExpression
 
   public static function create(...$properties)
   {
-    $expression              = new static;
+    $expression = new static;
     $expression->_properties = $properties;
     return $expression;
   }

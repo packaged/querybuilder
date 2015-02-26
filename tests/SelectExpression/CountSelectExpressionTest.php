@@ -2,13 +2,19 @@
 namespace Packaged\Tests\QueryBuilder\SelectExpression;
 
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
+use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\CountSelectExpression;
 
 class CountSelectExpressionTest extends \PHPUnit_Framework_TestCase
 {
   public function testAssemble()
   {
-    $selector = new CountSelectExpression();
+    $selector = CountSelectExpression::create();
+    $this->assertEquals(
+      'COUNT(*)',
+      QueryAssembler::stringify($selector)
+    );
+    $selector->setField(AllSelectExpression::create());
     $this->assertEquals(
       'COUNT(*)',
       QueryAssembler::stringify($selector)
