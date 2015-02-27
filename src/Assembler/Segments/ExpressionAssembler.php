@@ -84,8 +84,8 @@ class ExpressionAssembler extends AbstractSegmentAssembler
   public function assembleCaseExpression(CaseExpression $expr)
   {
     return 'CASE WHEN(' . $this->assembleSegment($expr->getExpression()) . ')'
-    . ' THEN ' . $this->escapeValue($expr->getTrueValue())
-    . ' ELSE ' . $this->escapeValue($expr->getFalseValue())
+    . ' THEN ' . $this->assembleSegment($expr->getTrueValue())
+    . ' ELSE ' . $this->assembleSegment($expr->getFalseValue())
     . ' END';
   }
 
@@ -93,8 +93,8 @@ class ExpressionAssembler extends AbstractSegmentAssembler
   {
     $sections = [
       $this->assembleSegment($expr->getExpression()),
-      $this->escapeValue($expr->getTrueValue()),
-      $this->escapeValue($expr->getFalseValue()),
+      $this->assembleSegment($expr->getTrueValue()),
+      $this->assembleSegment($expr->getFalseValue()),
     ];
     return 'IF(' . implode(',', $sections) . ')';
   }

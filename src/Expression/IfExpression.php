@@ -26,7 +26,8 @@ class IfExpression implements IExpression
 
   public function getTrueValue()
   {
-    return $this->_trueValue;
+    return $this->_trueValue instanceof ValueExpression
+      ? $this->_trueValue : ValueExpression::create($this->_trueValue);
   }
 
   public function setFalseValue($value)
@@ -37,7 +38,8 @@ class IfExpression implements IExpression
 
   public function getFalseValue()
   {
-    return $this->_falseValue;
+    return $this->_falseValue instanceof ValueExpression
+      ? $this->_falseValue : ValueExpression::create($this->_falseValue);
   }
 
   public static function create($expression, $trueValue, $falseValue)

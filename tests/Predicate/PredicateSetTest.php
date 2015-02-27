@@ -12,7 +12,7 @@ class PredicateSetTest extends \PHPUnit_Framework_TestCase
   public function testGettersAndSetters()
   {
     $set = new PredicateSet();
-    $eq  = new EqualPredicate();
+    $eq = new EqualPredicate();
     $neq = new NotEqualPredicate();
 
     $this->assertFalse($set->hasPredicates());
@@ -33,16 +33,14 @@ class PredicateSetTest extends \PHPUnit_Framework_TestCase
 
   public function testAssemble()
   {
-    $set = new PredicateSet();
-    $this->assertEquals('', QueryAssembler::stringify($set));
+    $this->assertEquals('', QueryAssembler::stringify(PredicateSet::create()));
 
     $eq = new EqualPredicate();
     $eq->setField("first")->setExpression(ValueExpression::create('val1'));
     $neq = new NotEqualPredicate();
     $neq->setField("second")->setExpression(ValueExpression::create('val1'));
 
-    $set->addPredicate($eq);
-    $set->addPredicate($neq);
+    $set = PredicateSet::create($eq, $neq);
 
     $this->assertEquals(
       '(first = "val1" AND second <> "val1")',

@@ -37,4 +37,11 @@ class PredicateSet implements IPredicate
   {
     return ' AND ';
   }
+
+  public static function create(...$predicates)
+  {
+    $predicate = new static;
+    $predicate->setPredicates($predicates);
+    return $predicate;
+  }
 }
