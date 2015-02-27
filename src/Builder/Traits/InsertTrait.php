@@ -52,7 +52,20 @@ trait InsertTrait
     return $this;
   }
 
+  /**
+   * @deprecated
+   *
+   * @param $field
+   * @param $value
+   *
+   * @return $this
+   */
   public function onDuplicate($field, $value)
+  {
+    return $this->onDuplicateKeyUpdate($field, $value);
+  }
+
+  public function onDuplicateKeyUpdate($field, $value)
   {
     /**
      * @var $this     IStatement
