@@ -19,7 +19,11 @@ abstract class AbstractTableClause implements IClause
     {
       return $this->_table;
     }
-    return TableExpression::create($this->_table);
+    elseif(is_scalar($this->_table))
+    {
+      return TableExpression::create($this->_table);
+    }
+    return $this->_table;
   }
 
   /**

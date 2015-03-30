@@ -13,7 +13,6 @@ trait InsertTrait
 {
   public function insertInto($table, ...$fields)
   {
-
     /**
      * @var $this     IStatement
      */
