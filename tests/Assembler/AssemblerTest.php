@@ -6,9 +6,11 @@ use Packaged\QueryBuilder\Builder\QueryBuilder;
 use Packaged\QueryBuilder\Clause\IClause;
 use Packaged\QueryBuilder\Clause\SelectClause;
 use Packaged\QueryBuilder\Expression\TableExpression;
+use Packaged\QueryBuilder\Expression\ValueExpression;
 use Packaged\QueryBuilder\Predicate\BetweenPredicate;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
+use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 use Packaged\QueryBuilder\Statement\IStatement;
 use Packaged\QueryBuilder\Statement\QueryStatement;
 
@@ -88,6 +90,18 @@ class AssemblerTest extends \PHPUnit_Framework_TestCase
       'INSERT INTO tbl (field) VALUES (?)',
       $assembler->getQuery()
     );
+  }
+
+  public function testChangingParameters()
+  {
+    $val2 = ValueExpression::create(123);
+    $assembler = new QueryAssembler(
+      QueryBuilder::select(AllSelectExpression::create())
+        ->from('tbl')->where(['field1' => 'val1', 'field2' => $val2])
+    );
+    $this->assertEquals(['val1', 123], $assembler->getParameters());
+    $val2->setValue(456);
+    $this->assertEquals(['val1', 456], $assembler->getParameters());
   }
 }
 

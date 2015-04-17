@@ -6,10 +6,10 @@ use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Predicate\InPredicate;
+use Packaged\QueryBuilder\Predicate\IPredicate;
 use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
 use Packaged\QueryBuilder\Predicate\NotInPredicate;
 use Packaged\QueryBuilder\Predicate\OrPredicateSet;
-use Packaged\QueryBuilder\Predicate\IPredicate;
 use Packaged\QueryBuilder\Predicate\PredicateSet;
 
 class WhereClause extends AbstractPredicateClause
@@ -39,11 +39,17 @@ class WhereClause extends AbstractPredicateClause
     $predicates = [];
     foreach($input as $key => $value)
     {
-      if($value === null || is_scalar($value))
+      if($value === null || is_scalar($value)
+        || $value instanceof ValueExpression
+      )
       {
         $pred = ($inverse ? new NotEqualPredicate() : new EqualPredicate());
         $pred->setField(FieldExpression::createWithTable($key, $table));
-        $pred->setExpression(ValueExpression::create($value));
+        if(!($value instanceof ValueExpression))
+        {
+          $value = ValueExpression::create($value);
+        }
+        $pred->setExpression($value);
         $predicates[] = $pred;
       }
       else if($value instanceof IPredicate)

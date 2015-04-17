@@ -52,12 +52,12 @@ abstract class AbstractSegmentAssembler
     return $this->getAssembler()->assembleSegment($segment);
   }
 
-  protected function _assemblePrepared($expr)
+  protected function _assemblePrepared($expr = null)
   {
     $assembler = $this->getAssembler();
     if($assembler->isForPrepare())
     {
-      $assembler->addParameter($expr);
+      $assembler->addParameter($expr ?: $this->_segment);
       return '?';
     }
     return false;

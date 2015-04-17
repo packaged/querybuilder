@@ -46,7 +46,10 @@ class InsertStatementTest extends \PHPUnit_Framework_TestCase
 
     $statement = QueryBuilder::insertInto('tbl', 'field1', 'field2')
       ->values('value1', 'value2')
-      ->onDuplicate('field1', IncrementExpression::create('field2', 1));
+      ->onDuplicateKeyUpdate(
+        'field1',
+        IncrementExpression::create('field2', 1)
+      );
     $assembler = new QueryAssembler($statement);
     $this->assertEquals(
       'INSERT INTO tbl (field1, field2) VALUES (?, ?) ON DUPLICATE KEY UPDATE field1 = field2 + ?',

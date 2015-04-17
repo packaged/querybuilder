@@ -22,7 +22,13 @@ class QueryAssembler
    */
   protected $_statement;
   protected $_forPrepare = true;
+  /**
+   * @var ValueExpression[]
+   */
   protected $_parameters;
+  /**
+   * @var string
+   */
   protected $_query;
   protected $_data;
 
@@ -34,10 +40,6 @@ class QueryAssembler
   {
     $this->_statement = $statement;
     $this->_forPrepare = $forPrepare;
-    if($statement)
-    {
-      $this->assemble();
-    }
   }
 
   public function getData($key)
@@ -124,9 +126,9 @@ class QueryAssembler
 
   public function addParameter($value)
   {
-    if($value instanceof ValueExpression)
+    if(!($value instanceof ValueExpression))
     {
-      $value = $value->getValue();
+      $value = ValueExpression::create($value);
     }
     $this->_parameters[] = $value;
     return $this;
@@ -134,12 +136,21 @@ class QueryAssembler
 
   public function getParameters()
   {
-    return $this->_parameters;
+    if($this->_statement)
+    {
+      $this->assemble();
+    }
+    $parameters = [];
+    foreach($this->_parameters as $parameter)
+    {
+      $parameters[] = $parameter->getValue();
+    }
+    return $parameters;
   }
 
   public function getQuery()
   {
-    return $this->_query;
+    return $this->assemble()->_query;
   }
 
   public static function stringify(IStatementSegment $segment)

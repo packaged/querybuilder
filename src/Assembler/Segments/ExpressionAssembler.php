@@ -101,7 +101,7 @@ class ExpressionAssembler extends AbstractSegmentAssembler
 
   public function assembleStringExpression(StringExpression $expr)
   {
-    return $this->_assemblePrepared($expr)
+    return $this->_assemblePrepared()
       ?: $this->escapeValue($expr->getValue());
   }
 
@@ -110,7 +110,7 @@ class ExpressionAssembler extends AbstractSegmentAssembler
     $values = [];
     foreach($expr->getValue() as $value)
     {
-      $values[] = $this->_assemblePrepared(ValueExpression::create($value))
+      $values[] = $this->_assemblePrepared($value)
         ?: $this->escapeValue($value);
     }
     return '(' . implode(',', $values) . ')';
@@ -118,12 +118,12 @@ class ExpressionAssembler extends AbstractSegmentAssembler
 
   public function assembleNumericExpression(NumericExpression $expr)
   {
-    return $this->_assemblePrepared($expr) ?: $expr->getValue();
+    return $this->_assemblePrepared() ?: $expr->getValue();
   }
 
   public function assembleBooleanExpression(BooleanExpression $expr)
   {
-    return $this->_assemblePrepared($expr->getValue())
+    return $this->_assemblePrepared()
       ?: ($expr->getValue() ? 'true' : 'false');
   }
 
@@ -151,7 +151,7 @@ class ExpressionAssembler extends AbstractSegmentAssembler
     $value = $expression->getValue();
     if($value === null)
     {
-      return $this->_assemblePrepared($expression) ?: 'NULL';
+      return $this->_assemblePrepared() ?: 'NULL';
     }
 
     if(is_bool($value))

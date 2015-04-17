@@ -53,6 +53,7 @@ trait InsertTrait
 
   /**
    * @deprecated
+   * @codeCoverageIgnore
    *
    * @param $field
    * @param $value
