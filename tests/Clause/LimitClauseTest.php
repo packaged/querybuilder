@@ -21,5 +21,11 @@ class LimitClauseTest extends \PHPUnit_Framework_TestCase
     $assembler = new QueryAssembler($stmt);
     $this->assertEquals('SELECT * LIMIT ?', $assembler->getQuery());
     $this->assertEquals([3], $assembler->getParameters());
+
+    $stmt = QueryBuilder::select(AllSelectExpression::create())
+      ->limitWithOffset(0, 3);
+    $assembler = new QueryAssembler($stmt);
+    $this->assertEquals('SELECT * LIMIT ?,?', $assembler->getQuery());
+    $this->assertEquals([0, 3], $assembler->getParameters());
   }
 }

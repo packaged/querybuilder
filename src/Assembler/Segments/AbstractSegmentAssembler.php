@@ -57,7 +57,7 @@ abstract class AbstractSegmentAssembler
     $assembler = $this->getAssembler();
     if($assembler->isForPrepare())
     {
-      $assembler->addParameter($expr ?: $this->_segment);
+      $assembler->addParameter($expr !== null ? $expr : $this->_segment);
       return '?';
     }
     return false;
