@@ -14,6 +14,6 @@ class NumericExpression extends ValueExpression
       );
     }
 
-    return filter_var($this->_value, FILTER_SANITIZE_NUMBER_INT) ?: 0;
+    return (int)filter_var($this->_value, FILTER_SANITIZE_NUMBER_INT);
   }
 }
