@@ -92,11 +92,11 @@ class ClauseAssembler extends AbstractSegmentAssembler
     if($clause->hasOffset())
     {
       $assembled .= $this->_assemblePrepared($clause->getOffset())
-        ?: $clause->getOffset();
+        ?: $clause->getOffset()->getValue();
       $assembled .= ',';
     }
     $assembled .= $this->_assemblePrepared($clause->getLimit())
-      ?: $clause->getLimit();
+      ?: $clause->getLimit()->getValue();
     return $assembled;
   }
 

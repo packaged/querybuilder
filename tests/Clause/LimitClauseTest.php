@@ -4,6 +4,7 @@ namespace Packaged\Tests\QueryBuilder\Clause;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Builder\QueryBuilder;
 use Packaged\QueryBuilder\Clause\LimitClause;
+use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 
 class LimitClauseTest extends \PHPUnit_Framework_TestCase
@@ -27,5 +28,18 @@ class LimitClauseTest extends \PHPUnit_Framework_TestCase
     $assembler = new QueryAssembler($stmt);
     $this->assertEquals('SELECT * LIMIT ?,?', $assembler->getQuery());
     $this->assertEquals([0, 3], $assembler->getParameters());
+
+    $offset = NumericExpression::create(0);
+    $limit = NumericExpression::create(3);
+    $stmt = QueryBuilder::select(AllSelectExpression::create())
+      ->limitWithOffset($offset, $limit);
+    $assembler = new QueryAssembler($stmt);
+    $this->assertEquals('SELECT * LIMIT ?,?', $assembler->getQuery());
+    $this->assertEquals([0, 3], $assembler->getParameters());
+
+    $offset->setValue(25);
+    $limit->setValue(38);
+    $this->assertEquals('SELECT * LIMIT ?,?', $assembler->getQuery());
+    $this->assertEquals([25, 38], $assembler->getParameters());
   }
 }

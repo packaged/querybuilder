@@ -1,6 +1,9 @@
 <?php
 namespace Packaged\QueryBuilder\Clause;
 
+use Packaged\QueryBuilder\Expression\NumericExpression;
+use Packaged\QueryBuilder\Expression\ValueExpression;
+
 class LimitClause implements IClause
 {
   protected $_limit;
@@ -8,24 +11,38 @@ class LimitClause implements IClause
 
   public function setLimit($limit)
   {
+    if(!($limit instanceof ValueExpression))
+    {
+      $limit = NumericExpression::create($limit);
+    }
     $this->_limit = $limit;
     return $this;
   }
 
+  /**
+   * @return ValueExpression
+   */
   public function getLimit()
   {
-    return (int)$this->_limit;
+    return $this->_limit;
   }
 
   public function setOffset($offset)
   {
+    if(!($offset instanceof ValueExpression))
+    {
+      $offset = NumericExpression::create($offset);
+    }
     $this->_offset = $offset;
     return $this;
   }
 
+  /**
+   * @return ValueExpression
+   */
   public function getOffset()
   {
-    return (int)$this->_offset;
+    return $this->_offset;
   }
 
   public function hasOffset()
