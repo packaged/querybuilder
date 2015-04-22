@@ -1,8 +1,6 @@
 <?php
 namespace Packaged\QueryBuilder\Clause;
 
-use Packaged\QueryBuilder\Expression\FieldExpression;
-
 class OrderByClause extends AbstractFieldClause
 {
   protected $_order;
@@ -15,10 +13,10 @@ class OrderByClause extends AbstractFieldClause
     return 'ORDER BY';
   }
 
-  public function addField(FieldExpression $field, $order = null)
+  public function addField($field, $order = null)
   {
-    $this->_fields[]                  = $field;
-    $this->_order[$field->getField()] = $order;
+    parent::addField($field);
+    $this->_order[] = $order;
   }
 
   public function clearFields()
@@ -29,6 +27,6 @@ class OrderByClause extends AbstractFieldClause
 
   public function getOrder($field, $default = 'ASC')
   {
-    return idx($this->_order, $field, $default);
+    return idx($this->_order, array_search($field, $this->_fields), $default);
   }
 }

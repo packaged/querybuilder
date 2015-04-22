@@ -2,7 +2,6 @@
 namespace Packaged\QueryBuilder\Builder\Traits;
 
 use Packaged\QueryBuilder\Clause\GroupByClause;
-use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Statement\IStatement;
 
 trait GroupByTrait
@@ -18,19 +17,19 @@ trait GroupByTrait
     {
       foreach(func_get_args() as $field)
       {
-        $groupClause->addField(FieldExpression::create($field));
+        $groupClause->addField($field);
       }
     }
     else if(is_array($fields))
     {
       foreach($fields as $field)
       {
-        $groupClause->addField(FieldExpression::create($field));
+        $groupClause->addField($field);
       }
     }
-    else if(is_scalar($fields))
+    else
     {
-      $groupClause->addField(FieldExpression::create($fields));
+      $groupClause->addField($fields);
     }
 
     $this->addClause($groupClause);

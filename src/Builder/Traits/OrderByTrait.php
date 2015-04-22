@@ -2,7 +2,6 @@
 namespace Packaged\QueryBuilder\Builder\Traits;
 
 use Packaged\QueryBuilder\Clause\OrderByClause;
-use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Statement\IStatement;
 
 trait OrderByTrait
@@ -20,11 +19,11 @@ trait OrderByTrait
       {
         if(contains_any($order, ['asc', 'desc'], false))
         {
-          $orderClause->addField(FieldExpression::create($field), $order);
+          $orderClause->addField($field, $order);
         }
         else
         {
-          $orderClause->addField(FieldExpression::create($order));
+          $orderClause->addField($order);
         }
       }
     }
@@ -32,12 +31,12 @@ trait OrderByTrait
     {
       foreach(func_get_args() as $field)
       {
-        $orderClause->addField(FieldExpression::create($field));
+        $orderClause->addField($field);
       }
     }
-    else if(is_scalar($fields))
+    else
     {
-      $orderClause->addField(FieldExpression::create($fields));
+      $orderClause->addField($fields);
     }
 
     $this->addClause($orderClause);

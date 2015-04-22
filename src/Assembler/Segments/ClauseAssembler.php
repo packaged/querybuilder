@@ -141,7 +141,7 @@ class ClauseAssembler extends AbstractSegmentAssembler
     {
       $orders[] = trim(
         $this->assembleSegment($field) . ' '
-        . strtoupper($clause->getOrder($field->getField(), ''))
+        . strtoupper($clause->getOrder($field, ''))
       );
     }
     return $clause->getAction() . ' ' . implode(', ', $orders);

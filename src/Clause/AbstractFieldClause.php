@@ -10,8 +10,13 @@ abstract class AbstractFieldClause implements IClause
    */
   protected $_fields = [];
 
-  public function addField(FieldExpression $field)
+  public function addField($field)
   {
+    if(is_scalar($field))
+    {
+      $field = FieldExpression::create($field);
+    }
+
     $this->_fields[] = $field;
   }
 

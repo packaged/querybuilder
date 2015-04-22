@@ -9,7 +9,7 @@ class AbstractFieldClauseTest extends \PHPUnit_Framework_TestCase
 {
   public function testAssemble()
   {
-    $clause = new FinalAbstractFieldClause();
+    $clause = new TestFieldClause();
     $clause->addField((new FieldExpression())->setField('first'));
     $this->assertEquals('T first', QueryAssembler::stringify($clause));
     $clause->addField((new FieldExpression())->setField('second'));
@@ -20,7 +20,7 @@ class AbstractFieldClauseTest extends \PHPUnit_Framework_TestCase
   }
 }
 
-class FinalAbstractFieldClause extends AbstractFieldClause
+class TestFieldClause extends AbstractFieldClause
 {
   /**
    * @return string
