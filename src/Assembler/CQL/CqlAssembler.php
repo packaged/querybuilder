@@ -4,12 +4,12 @@ namespace Packaged\QueryBuilder\Assembler\CQL;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\CQL\AllowFilteringClause;
 use Packaged\QueryBuilder\Clause\CQL\UsingClause;
-use Packaged\QueryBuilder\Expression\FieldExpression;
-use Packaged\QueryBuilder\Expression\TableExpression;
-use Packaged\QueryBuilder\Expression\ValueExpression;
+use Packaged\QueryBuilder\Exceptions\Assembler\CqlAssemblerException;
 use Packaged\QueryBuilder\Predicate\BetweenPredicate;
+use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Predicate\GreaterThanOrEqualPredicate;
 use Packaged\QueryBuilder\Predicate\LessThanOrEqualPredicate;
+use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
 use Packaged\QueryBuilder\Predicate\PredicateSet;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
@@ -18,6 +18,13 @@ class CqlAssembler extends QueryAssembler
 {
   public function assembleSegment($segment)
   {
+    if(($segment instanceof EqualPredicate || $segment instanceof NotEqualPredicate)
+      && $segment->isNullValue()
+    )
+    {
+      throw new CqlAssemblerException("Null is not available in CQL Queries");
+    }
+
     if($segment instanceof FieldSelectExpression)
     {
       $segment->setAlias(null);

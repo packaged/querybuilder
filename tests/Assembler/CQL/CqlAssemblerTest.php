@@ -2,7 +2,9 @@
 namespace Packaged\Tests\QueryBuilder\Assembler\CQL;
 
 use Packaged\QueryBuilder\Assembler\CQL\CqlAssembler;
+use Packaged\QueryBuilder\Builder\QueryBuilder;
 use Packaged\QueryBuilder\Clause\WhereClause;
+use Packaged\QueryBuilder\Exceptions\Assembler\CqlAssemblerException;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
@@ -64,6 +66,17 @@ class CqlAssemblerTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals('*', CqlAssembler::stringify($selector));
     $selector->setTable('test');
     $this->assertEquals('*', CqlAssembler::stringify($selector));
+  }
+
+  /**
+   * @expectedException \Packaged\QueryBuilder\Exceptions\Assembler\CqlAssemblerException
+   * @expectedExceptionMessage Null is not available in CQL Queries
+   */
+  public function testEmptySelect()
+  {
+    CqlAssembler::stringify(
+      QueryBuilder::select()->from('table')->where(['id' => null])
+    );
   }
 
   public function testTableName()
