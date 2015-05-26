@@ -7,7 +7,7 @@ class NumericExpression extends ValueExpression
   {
     if(stristr($this->_value, '.'))
     {
-      return filter_var(
+      return (float)filter_var(
         $this->_value,
         FILTER_SANITIZE_NUMBER_FLOAT,
         FILTER_FLAG_ALLOW_FRACTION
