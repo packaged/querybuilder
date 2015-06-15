@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Clause;
 
+use Packaged\Helpers\Arrays;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 
 class InsertClause extends AbstractTableClause
@@ -15,7 +16,7 @@ class InsertClause extends AbstractTableClause
 
   public function setFields(array $fields)
   {
-    $this->_fields = assert_instances_of(
+    $this->_fields = Arrays::instancesOf(
       $fields,
       '\Packaged\QueryBuilder\Expression\FieldExpression'
     );

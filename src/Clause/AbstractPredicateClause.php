@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Clause;
 
+use Packaged\Helpers\Arrays;
 use Packaged\QueryBuilder\Predicate\IPredicate;
 
 abstract class AbstractPredicateClause implements IClause
@@ -14,7 +15,7 @@ abstract class AbstractPredicateClause implements IClause
 
   public function setPredicates(array $predicates)
   {
-    $this->_predicates = assert_instances_of(
+    $this->_predicates = Arrays::instancesOf(
       $predicates,
       '\Packaged\QueryBuilder\Predicate\IPredicate'
     );

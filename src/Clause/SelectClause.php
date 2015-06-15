@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Clause;
 
+use Packaged\Helpers\Arrays;
 use Packaged\QueryBuilder\SelectExpression\ConcatSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\ISelectExpression;
@@ -29,7 +30,7 @@ class SelectClause implements IClause
 
   public function setExpressions(array $expressions)
   {
-    $this->_expressions = assert_instances_of(
+    $this->_expressions = Arrays::instancesOf(
       $expressions,
       '\Packaged\QueryBuilder\SelectExpression\ISelectExpression'
     );

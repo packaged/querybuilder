@@ -1,6 +1,8 @@
 <?php
 namespace Packaged\QueryBuilder\Clause;
 
+use Packaged\Helpers\Arrays;
+
 class OrderByClause extends AbstractFieldClause
 {
   protected $_order;
@@ -27,6 +29,10 @@ class OrderByClause extends AbstractFieldClause
 
   public function getOrder($field, $default = 'ASC')
   {
-    return idx($this->_order, array_search($field, $this->_fields), $default);
+    return Arrays::value(
+      $this->_order,
+      array_search($field, $this->_fields),
+      $default
+    );
   }
 }

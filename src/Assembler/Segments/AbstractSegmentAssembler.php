@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Assembler\Segments;
 
+use Packaged\Helpers\Objects;
 use Packaged\Helpers\Strings;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Statement\IStatementSegment;
@@ -74,7 +75,7 @@ abstract class AbstractSegmentAssembler
       "Unsupported segment '"
       . get_class($this->_segment)
       . "' passed to the " .
-      ucwords(Strings::humanize(class_shortname(get_called_class())))
+      ucwords(Strings::humanize(Objects::classShortname(get_called_class())))
     );
   }
 

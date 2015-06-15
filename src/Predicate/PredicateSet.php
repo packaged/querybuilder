@@ -1,6 +1,8 @@
 <?php
 namespace Packaged\QueryBuilder\Predicate;
 
+use Packaged\Helpers\Arrays;
+
 class PredicateSet implements IPredicate
 {
   protected $_predicates = [];
@@ -12,7 +14,7 @@ class PredicateSet implements IPredicate
 
   public function setPredicates(array $predicates)
   {
-    $this->_predicates = assert_instances_of(
+    $this->_predicates = Arrays::instancesOf(
       $predicates,
       '\Packaged\QueryBuilder\Predicate\IPredicate'
     );

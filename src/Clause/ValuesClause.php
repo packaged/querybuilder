@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Clause;
 
+use Packaged\Helpers\Arrays;
 use Packaged\QueryBuilder\Expression\IExpression;
 
 class ValuesClause implements IClause
@@ -15,7 +16,7 @@ class ValuesClause implements IClause
 
   public function setExpressions(array $expressions)
   {
-    $this->_expressions = assert_instances_of(
+    $this->_expressions = Arrays::instancesOf(
       $expressions,
       '\Packaged\QueryBuilder\Expression\IExpression'
     );

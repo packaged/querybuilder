@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Builder\Traits;
 
+use Packaged\Helpers\Strings;
 use Packaged\QueryBuilder\Clause\OrderByClause;
 use Packaged\QueryBuilder\Statement\IStatement;
 
@@ -17,7 +18,7 @@ trait OrderByTrait
     {
       foreach($fields as $field => $order)
       {
-        if(contains_any($order, ['asc', 'desc'], false))
+        if(Strings::containsAny($order, ['asc', 'desc'], false))
         {
           $orderClause->addField($field, $order);
         }

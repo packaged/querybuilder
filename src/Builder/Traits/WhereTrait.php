@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Builder\Traits;
 
+use Packaged\Helpers\Arrays;
 use Packaged\QueryBuilder\Clause\WhereClause;
 use Packaged\QueryBuilder\Predicate\OrPredicateSet;
 use Packaged\QueryBuilder\Predicate\PredicateSet;
@@ -21,7 +22,7 @@ trait WhereTrait
   public function andWhere(...$expressions)
   {
     $currentSet = $this->_getCurrentSet();
-    $newSet     = $this->_getNewSet($expressions);
+    $newSet = $this->_getNewSet($expressions);
 
     $finalSet = new PredicateSet();
     $finalSet->addPredicate($currentSet);
@@ -41,7 +42,7 @@ trait WhereTrait
   public function orWhere(...$expressions)
   {
     $currentSet = $this->_getCurrentSet();
-    $newSet     = $this->_getNewSet($expressions);
+    $newSet = $this->_getNewSet($expressions);
 
     $finalSet = new OrPredicateSet();
     $finalSet->addPredicate($currentSet);
@@ -74,7 +75,7 @@ trait WhereTrait
 
     if(count($where->getPredicates()) === 1)
     {
-      $currentSet = head($where->getPredicates());
+      $currentSet = Arrays::first($where->getPredicates());
     }
     else
     {
@@ -90,7 +91,7 @@ trait WhereTrait
     $newPredicates = WhereClause::buildPredicates($expressions);
     if(count($newPredicates) === 1)
     {
-      $newSet = head($newPredicates);
+      $newSet = Arrays::first($newPredicates);
     }
     else
     {

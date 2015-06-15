@@ -1,12 +1,13 @@
 <?php
 namespace Packaged\QueryBuilder\SelectExpression;
 
+use Packaged\Helpers\Strings;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\SelectExpression\Traits\AliasTrait;
 
 /**
- * Fields to concat together should be specified individually into the contructor
- * and strings should be quoted before pushing through
+ * Fields to concat together should be specified individually into the
+ * contructor and strings should be quoted before pushing through
  */
 class ConcatSelectExpression implements ISelectExpression
 {
@@ -24,7 +25,7 @@ class ConcatSelectExpression implements ISelectExpression
     $this->_properties = [];
     foreach($properties as $property)
     {
-      if(contains_any($property, ['"', "'", ')']))
+      if(Strings::containsAny($property, ['"', "'", ')']))
       {
         $this->_properties[] = $property;
       }

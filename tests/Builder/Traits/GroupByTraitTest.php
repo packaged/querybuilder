@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\Tests\QueryBuilder\Builder\Traits;
 
+use Packaged\Helpers\Arrays;
 use Packaged\QueryBuilder\Builder\Traits\GroupByTrait;
 use Packaged\QueryBuilder\Clause\GroupByClause;
 use Packaged\QueryBuilder\Statement\AbstractStatement;
@@ -40,7 +41,7 @@ class GroupByTraitTest extends \PHPUnit_Framework_TestCase
 
   protected function _verifyClause(GroupByClause $clause, $fields)
   {
-    $fields = array_fuse($fields);
+    $fields = Arrays::fuse($fields);
     foreach($clause->getFields() as $field)
     {
       unset($fields[$field->getField()]);

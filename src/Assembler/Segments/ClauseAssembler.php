@@ -1,6 +1,8 @@
 <?php
 namespace Packaged\QueryBuilder\Assembler\Segments;
 
+use Packaged\Helpers\Arrays;
+use Packaged\Helpers\Strings;
 use Packaged\QueryBuilder\Clause\AbstractFieldClause;
 use Packaged\QueryBuilder\Clause\AbstractPredicateClause;
 use Packaged\QueryBuilder\Clause\AbstractTableClause;
@@ -161,13 +163,15 @@ class ClauseAssembler extends AbstractSegmentAssembler
     }
 
     if(count($clause->getPredicates()) === 1
-      && head($clause->getPredicates()) instanceof PredicateSet
+      && Arrays::first($clause->getPredicates()) instanceof PredicateSet
     )
     {
       $assembled = $this->getAssembler()->assembleSegment(
-        head($clause->getPredicates())
+        Arrays::first($clause->getPredicates())
       );
-      if(starts_with($assembled, '(') && ends_with($assembled, ')'))
+      if(Strings::startsWith($assembled, '(')
+        && Strings::endsWith($assembled, ')')
+      )
       {
         $assembled = substr($assembled, 1, -1);
       }
