@@ -41,5 +41,28 @@ class UpdateStatementTest extends \PHPUnit_Framework_TestCase
       . 'WHERE username IS NOT NULL AND name LIKE "Joh%"',
       QueryAssembler::stringify($statement)
     );
+
+    $statement->orderBy(['username' => 'asc']);
+    $this->assertEquals(
+      'UPDATE tbl SET field1 = "value1", username = "john", bob = NULL '
+      . 'WHERE username IS NOT NULL AND name LIKE "Joh%" ORDER BY username ASC',
+      QueryAssembler::stringify($statement)
+    );
+
+    $statement->orderBy(['username' => 'desc', 'field1' => 'asc']);
+    $this->assertEquals(
+      'UPDATE tbl SET field1 = "value1", username = "john", bob = NULL '
+      . 'WHERE username IS NOT NULL AND name LIKE "Joh%" '
+      . 'ORDER BY username DESC, field1 ASC',
+      QueryAssembler::stringify($statement)
+    );
+
+    $statement->limit(2);
+    $this->assertEquals(
+      'UPDATE tbl SET field1 = "value1", username = "john", bob = NULL '
+      . 'WHERE username IS NOT NULL AND name LIKE "Joh%" '
+      . 'ORDER BY username DESC, field1 ASC LIMIT 2',
+      QueryAssembler::stringify($statement)
+    );
   }
 }
