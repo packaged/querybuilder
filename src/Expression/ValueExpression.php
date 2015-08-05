@@ -1,20 +1,11 @@
 <?php
 namespace Packaged\QueryBuilder\Expression;
 
+use Packaged\QueryBuilder\Expression\Traits\ValueTrait;
+
 class ValueExpression implements IExpression
 {
-  protected $_value;
-
-  public function setValue($value)
-  {
-    $this->_value = $value;
-    return $this;
-  }
-
-  public function getValue()
-  {
-    return $this->_value;
-  }
+  use ValueTrait;
 
   public static function create($value)
   {

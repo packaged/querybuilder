@@ -1,45 +1,19 @@
 <?php
 namespace Packaged\QueryBuilder\Expression;
 
+use Packaged\QueryBuilder\Expression\Traits\FieldTrait;
+use Packaged\QueryBuilder\Expression\Traits\TableTrait;
+
 class FieldExpression implements IExpression
 {
-  protected $_field;
-  protected $_table;
+  use FieldTrait;
+  use TableTrait;
 
-  public function setField($field)
-  {
-    $this->_field = $field;
-    return $this;
-  }
-
-  public function getField()
-  {
-    return $this->_field;
-  }
-
-  public function setTable($table)
-  {
-    if($table instanceof TableExpression)
-    {
-      $this->_table = $table;
-    }
-    else if($table !== null)
-    {
-      $this->_table = TableExpression::create($table);
-    }
-    return $this;
-  }
-
-  public function getTable()
-  {
-    return $this->_table;
-  }
-
-  public function hasTable()
-  {
-    return $this->_table !== null;
-  }
-
+  /**
+   * @param $field
+   *
+   * @return static
+   */
   public static function create($field)
   {
     $expression = new static;

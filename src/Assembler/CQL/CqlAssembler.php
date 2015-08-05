@@ -5,6 +5,11 @@ use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\CQL\AllowFilteringClause;
 use Packaged\QueryBuilder\Clause\CQL\UsingClause;
 use Packaged\QueryBuilder\Exceptions\Assembler\CqlAssemblerException;
+use Packaged\QueryBuilder\Expression\AbstractArithmeticExpression;
+use Packaged\QueryBuilder\Expression\CQL\ListExpression;
+use Packaged\QueryBuilder\Expression\CQL\MapExpression;
+use Packaged\QueryBuilder\Expression\CQL\MapFieldExpression;
+use Packaged\QueryBuilder\Expression\CQL\SetExpression;
 use Packaged\QueryBuilder\Predicate\BetweenPredicate;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Predicate\GreaterThanOrEqualPredicate;
@@ -49,8 +54,70 @@ class CqlAssembler extends QueryAssembler
     {
       return $this->assembleBetween($segment);
     }
+    else if($segment instanceof MapFieldExpression)
+    {
+      return $this->assembleMapFieldExpression($segment);
+    }
+    else if($segment instanceof ListExpression)
+    {
+      return $this->assembleListExpression($segment);
+    }
+    else if($segment instanceof MapExpression)
+    {
+      return $this->assembleMapExpression($segment);
+    }
+    else if($segment instanceof SetExpression)
+    {
+      return $this->assembleSetExpression($segment);
+    }
+    else if($segment instanceof AbstractArithmeticExpression)
+    {
+      return $this->assembleArithmeticExpression($segment);
+    }
 
     return parent::assembleSegment($segment);
+  }
+
+  public function assembleArithmeticExpression(
+    AbstractArithmeticExpression $expr
+  )
+  {
+    $values = [];
+    foreach($expr->getExpressions() as $value)
+    {
+      $values[] = $this->assembleSegment($value);
+    }
+    return implode(' ' . $expr->getOperator() . ' ', $values);
+  }
+
+  public function assembleMapExpression(MapExpression $map)
+  {
+    $return = [];
+    $values = $this->assembleSegments((array)$map->getValue());
+    foreach($values as $key => $value)
+    {
+      $return[] = "'$key':$value";
+    }
+    return '{' . implode(',', $return) . '}';
+  }
+
+  public function assembleSetExpression(SetExpression $set)
+  {
+    $values = $this->assembleSegments((array)$set->getValue());
+    return '{' . implode(',', $values) . '}';
+  }
+
+  public function assembleListExpression(ListExpression $list)
+  {
+    $values = $this->assembleSegments((array)$list->getValue());
+    return '[' . implode(',', $values) . ']';
+  }
+
+  public function assembleMapFieldExpression(MapFieldExpression $expression)
+  {
+    $key = is_numeric($expression->getKey())
+      ? $expression->getKey() : "'" . $expression->getKey() . "'";
+    return $expression->getField() . '[' . $key . ']';
   }
 
   public function assembleUsingClause(UsingClause $clause)
