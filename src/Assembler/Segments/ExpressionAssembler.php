@@ -153,28 +153,33 @@ class ExpressionAssembler extends AbstractSegmentAssembler
     {
       return $this->_assemblePrepared() ?: 'NULL';
     }
-
-    if(is_bool($value))
+    else if(is_scalar($value))
     {
-      return $this->assembleBooleanExpression(
-        BooleanExpression::create($value)
-      );
+      if(is_string($value))
+      {
+        return $this->assembleStringExpression(
+          StringExpression::create($value)
+        );
+      }
+      else if(is_numeric($value))
+      {
+        return $this->assembleNumericExpression(
+          NumericExpression::create($value)
+        );
+      }
+      else if(is_bool($value))
+      {
+        return $this->assembleBooleanExpression(
+          BooleanExpression::create($value)
+        );
+      }
     }
-
-    if(is_int($value) || is_double($value) || is_float($value))
-    {
-      return $this->assembleNumericExpression(
-        NumericExpression::create($value)
-      );
-    }
-
-    if(is_array($value))
+    else if(is_array($value))
     {
       return $this->assembleArrayExpression(
         ArrayExpression::create($value)
       );
     }
-
     return $this->assembleStringExpression(
       StringExpression::create($value)
     );
