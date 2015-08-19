@@ -16,6 +16,11 @@ class TableExpression implements IExpression
     return $this->_table;
   }
 
+  /**
+   * @param $table
+   *
+   * @return static
+   */
   public static function create($table)
   {
     return (new static)->setTableName($table);
