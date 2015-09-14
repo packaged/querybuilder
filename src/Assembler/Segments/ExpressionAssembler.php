@@ -129,7 +129,7 @@ class ExpressionAssembler extends AbstractSegmentAssembler
 
   public function assembleCounterExpression(CounterExpression $expr)
   {
-    return $this->assembleSegment($expr->getField())
+    return $this->assembleSegment($this->escapeField($expr->getField()))
     . ' ' . $expr->getOperator() . ' '
     . $this->assembleSegment($expr->getValue());
   }
