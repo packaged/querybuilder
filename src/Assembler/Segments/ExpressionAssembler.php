@@ -1,6 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\Assembler\Segments;
 
+use Packaged\QueryBuilder\Exceptions\Assembler\QueryBuilderAssemblerException;
 use Packaged\QueryBuilder\Expression\AbstractArithmeticExpression;
 use Packaged\QueryBuilder\Expression\ArrayExpression;
 use Packaged\QueryBuilder\Expression\BooleanExpression;
@@ -107,8 +108,15 @@ class ExpressionAssembler extends AbstractSegmentAssembler
 
   public function assembleArrayExpression(ArrayExpression $expr)
   {
+    $exprValues = $expr->getValue();
+    if(count($exprValues) < 1)
+    {
+      throw new QueryBuilderAssemblerException(
+        'Cannot assemble an empty ArrayExpression'
+      );
+    }
     $values = [];
-    foreach($expr->getValue() as $value)
+    foreach($exprValues as $value)
     {
       $values[] = $this->_assemblePrepared($value)
         ?: $this->escapeValue($value);

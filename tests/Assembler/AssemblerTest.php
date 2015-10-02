@@ -5,6 +5,7 @@ use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Builder\QueryBuilder;
 use Packaged\QueryBuilder\Clause\IClause;
 use Packaged\QueryBuilder\Clause\SelectClause;
+use Packaged\QueryBuilder\Clause\WhereClause;
 use Packaged\QueryBuilder\Expression\TableExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
 use Packaged\QueryBuilder\Predicate\BetweenPredicate;
@@ -102,6 +103,24 @@ class AssemblerTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(['val1', 123], $assembler->getParameters());
     $val2->setValue(456);
     $this->assertEquals(['val1', 456], $assembler->getParameters());
+  }
+
+  public function testInPredicate()
+  {
+    $this->assertEquals(
+      'WHERE field1 IN ("value1","value2")',
+      QueryAssembler::stringify(
+        WhereClause::create(['field1' => ['value1', 'value2']])
+      )
+    );
+
+    $this->setExpectedException(
+      '\Packaged\QueryBuilder\Exceptions\Assembler\QueryBuilderAssemblerException',
+      'Cannot assemble an empty ArrayExpression'
+    );
+    QueryAssembler::stringify(
+      WhereClause::create(['field1' => []])
+    );
   }
 }
 
