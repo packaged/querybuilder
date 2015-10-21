@@ -4,13 +4,13 @@ namespace Packaged\Tests\QueryBuilder\Assembler\CQL;
 use Packaged\QueryBuilder\Assembler\CQL\CqlAssembler;
 use Packaged\QueryBuilder\Builder\QueryBuilder;
 use Packaged\QueryBuilder\Clause\WhereClause;
-use Packaged\QueryBuilder\Exceptions\Assembler\CqlAssemblerException;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Expression\TableExpression;
 use Packaged\QueryBuilder\Predicate\BetweenPredicate;
 use Packaged\QueryBuilder\Predicate\InPredicate;
+use Packaged\QueryBuilder\Predicate\NotBetweenPredicate;
 use Packaged\QueryBuilder\Predicate\PredicateSet;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\CountSelectExpression;
@@ -20,6 +20,17 @@ class CqlAssemblerTest extends \PHPUnit_Framework_TestCase
 {
   public function testBetween()
   {
+    $predicate = new NotBetweenPredicate();
+    $predicate->setField('field');
+    $predicate->setValues(
+      (new NumericExpression())->setValue(1),
+      (new NumericExpression())->setValue(5)
+    );
+    $this->assertEquals(
+      '"field" <= 1 AND "field" >= 5',
+      CqlAssembler::stringify($predicate)
+    );
+
     $predicate = new BetweenPredicate();
     $predicate->setField('field');
     $this->assertEquals(

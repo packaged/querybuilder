@@ -3,6 +3,7 @@ namespace Packaged\Tests\QueryBuilder\Expression;
 
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Builder\QueryBuilder;
+use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\IncrementExpression;
 
 class IncrementExpressionTest extends \PHPUnit_Framework_TestCase
@@ -10,7 +11,7 @@ class IncrementExpressionTest extends \PHPUnit_Framework_TestCase
   public function testAssemble()
   {
     $expression = new IncrementExpression();
-    $expression->setField('new_field');
+    $expression->setField(FieldExpression::create('new_field'));
     $this->assertEquals(
       'new_field + 0',
       QueryAssembler::stringify($expression)

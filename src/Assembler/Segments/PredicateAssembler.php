@@ -5,6 +5,7 @@ use Packaged\QueryBuilder\Predicate\AbstractOperatorPredicate;
 use Packaged\QueryBuilder\Predicate\BetweenPredicate;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Predicate\IPredicate;
+use Packaged\QueryBuilder\Predicate\NotBetweenPredicate;
 use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
 use Packaged\QueryBuilder\Predicate\PredicateSet;
 
@@ -52,8 +53,10 @@ class PredicateAssembler extends AbstractSegmentAssembler
       ?: $this->assembleSegment($predicate->getRangeStart());
     $end = $this->_assemblePrepared($predicate->getRangeEnd())
       ?: $this->assembleSegment($predicate->getRangeEnd());
+    $not = $predicate instanceof NotBetweenPredicate ? ' NOT' : '';
+
     return $this->assembleSegment($predicate->getField())
-    . ' BETWEEN ' . $start . ' AND ' . $end;
+    . $not . ' BETWEEN ' . $start . ' AND ' . $end;
   }
 
   public function assemblePredicateSet(PredicateSet $predicate)

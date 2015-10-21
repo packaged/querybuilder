@@ -14,6 +14,7 @@ use Packaged\QueryBuilder\Predicate\BetweenPredicate;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Predicate\GreaterThanOrEqualPredicate;
 use Packaged\QueryBuilder\Predicate\LessThanOrEqualPredicate;
+use Packaged\QueryBuilder\Predicate\NotBetweenPredicate;
 use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
 use Packaged\QueryBuilder\Predicate\PredicateSet;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
@@ -160,14 +161,25 @@ class CqlAssembler extends QueryAssembler
   {
     $gte = new GreaterThanOrEqualPredicate();
     $gte->setField($betweenPredicate->getField());
-    $gte->setExpression($betweenPredicate->getRangeStart());
     $lte = new LessThanOrEqualPredicate();
     $lte->setField($betweenPredicate->getField());
-    $lte->setExpression($betweenPredicate->getRangeEnd());
 
     $set = new PredicateSet();
-    $set->addPredicate($gte);
-    $set->addPredicate($lte);
+    if($betweenPredicate instanceof NotBetweenPredicate)
+    {
+      $gte->setExpression($betweenPredicate->getRangeEnd());
+      $lte->setExpression($betweenPredicate->getRangeStart());
+      $set->addPredicate($lte);
+      $set->addPredicate($gte);
+    }
+    else
+    {
+      $gte->setExpression($betweenPredicate->getRangeStart());
+      $lte->setExpression($betweenPredicate->getRangeEnd());
+      $set->addPredicate($gte);
+      $set->addPredicate($lte);
+    }
+
     return $this->assembleSegment($set);
   }
 

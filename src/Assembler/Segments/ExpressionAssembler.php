@@ -172,13 +172,7 @@ class ExpressionAssembler extends AbstractSegmentAssembler
     }
     else if(is_scalar($value))
     {
-      if(is_string($value))
-      {
-        return $this->assembleStringExpression(
-          StringExpression::create($value)
-        );
-      }
-      else if(is_numeric($value))
+      if(!is_string($value) && is_numeric($value))
       {
         return $this->assembleNumericExpression(
           NumericExpression::create($value)
