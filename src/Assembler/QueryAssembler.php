@@ -34,7 +34,8 @@ class QueryAssembler
 
   /**
    * @param IStatement $statement
-   * @param bool       $forPrepare If the statement should be build with parameters
+   * @param bool       $forPrepare If the statement should be build with
+   *                               parameters
    */
   public function __construct(IStatement $statement = null, $forPrepare = true)
   {
@@ -105,13 +106,13 @@ class QueryAssembler
     {
       $assembler = new ExpressionAssembler($segment);
     }
-
-    if($assembler !== null && $assembler instanceof AbstractSegmentAssembler)
+    else
     {
-      $assembler->setAssembler($this);
-      return $assembler->assemble();
+      throw new \Exception("Unsupported segment type " . get_class($segment));
     }
-    throw new \Exception("Unsupported segment type " . get_class($segment));
+
+    $assembler->setAssembler($this);
+    return $assembler->assemble();
   }
 
   public function assembleSegments($segments)
