@@ -78,7 +78,7 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
 
   public function assembleCustomSelect(CustomSelectExpression $expr)
   {
-    return $expr->getField()
+    return $this->assembleSegment($expr->getField())
     . ($expr->hasAlias() ? ' AS ' . $this->escapeField($expr->getAlias()) : '');
   }
 
@@ -96,8 +96,8 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
 
   public function assembleSubQueryExpression(SubQuerySelectExpression $expr)
   {
-    return '(' . $this->assembleSegment($expr->getQuery())
-    . ') AS ' . $this->escapeField($expr->getAlias());
+    return '(' . $this->assembleSegment($expr->getQuery()) . ')'
+    . ($expr->hasAlias() ? ' AS ' . $this->escapeField($expr->getAlias()) : '');
   }
 
   public function assembleConcatSelectExpression(ConcatSelectExpression $expr)

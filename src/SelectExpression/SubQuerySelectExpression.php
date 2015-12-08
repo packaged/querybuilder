@@ -27,6 +27,7 @@ class SubQuerySelectExpression implements ISelectExpression
       $this->_alias = substr(md5(QueryAssembler::stringify($query)), 0, 6);
     }
     $this->_query = $query;
+    return $this;
   }
 
   public static function create(QueryStatement $query, $alias = null)

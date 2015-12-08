@@ -13,7 +13,7 @@ class SubQuerySelectExpressionTest extends \PHPUnit_Framework_TestCase
   protected function _basicQuery()
   {
     $statement = new QueryStatement();
-    $select    = (new SelectClause())->addExpression(new AllSelectExpression());
+    $select = (new SelectClause())->addExpression(new AllSelectExpression());
     $statement->addClause($select);
     $from = (new FromClause())->setTable('tbl');
     $statement->addClause($from);
@@ -39,6 +39,12 @@ class SubQuerySelectExpressionTest extends \PHPUnit_Framework_TestCase
         0,
         6
       ),
+      QueryAssembler::stringify($selector)
+    );
+
+    $selector = SubQuerySelectExpression::create($statement)->setAlias(null);
+    $this->assertEquals(
+      '(SELECT * FROM tbl)',
       QueryAssembler::stringify($selector)
     );
   }
