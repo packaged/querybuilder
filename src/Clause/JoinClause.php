@@ -28,11 +28,13 @@ class JoinClause extends AbstractPredicateClause
   public function setSourceField($table, $field)
   {
     $this->_src = [$table, $field];
+    return $this;
   }
 
   public function setDestinationField($table, $field)
   {
     $this->_dest = [$table, $field];
+    return $this;
   }
 
   public function getSource()
