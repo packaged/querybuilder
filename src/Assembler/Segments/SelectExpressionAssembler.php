@@ -13,6 +13,7 @@ use Packaged\QueryBuilder\SelectExpression\ISelectExpression;
 use Packaged\QueryBuilder\SelectExpression\NowSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\SubQuerySelectExpression;
 use Packaged\QueryBuilder\SelectExpression\SubStringSelectExpression;
+use Packaged\QueryBuilder\SelectExpression\TableSelectExpression;
 
 class SelectExpressionAssembler extends AbstractSegmentAssembler
 {
@@ -73,6 +74,10 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
     {
       return $this->assembleField($this->_segment);
     }
+    else if($this->_segment instanceof TableSelectExpression)
+    {
+      return $this->assembleTable($this->_segment);
+    }
     return parent::assemble();
   }
 
@@ -118,6 +123,13 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
   public function assembleField(FieldSelectExpression $field)
   {
     return $this->assembleSegment($field->getField())
+    . ($field->hasAlias()
+      ? ' AS ' . $this->escapeField($field->getAlias()) : '');
+  }
+
+  public function assembleTable(TableSelectExpression $field)
+  {
+    return $this->assembleSegment($field->getTable())
     . ($field->hasAlias()
       ? ' AS ' . $this->escapeField($field->getAlias()) : '');
   }

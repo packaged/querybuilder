@@ -6,12 +6,11 @@ php:
 
 before_script:
   - composer self-update
-  - composer install --no-interaction --prefer-source
-  - composer require satooshi/php-coveralls:dev-master --dev --no-progress --prefer-source
+  - composer install --no-interaction --no-progress --prefer-dist -o
 
 script:
  - mkdir -p build/logs
- - phpunit --coverage-clover build/logs/clover.xml
+ - vendor/phpunit/phpunit/phpunit --coverage-clover build/logs/clover.xml
 
 after_script:
   - php vendor/bin/coveralls -v
