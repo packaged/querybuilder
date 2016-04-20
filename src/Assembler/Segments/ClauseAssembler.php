@@ -68,17 +68,24 @@ class ClauseAssembler extends AbstractSegmentAssembler
 
   public function assembleJoinClause(JoinClause $clause)
   {
-    return $clause->getAction() . ' '
-    . $this->assembleSegment($clause->getTable()) . ' ON '
-    . $this->assembleSegment($clause->getSource()) . ' = '
-    . $this->assembleSegment($clause->getDestination())
-    . ($clause->hasPredicates() ?
-      ' AND ' .
-      implode(
-        $clause->getGlue(),
+    $segments = [];
+    $source = $clause->getSource();
+    $destination = $clause->getDestination();
+    if($source && $destination)
+    {
+      $segments[] = $this->assembleSegment($source)
+        . ' = ' . $this->assembleSegment($destination);
+    }
+    if($clause->hasPredicates())
+    {
+      $segments = array_merge(
+        $segments,
         $this->assembleSegments($clause->getPredicates())
-      )
-      : '');
+      );
+    }
+    return $clause->getAction() . ' '
+    . $this->assembleSegment($clause->getTable())
+    . ' ON ' . implode($clause->getGlue(), $segments);
   }
 
   public function assembleInsertClause(InsertClause $clause)

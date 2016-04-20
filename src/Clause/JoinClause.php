@@ -7,8 +7,8 @@ use Packaged\QueryBuilder\Expression\TableExpression;
 class JoinClause extends AbstractPredicateClause
 {
   protected $_table;
-  protected $_src = [null, null];
-  protected $_dest = [null, null];
+  protected $_src = null;
+  protected $_dest = null;
 
   public function setTableName($table)
   {
@@ -39,12 +39,20 @@ class JoinClause extends AbstractPredicateClause
 
   public function getSource()
   {
-    return FieldExpression::createWithTable($this->_src[1], $this->_src[0]);
+    if(is_array($this->_src))
+    {
+      return FieldExpression::createWithTable($this->_src[1], $this->_src[0]);
+    }
+    return $this->_src;
   }
 
   public function getDestination()
   {
-    return FieldExpression::createWithTable($this->_dest[1], $this->_dest[0]);
+    if(is_array($this->_dest))
+    {
+      return FieldExpression::createWithTable($this->_dest[1], $this->_dest[0]);
+    }
+    return $this->_dest;
   }
 
   /**

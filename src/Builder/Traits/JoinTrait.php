@@ -43,4 +43,19 @@ trait JoinTrait
     $this->addClause($join);
     return $this;
   }
+
+  public function joinWithPredicates($table, ...$predicates)
+  {
+    if(empty($predicates))
+    {
+      throw new \RuntimeException('No predicates specified for join');
+    }
+
+    $join = new JoinClause();
+    $join->setTableName($table);
+    $join->setPredicates(WhereClause::buildPredicates($predicates, $table));
+
+    $this->addClause($join);
+    return $this;
+  }
 }
