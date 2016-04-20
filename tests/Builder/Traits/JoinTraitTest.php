@@ -7,6 +7,7 @@ use Packaged\QueryBuilder\Clause\FromClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\TableExpression;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
+use Packaged\QueryBuilder\SelectExpression\TableSelectExpression;
 use Packaged\QueryBuilder\Statement\AbstractStatement;
 
 class JoinTraitTest extends \PHPUnit_Framework_TestCase
@@ -27,16 +28,16 @@ class JoinTraitTest extends \PHPUnit_Framework_TestCase
       QueryAssembler::stringify($class)
     );
     $class->joinWithPredicates(
-      'tbl4',
+      TableSelectExpression::createWithAlias('tbl4', 't4'),
       EqualPredicate::create(
         FieldExpression::createWithTable('email', 'tbl2'),
-        FieldExpression::createWithTable('email', 'tbl4')
+        FieldExpression::createWithTable('email', 't4')
       )
     );
     $this->assertEquals(
       'FROM tbl JOIN tbl2 ON tbl.email = tbl2.email '
       . 'JOIN tbl3 ON tbl.user = tbl3.user_id '
-      . 'JOIN tbl4 ON tbl2.email = tbl4.email',
+      . 'JOIN tbl4 AS t4 ON tbl2.email = t4.email',
       QueryAssembler::stringify($class)
     );
   }

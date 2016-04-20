@@ -22,7 +22,11 @@ class JoinClause extends AbstractPredicateClause
     {
       return $this->_table;
     }
-    return TableExpression::create($this->_table);
+    elseif(is_scalar($this->_table))
+    {
+      return TableExpression::create($this->_table);
+    }
+    return $this->_table;
   }
 
   public function setSourceField($table, $field)
