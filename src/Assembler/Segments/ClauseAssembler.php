@@ -71,7 +71,7 @@ class ClauseAssembler extends AbstractSegmentAssembler
     $segments = [];
     $source = $clause->getSource();
     $destination = $clause->getDestination();
-    if($source && $destination)
+    if($source !== null && $destination !== null)
     {
       $segments[] = $this->assembleSegment($source)
         . ' = ' . $this->assembleSegment($destination);
