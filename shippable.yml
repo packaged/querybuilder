@@ -9,4 +9,4 @@ build:
   ci:
     - composer self-update
     - composer install --no-interaction --no-progress --prefer-dist -o
-    - vendor/phpunit/phpunit/phpunit -dzend.enable_gc=0 --log-junit shippable/testresults/junit.xml --coverage-xml shippable/codecoverage -c phpunit.xml
+    - vendor/phpunit/phpunit/phpunit -dzend.enable_gc=0 --log-junit shippable/testresults/junit.xml --coverage-xml shippable/codecoverage -c phpunit.xml.dist
