@@ -24,9 +24,6 @@ class TableSelectExpression implements ISelectExpression
     return $this;
   }
 
-  /**
-   * @return TableExpression
-   */
   public function getTable()
   {
     return $this->_table;

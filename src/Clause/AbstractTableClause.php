@@ -13,9 +13,6 @@ abstract class AbstractTableClause implements IClause
     return $this;
   }
 
-  /**
-   * @return TableExpression
-   */
   public function getTable()
   {
     if($this->_table instanceof TableExpression)

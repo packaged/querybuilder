@@ -2,11 +2,13 @@
 namespace Packaged\Tests\QueryBuilder\Builder\Traits;
 
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
+use Packaged\QueryBuilder\Builder\QueryBuilder;
 use Packaged\QueryBuilder\Builder\Traits\JoinTrait;
 use Packaged\QueryBuilder\Clause\FromClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\TableExpression;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
+use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\TableSelectExpression;
 use Packaged\QueryBuilder\Statement\AbstractStatement;
 
@@ -39,6 +41,18 @@ class JoinTraitTest extends \PHPUnit_Framework_TestCase
       . 'JOIN tbl3 ON tbl.user = tbl3.user_id '
       . 'JOIN tbl4 AS t4 ON tbl2.email = t4.email',
       QueryAssembler::stringify($class)
+    );
+  }
+
+  public function testFullStmt()
+  {
+    $query = QueryBuilder::select(AllSelectExpression::create())
+      ->from(TableSelectExpression::createWithAlias('table_one', 't1'))
+      ->join(TableSelectExpression::create('table_two'), 'myfield');
+
+    $this->assertEquals(
+      'SELECT * FROM table_one AS t1 JOIN table_two ON t1.myfield = table_two.myfield',
+      QueryAssembler::stringify($query)
     );
   }
 

@@ -4,6 +4,8 @@ namespace Packaged\QueryBuilder\Builder\Traits;
 use Packaged\QueryBuilder\Clause\FromClause;
 use Packaged\QueryBuilder\Clause\JoinClause;
 use Packaged\QueryBuilder\Clause\WhereClause;
+use Packaged\QueryBuilder\Expression\TableExpression;
+use Packaged\QueryBuilder\SelectExpression\TableSelectExpression;
 use Packaged\QueryBuilder\Statement\IStatement;
 
 trait JoinTrait
@@ -21,7 +23,17 @@ trait JoinTrait
     $from = $this->getClause('FROM');
     if($from instanceof FromClause)
     {
-      $sourceTable = $from->getTable()->getTableName();
+      $sourceTable = $from->getTable();
+      if($sourceTable instanceof TableSelectExpression)
+      {
+        /** @var TableSelectExpression $sourceTable */
+        $sourceTable = $sourceTable->getAlias();
+      }
+      else if($sourceTable instanceof TableExpression)
+      {
+        /** @var TableExpression $sourceTable */
+        $sourceTable = $sourceTable->getTableName();
+      }
     }
     else
     {
