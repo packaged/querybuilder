@@ -36,7 +36,7 @@ class LikePredicateTest extends \PHPUnit_Framework_TestCase
     );
     $predicate->setExpression(EndsWithExpression::create('abc'));
     $this->assertEquals(
-      'field LIKE "abc%"',
+      'field LIKE "%abc"',
       QueryAssembler::stringify($predicate)
     );
     $predicate->setExpression(ContainsExpression::create('abc'));
@@ -46,7 +46,7 @@ class LikePredicateTest extends \PHPUnit_Framework_TestCase
     );
     $predicate->setExpression(StartsWithExpression::create('abc'));
     $this->assertEquals(
-      'field LIKE "%abc"',
+      'field LIKE "abc%"',
       QueryAssembler::stringify($predicate)
     );
     $predicate->setExpression(CustomLikeExpression::create('a%bc'));
@@ -66,7 +66,7 @@ class LikePredicateTest extends \PHPUnit_Framework_TestCase
       StartsWithExpression::create('abc')
     );
     $this->assertEquals(
-      'field LIKE "%abc"',
+      'field LIKE "abc%"',
       QueryAssembler::stringify($predicate)
     );
   }

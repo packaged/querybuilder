@@ -36,7 +36,7 @@ class NotLikePredicateTest extends \PHPUnit_Framework_TestCase
     );
     $predicate->setExpression(EndsWithExpression::create('abc'));
     $this->assertEquals(
-      'field NOT LIKE "abc%"',
+      'field NOT LIKE "%abc"',
       QueryAssembler::stringify($predicate)
     );
     $predicate->setExpression(ContainsExpression::create('abc'));
@@ -46,7 +46,7 @@ class NotLikePredicateTest extends \PHPUnit_Framework_TestCase
     );
     $predicate->setExpression(StartsWithExpression::create('abc'));
     $this->assertEquals(
-      'field NOT LIKE "%abc"',
+      'field NOT LIKE "abc%"',
       QueryAssembler::stringify($predicate)
     );
     $predicate->setExpression(CustomLikeExpression::create('a%bc'));

@@ -5,6 +5,6 @@ class EndsWithExpression extends CustomLikeExpression
 {
   public function getValue()
   {
-    return parent::getValue() . '%';
+    return '%' . parent::getValue();
   }
 }

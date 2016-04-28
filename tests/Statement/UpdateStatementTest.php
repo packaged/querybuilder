@@ -3,7 +3,7 @@ namespace Packaged\Tests\QueryBuilder\Statement;
 
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Builder\QueryBuilder;
-use Packaged\QueryBuilder\Expression\Like\EndsWithExpression;
+use Packaged\QueryBuilder\Expression\Like\StartsWithExpression;
 use Packaged\QueryBuilder\Predicate\LikePredicate;
 
 class UpdateStatementTest extends \PHPUnit_Framework_TestCase
@@ -26,7 +26,7 @@ class UpdateStatementTest extends \PHPUnit_Framework_TestCase
 
     $statement->andWhere(
       (new LikePredicate())->setField('name')->setExpression(
-        EndsWithExpression::create('Joh')
+        StartsWithExpression::create('Joh')
       )
     );
     $this->assertEquals(

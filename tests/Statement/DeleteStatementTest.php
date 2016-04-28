@@ -38,7 +38,7 @@ class DeleteStatementTest extends \PHPUnit_Framework_TestCase
     );
     $this->assertEquals(
       'DELETE FROM tbl '
-      . 'WHERE username IS NOT NULL AND name LIKE "Joh%"',
+      . 'WHERE username IS NOT NULL AND name LIKE "%Joh"',
       QueryAssembler::stringify($statement)
     );
   }
