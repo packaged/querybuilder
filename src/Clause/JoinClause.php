@@ -64,7 +64,7 @@ class JoinClause extends AbstractPredicateClause
    */
   public function getAction()
   {
-    return 'JOIN';
+    return 'INNER JOIN';
   }
 
   /**

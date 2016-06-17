@@ -25,11 +25,14 @@ class QueryStatement extends AbstractStatement
       'SELECT',
       'FROM',
       'JOIN',
+      'INNERJOIN',
+      'LEFTOUTERJOIN',
+      'RIGHTOUTERJOIN',
       'WHERE',
       'GROUPBY',
       'HAVING',
       'ORDERBY',
-      'LIMIT'
+      'LIMIT',
     ];
   }
 }

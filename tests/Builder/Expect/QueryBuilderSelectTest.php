@@ -47,7 +47,7 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(
       'SELECT field, field2'
       . ' FROM table'
-      . ' JOIN details ON table.id = details.user_id',
+      . ' INNER JOIN details ON table.id = details.user_id',
       QueryAssembler::stringify($query)
     );
   }
@@ -63,8 +63,8 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(
       'SELECT field, field2'
       . ' FROM table'
-      . ' JOIN details ON table.id = details.user_id'
-      . ' JOIN emails ON table.email = emails.email',
+      . ' INNER JOIN details ON table.id = details.user_id'
+      . ' INNER JOIN emails ON table.email = emails.email',
       QueryAssembler::stringify($query)
     );
   }
@@ -81,9 +81,9 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(
       'SELECT field, field2'
       . ' FROM table'
-      . ' JOIN details ON table.id = details.user_id'
-      . ' JOIN emails ON table.email = emails.email'
-      . ' JOIN comments ON table.id = comments.author AND comments.active = 1',
+      . ' INNER JOIN details ON table.id = details.user_id'
+      . ' INNER JOIN emails ON table.email = emails.email'
+      . ' INNER JOIN comments ON table.id = comments.author AND comments.active = 1',
       QueryAssembler::stringify($query)
     );
   }
@@ -100,9 +100,9 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(
       'SELECT field, field2'
       . ' FROM table'
-      . ' JOIN details ON table.id = details.user_id'
-      . ' JOIN emails ON table.email = emails.email'
-      . ' JOIN comments ON table.id = comments.author AND comments.active = 1'
+      . ' INNER JOIN details ON table.id = details.user_id'
+      . ' INNER JOIN emails ON table.email = emails.email'
+      . ' INNER JOIN comments ON table.id = comments.author AND comments.active = 1'
       . ' WHERE username = "test"',
       QueryAssembler::stringify($query)
     );
@@ -142,9 +142,9 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(
       'SELECT field, field2'
       . ' FROM table'
-      . ' JOIN details ON table.id = details.user_id'
-      . ' JOIN emails ON table.email = emails.email'
-      . ' JOIN comments ON table.id = comments.author AND comments.active = 1'
+      . ' INNER JOIN details ON table.id = details.user_id'
+      . ' INNER JOIN emails ON table.email = emails.email'
+      . ' INNER JOIN comments ON table.id = comments.author AND comments.active = 1'
       . ' WHERE username = "test" OR username = "tester"',
       QueryAssembler::stringify($query)
     );
@@ -164,9 +164,9 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(
       'SELECT field, field2'
       . ' FROM table'
-      . ' JOIN details ON table.id = details.user_id'
-      . ' JOIN emails ON table.email = emails.email'
-      . ' JOIN comments ON table.id = comments.author AND comments.active = 1'
+      . ' INNER JOIN details ON table.id = details.user_id'
+      . ' INNER JOIN emails ON table.email = emails.email'
+      . ' INNER JOIN comments ON table.id = comments.author AND comments.active = 1'
       . ' WHERE username = "test" OR username = "tester"'
       . ' GROUP BY role',
       QueryAssembler::stringify($query)
@@ -188,9 +188,9 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(
       'SELECT field, field2'
       . ' FROM table'
-      . ' JOIN details ON table.id = details.user_id'
-      . ' JOIN emails ON table.email = emails.email'
-      . ' JOIN comments ON table.id = comments.author AND comments.active = 1'
+      . ' INNER JOIN details ON table.id = details.user_id'
+      . ' INNER JOIN emails ON table.email = emails.email'
+      . ' INNER JOIN comments ON table.id = comments.author AND comments.active = 1'
       . ' WHERE username = "test" OR username = "tester"'
       . ' GROUP BY role'
       . ' ORDER BY id DESC',
@@ -214,9 +214,9 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(
       'SELECT field, field2'
       . ' FROM table'
-      . ' JOIN details ON table.id = details.user_id'
-      . ' JOIN emails ON table.email = emails.email'
-      . ' JOIN comments ON table.id = comments.author AND comments.active = 1'
+      . ' INNER JOIN details ON table.id = details.user_id'
+      . ' INNER JOIN emails ON table.email = emails.email'
+      . ' INNER JOIN comments ON table.id = comments.author AND comments.active = 1'
       . ' WHERE username = "test" OR username = "tester"'
       . ' GROUP BY role'
       . ' HAVING count = 23'
@@ -242,9 +242,9 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(
       'SELECT field, field2'
       . ' FROM table'
-      . ' JOIN details ON table.id = details.user_id'
-      . ' JOIN emails ON table.email = emails.email'
-      . ' JOIN comments ON table.id = comments.author AND comments.active = 1'
+      . ' INNER JOIN details ON table.id = details.user_id'
+      . ' INNER JOIN emails ON table.email = emails.email'
+      . ' INNER JOIN comments ON table.id = comments.author AND comments.active = 1'
       . ' WHERE username = "test" OR username = "tester"'
       . ' GROUP BY role'
       . ' HAVING count = 23'
@@ -262,16 +262,16 @@ class QueryBuilderSelectTest extends \PHPUnit_Framework_TestCase
       [
         'OR' => [
           ['name' => 'acme'],
-          ['type' => 'internal']
+          ['type' => 'internal'],
         ],
         [
           'OR' => [
             ['status' => 'active'],
             'NOT' => [
-              ['status' => ['inactive', 'suspended']]
-            ]
-          ]
-        ]
+              ['status' => ['inactive', 'suspended']],
+            ],
+          ],
+        ],
       ]
     );
 

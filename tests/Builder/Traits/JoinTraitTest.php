@@ -20,13 +20,13 @@ class JoinTraitTest extends \PHPUnit_Framework_TestCase
     $class->addClause((new FromClause())->setTable('tbl'));
     $class->join(TableExpression::create('tbl2'), 'email');
     $this->assertEquals(
-      "FROM tbl JOIN tbl2 ON tbl.email = tbl2.email",
+      "FROM tbl INNER JOIN tbl2 ON tbl.email = tbl2.email",
       QueryAssembler::stringify($class)
     );
     $class->join('tbl3', 'user', 'user_id');
     $this->assertEquals(
-      'FROM tbl JOIN tbl2 ON tbl.email = tbl2.email '
-      . 'JOIN tbl3 ON tbl.user = tbl3.user_id',
+      'FROM tbl INNER JOIN tbl2 ON tbl.email = tbl2.email '
+      . 'INNER JOIN tbl3 ON tbl.user = tbl3.user_id',
       QueryAssembler::stringify($class)
     );
     $class->joinWithPredicates(
@@ -37,9 +37,9 @@ class JoinTraitTest extends \PHPUnit_Framework_TestCase
       )
     );
     $this->assertEquals(
-      'FROM tbl JOIN tbl2 ON tbl.email = tbl2.email '
-      . 'JOIN tbl3 ON tbl.user = tbl3.user_id '
-      . 'JOIN tbl4 AS t4 ON tbl2.email = t4.email',
+      'FROM tbl INNER JOIN tbl2 ON tbl.email = tbl2.email '
+      . 'INNER JOIN tbl3 ON tbl.user = tbl3.user_id '
+      . 'INNER JOIN tbl4 AS t4 ON tbl2.email = t4.email',
       QueryAssembler::stringify($class)
     );
   }
@@ -51,7 +51,7 @@ class JoinTraitTest extends \PHPUnit_Framework_TestCase
       ->join(TableSelectExpression::create('table_two'), 'myfield');
 
     $this->assertEquals(
-      'SELECT * FROM table_one AS t1 JOIN table_two ON t1.myfield = table_two.myfield',
+      'SELECT * FROM table_one AS t1 INNER JOIN table_two ON t1.myfield = table_two.myfield',
       QueryAssembler::stringify($query)
     );
   }
@@ -85,6 +85,6 @@ class FinalJoinTrait extends AbstractStatement
 
   protected function _getOrder()
   {
-    return ["FROM", 'JOIN'];
+    return ["FROM", 'INNERJOIN'];
   }
 }

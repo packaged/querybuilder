@@ -3,6 +3,8 @@ namespace Packaged\QueryBuilder\Builder\Traits;
 
 use Packaged\QueryBuilder\Clause\FromClause;
 use Packaged\QueryBuilder\Clause\JoinClause;
+use Packaged\QueryBuilder\Clause\LeftOuterJoinClause;
+use Packaged\QueryBuilder\Clause\RightOuterJoinClause;
 use Packaged\QueryBuilder\Clause\WhereClause;
 use Packaged\QueryBuilder\Expression\TableExpression;
 use Packaged\QueryBuilder\SelectExpression\TableSelectExpression;
@@ -11,6 +13,58 @@ use Packaged\QueryBuilder\Statement\IStatement;
 trait JoinTrait
 {
   public function join($table, $sourceField, $destField = null, $where = null)
+  {
+    return $this->_join(
+      new JoinClause(),
+      $table,
+      $sourceField,
+      $destField,
+      $where
+    );
+  }
+
+  public function innerJoin(
+    $table, $sourceField, $destField = null, $where = null
+  )
+  {
+    return $this->_join(
+      new JoinClause(),
+      $table,
+      $sourceField,
+      $destField,
+      $where
+    );
+  }
+
+  public function leftOuterJoin(
+    $table, $sourceField, $destField = null, $where = null
+  )
+  {
+    return $this->_join(
+      new LeftOuterJoinClause(),
+      $table,
+      $sourceField,
+      $destField,
+      $where
+    );
+  }
+
+  public function rightOuterJoin(
+    $table, $sourceField, $destField = null, $where = null
+  )
+  {
+    return $this->_join(
+      new RightOuterJoinClause(),
+      $table,
+      $sourceField,
+      $destField,
+      $where
+    );
+  }
+
+  private function _join(
+    JoinClause $join, $table, $sourceField, $destField = null, $where = null
+  )
   {
     /**
      * @var $this IStatement
@@ -42,7 +96,6 @@ trait JoinTrait
       );
     }
 
-    $join = new JoinClause();
     $join->setTableName($table);
     $join->setDestinationField($table, $destField);
     $join->setSourceField($sourceTable, $sourceField);
