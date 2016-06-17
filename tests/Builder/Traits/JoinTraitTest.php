@@ -56,6 +56,42 @@ class JoinTraitTest extends \PHPUnit_Framework_TestCase
     );
   }
 
+  public function testInnerFullStmt()
+  {
+    $query = QueryBuilder::select(AllSelectExpression::create())
+      ->from(TableSelectExpression::createWithAlias('table_one', 't1'))
+      ->innerJoin(TableSelectExpression::create('table_two'), 'myfield');
+
+    $this->assertEquals(
+      'SELECT * FROM table_one AS t1 INNER JOIN table_two ON t1.myfield = table_two.myfield',
+      QueryAssembler::stringify($query)
+    );
+  }
+
+  public function testRightFullStmt()
+  {
+    $query = QueryBuilder::select(AllSelectExpression::create())
+      ->from(TableSelectExpression::createWithAlias('table_one', 't1'))
+      ->rightOuterJoin(TableSelectExpression::create('table_two'), 'myfield');
+
+    $this->assertEquals(
+      'SELECT * FROM table_one AS t1 RIGHT OUTER JOIN table_two ON t1.myfield = table_two.myfield',
+      QueryAssembler::stringify($query)
+    );
+  }
+
+  public function testLeftFullStmt()
+  {
+    $query = QueryBuilder::select(AllSelectExpression::create())
+      ->from(TableSelectExpression::createWithAlias('table_one', 't1'))
+      ->leftOuterJoin(TableSelectExpression::create('table_two'), 'myfield');
+
+    $this->assertEquals(
+      'SELECT * FROM table_one AS t1 LEFT OUTER JOIN table_two ON t1.myfield = table_two.myfield',
+      QueryAssembler::stringify($query)
+    );
+  }
+
   /**
    * @expectedException \RuntimeException
    * @expectedExceptionMessage No predicates specified for join
