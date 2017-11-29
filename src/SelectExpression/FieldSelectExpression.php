@@ -10,6 +10,7 @@ class FieldSelectExpression implements ISelectExpression
   use AliasTrait;
 
   protected $_field;
+  protected $_collation = '';
 
   public function setField($field, $table = null)
   {
@@ -33,13 +34,32 @@ class FieldSelectExpression implements ISelectExpression
   }
 
   /**
+   * @param string $collation
+   *
+   * @return $this
+   */
+  public function setCollation($collation)
+  {
+    $this->_collation = $collation;
+    return $this;
+  }
+
+  /**
+   * @return string
+   */
+  public function getCollation()
+  {
+    return $this->_collation;
+  }
+
+  /**
    * @param $field
    *
    * @return static
    */
   public static function create($field)
   {
-    $expression = new static;
+    $expression = new static();
     $expression->setField($field);
     return $expression;
   }
@@ -52,7 +72,7 @@ class FieldSelectExpression implements ISelectExpression
    */
   public static function createWithAlias($field, $alias)
   {
-    $expression = new static;
+    $expression = new static();
     $expression->setField($field);
     if($alias !== null)
     {
