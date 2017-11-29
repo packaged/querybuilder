@@ -122,9 +122,16 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
 
   public function assembleField(FieldSelectExpression $field)
   {
-    return $this->assembleSegment($field->getField())
-    . ($field->hasAlias()
-      ? ' AS ' . $this->escapeField($field->getAlias()) : '');
+    $result = $this->assembleSegment($field->getField());
+    if($collation = $field->getCollation())
+    {
+      $result .= ' COLLATE ' . $collation;
+    }
+    if($alias = $field->hasAlias())
+    {
+      $result .= ' AS ' . $this->escapeField($field->getAlias());
+    }
+    return $result;
   }
 
   public function assembleTable(TableSelectExpression $field)

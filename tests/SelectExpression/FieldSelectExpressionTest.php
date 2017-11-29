@@ -48,4 +48,15 @@ class FieldSelectExpressionTest extends \PHPUnit_Framework_TestCase
       )
     );
   }
+
+  public function testCollation()
+  {
+    $expression = FieldSelectExpression::create('fieldname');
+    $expression->setCollation('utf8mb4_unicode_ci');
+    $this->assertEquals('fieldname COLLATE utf8mb4_unicode_ci', QueryAssembler::stringify($expression));
+
+    $expression = FieldSelectExpression::createWithAlias('fieldname', 'ali');
+    $expression->setCollation('utf8mb4_unicode_ci');
+    $this->assertEquals('fieldname COLLATE utf8mb4_unicode_ci AS ali', QueryAssembler::stringify($expression));
+  }
 }

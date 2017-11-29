@@ -102,8 +102,12 @@ class ExpressionAssembler extends AbstractSegmentAssembler
 
   public function assembleStringExpression(StringExpression $expr)
   {
-    return $this->_assemblePrepared()
-      ?: $this->escapeValue($expr->getValue());
+    $result = $this->_assemblePrepared() ?: $this->escapeValue($expr->getValue());
+    if($collation = $expr->getCollation())
+    {
+      $result .= ' COLLATE ' . $collation;
+    }
+    return $result;
   }
 
   public function assembleArrayExpression(ArrayExpression $expr)
