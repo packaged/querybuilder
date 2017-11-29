@@ -6,14 +6,14 @@ use Packaged\QueryBuilder\Expression\Like\ContainsExpression;
 use Packaged\QueryBuilder\Expression\Like\CustomLikeExpression;
 use Packaged\QueryBuilder\Expression\Like\EndsWithExpression;
 use Packaged\QueryBuilder\Expression\Like\StartsWithExpression;
-use Packaged\QueryBuilder\Expression\StringExpression;
-use Packaged\QueryBuilder\Predicate\LikeBinaryPredicate;
+use Packaged\QueryBuilder\Predicate\LikePredicate;
 
 class LikeBinaryPredicateTest extends \PHPUnit_Framework_TestCase
 {
   public function testAssemble()
   {
-    $predicate = new LikeBinaryPredicate();
+    $predicate = new LikePredicate();
+    $predicate->setBinary(true);
     $predicate->setField('field');
     $this->assertEquals(
       'field LIKE BINARY NULL',
@@ -55,30 +55,21 @@ class LikeBinaryPredicateTest extends \PHPUnit_Framework_TestCase
       QueryAssembler::stringify($predicate)
     );
 
-    $predicate = LikeBinaryPredicate::create('field', 'a%bc');
+    $predicate = LikePredicate::create('field', 'a%bc');
+    $predicate->setBinary(true);
     $this->assertEquals(
       'field LIKE BINARY "a%bc"',
       QueryAssembler::stringify($predicate)
     );
 
-    $predicate = LikeBinaryPredicate::create(
+    $predicate = LikePredicate::create(
       'field',
       StartsWithExpression::create('abc')
     );
+    $predicate->setBinary(true);
     $this->assertEquals(
       'field LIKE BINARY "abc%"',
       QueryAssembler::stringify($predicate)
     );
-  }
-
-  /**
-   * @expectedException \Exception
-   * @expectedExceptionMessage Invalid Expression Type
-   */
-  public function testInvalidExpression()
-  {
-    $predicate = new LikeBinaryPredicate();
-    $predicate->setField('field');
-    $predicate->setExpression(StringExpression::create('a%bc'));
   }
 }

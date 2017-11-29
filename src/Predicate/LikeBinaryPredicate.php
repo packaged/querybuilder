@@ -1,6 +1,9 @@
 <?php
 namespace Packaged\QueryBuilder\Predicate;
 
+/**
+ * @deprecated
+ */
 class LikeBinaryPredicate extends LikePredicate
 {
   /**
