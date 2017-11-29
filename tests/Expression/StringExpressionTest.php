@@ -26,4 +26,12 @@ class StringExpressionTest extends \PHPUnit_Framework_TestCase
     $expression->setValue("'a'b'c'");
     $this->assertEquals("'''a''b''c'''", CqlAssembler::stringify($expression));
   }
+
+  public function testCollation()
+  {
+    $expression = new StringExpression();
+    $expression->setValue('testing');
+    $expression->setCollation('utf8mb4_unicode_ci');
+    $this->assertEquals('"testing" COLLATE utf8mb4_unicode_ci', QueryAssembler::stringify($expression));
+  }
 }
