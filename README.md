@@ -3,7 +3,7 @@ Query Builder
 
 [![Latest Stable Version](https://poser.pugx.org/packaged/querybuilder/version.png)](https://packagist.org/packages/packaged/querybuilder)
 [![Total Downloads](https://poser.pugx.org/packaged/querybuilder/d/total.png)](https://packagist.org/packages/packaged/querybuilder)
-[![Build Status](https://travis-ci.org/packaged/querybuilder.png)](https://travis-ci.org/packaged/querybuilder)
+[![CircleCI](https://circleci.com/gh/packaged/querybuilder.svg?style=shield)](https://circleci.com/gh/packaged/querybuilder)
 [![Dependency Status](https://www.versioneye.com/php/packaged:querybuilder/badge.png)](https://www.versioneye.com/php/packaged:querybuilder)
 [![HHVM Status](http://hhvm.h4cc.de/badge/packaged/querybuilder.png)](http://hhvm.h4cc.de/package/packaged/querybuilder)
 [![Coverage Status](https://coveralls.io/repos/packaged/querybuilder/badge.png)](https://coveralls.io/r/packaged/querybuilder)
