@@ -6,13 +6,36 @@ use Packaged\QueryBuilder\Expression\Like\CustomLikeExpression;
 
 class LikePredicate extends AbstractOperatorPredicate
 {
+  protected $_binary = false;
+
   /**
    * Operator e.g. =, >= >
+   *
    * @return string
    */
   public function getOperator()
   {
+    if($this->getBinary())
+    {
+      return 'LIKE BINARY';
+    }
     return 'LIKE';
+  }
+
+  /**
+   * @param bool $binary
+   *
+   * @return $this
+   */
+  public function setBinary($binary)
+  {
+    $this->_binary = (bool)$binary;
+    return $this;
+  }
+
+  public function getBinary()
+  {
+    return $this->_binary;
   }
 
   public function setExpression(IExpression $value)
