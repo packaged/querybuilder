@@ -1,7 +1,7 @@
 <?php
 namespace Packaged\QueryBuilder\SelectExpression;
 
-use Packaged\QueryBuilder\Assembler\QueryAssembler;
+use Packaged\Helpers\Strings;
 use Packaged\QueryBuilder\SelectExpression\Traits\AliasTrait;
 use Packaged\QueryBuilder\Statement\QueryStatement;
 
@@ -24,7 +24,7 @@ class SubQuerySelectExpression implements ISelectExpression
     $this->_alias = $alias;
     if($this->_alias === null)
     {
-      $this->_alias = substr(md5(QueryAssembler::stringify($query)), 0, 6);
+      $this->_alias = 't' . Strings::randomString(5);
     }
     $this->_query = $query;
     return $this;
@@ -32,7 +32,7 @@ class SubQuerySelectExpression implements ISelectExpression
 
   public static function create(QueryStatement $query, $alias = null)
   {
-    $expression = new static;
+    $expression = new static();
     $expression->setQuery($query, $alias);
     return $expression;
   }

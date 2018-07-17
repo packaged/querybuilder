@@ -34,37 +34,23 @@ class SubQuerySelectExpressionTest extends \PHPUnit_Framework_TestCase
     $selector = new SubQuerySelectExpression();
     $selector->setQuery($statement);
     $this->assertEquals(
-      '(SELECT * FROM tbl) AS ' . substr(
-        md5(QueryAssembler::stringify($statement)),
-        0,
-        6
-      ),
+      '(SELECT * FROM tbl) AS ' . $selector->getAlias(),
       QueryAssembler::stringify($selector)
     );
 
     $selector = SubQuerySelectExpression::create($statement)->setAlias(null);
-    $this->assertEquals(
-      '(SELECT * FROM tbl)',
-      QueryAssembler::stringify($selector)
-    );
+    $this->assertEquals('(SELECT * FROM tbl)', QueryAssembler::stringify($selector));
   }
 
   public function testStatic()
   {
     $statement = $this->_basicQuery();
+    $subQuery = SubQuerySelectExpression::create($statement, 'query');
+    $this->assertEquals('(SELECT * FROM tbl) AS query', QueryAssembler::stringify($subQuery));
+
     $this->assertEquals(
-      '(SELECT * FROM tbl) AS query',
-      QueryAssembler::stringify(
-        SubQuerySelectExpression::create($statement, 'query')
-      )
-    );
-    $this->assertEquals(
-      '(SELECT * FROM tbl) AS ' . substr(
-        md5(QueryAssembler::stringify($statement)),
-        0,
-        6
-      ),
-      QueryAssembler::stringify(SubQuerySelectExpression::create($statement))
+      '(SELECT * FROM tbl) AS ' . $subQuery->getAlias(),
+      QueryAssembler::stringify(SubQuerySelectExpression::create($statement)->setAlias('query'))
     );
   }
 }
