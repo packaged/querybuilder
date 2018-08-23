@@ -10,10 +10,10 @@ class LengthSelectExpressionTest extends \PHPUnit_Framework_TestCase
   {
     $selector = new LengthSelectExpression();
     $selector->setField('fieldname');
-    $this->assertEquals('LEN(fieldname)', QueryAssembler::stringify($selector));
+    $this->assertEquals('LENGTH(fieldname)', QueryAssembler::stringify($selector));
     $selector->setAlias('ln');
     $this->assertEquals(
-      'LEN(fieldname) AS ln',
+      'LENGTH(fieldname) AS ln',
       QueryAssembler::stringify($selector)
     );
   }

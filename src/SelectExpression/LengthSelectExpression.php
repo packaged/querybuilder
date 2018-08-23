@@ -10,6 +10,6 @@ class LengthSelectExpression extends FunctionSelectExpression
    */
   public function getFunctionName()
   {
-    return 'LEN';
+    return 'LENGTH';
   }
 }
