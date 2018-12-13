@@ -47,6 +47,18 @@ class SelectClauseTest extends \PHPUnit_Framework_TestCase
     );
 
     $clause->clearExpressions();
+    $clause->addTableField('tbl', 'first');
+    $this->assertEquals('SELECT tbl.first', QueryAssembler::stringify($clause));
+
+    $clause->clearExpressions();
+    $clause->addTableField('tbl', 'first', 'bob');
+    $this->assertEquals('SELECT tbl.first AS bob', QueryAssembler::stringify($clause));
+
+    $clause->clearExpressions();
+    $clause->addTableFields('tbl', ['first', 'second', 'third']);
+    $this->assertEquals('SELECT tbl.first, tbl.second, tbl.third', QueryAssembler::stringify($clause));
+
+    $clause->clearExpressions();
     $clause->addField('first');
     $clause->setDistinct(true);
     $this->assertEquals(
@@ -61,8 +73,8 @@ class SelectClauseTest extends \PHPUnit_Framework_TestCase
   public function testGettersAndSetters()
   {
     $clause = new SelectClause();
-    $field  = new FieldSelectExpression();
-    $now    = new NowSelectExpression();
+    $field = new FieldSelectExpression();
+    $now = new NowSelectExpression();
 
     $this->assertFalse($clause->hasExpressions());
     $clause->addExpression($field);

@@ -2,6 +2,7 @@
 namespace Packaged\QueryBuilder\Clause;
 
 use Packaged\Helpers\Arrays;
+use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\SelectExpression\ConcatSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\ISelectExpression;
@@ -92,6 +93,21 @@ class SelectClause implements IClause
       throw new \InvalidArgumentException("Invalid field type entered");
     }
     return $this;
+  }
+
+  public function addTableField($table, $field, $alias = null)
+  {
+    return $this->addField(
+      FieldSelectExpression::createWithAlias(FieldExpression::createWithTable($field, $table), $alias)
+    );
+  }
+
+  public function addTableFields($table, $fields)
+  {
+    foreach($fields as $field)
+    {
+      $this->addTableField($table, $field);
+    }
   }
 
   /**
