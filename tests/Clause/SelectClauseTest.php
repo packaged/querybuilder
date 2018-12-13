@@ -51,6 +51,11 @@ class SelectClauseTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals('SELECT tbl.first', QueryAssembler::stringify($clause));
 
     $clause->clearExpressions();
+    $clause->addTableField('tbl1', 'first');
+    $clause->addTableField('tbl2', 'second');
+    $this->assertEquals('SELECT tbl1.first, tbl2.second', QueryAssembler::stringify($clause));
+
+    $clause->clearExpressions();
     $clause->addTableField('tbl', 'first', 'bob');
     $this->assertEquals('SELECT tbl.first AS bob', QueryAssembler::stringify($clause));
 
