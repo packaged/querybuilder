@@ -108,6 +108,7 @@ class SelectClause implements IClause
     {
       $this->addTableField($table, $field);
     }
+    return $this;
   }
 
   /**
