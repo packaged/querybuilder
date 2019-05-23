@@ -4,6 +4,7 @@ namespace Packaged\QueryBuilder\Builder\Traits;
 use Packaged\QueryBuilder\Clause\SetClause;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Statement\IStatement;
+use function is_array;
 
 trait SetTrait
 {
@@ -19,7 +20,17 @@ trait SetTrait
       $this->addClause($set);
     }
 
-    $set->addPredicate(EqualPredicate::create($field, $value)->forceOperator());
+    if(is_array($value))
+    {
+      foreach($value as $exp)
+      {
+        $set->addPredicate(EqualPredicate::create($field, $exp)->forceOperator());
+      }
+    }
+    else
+    {
+      $set->addPredicate(EqualPredicate::create($field, $value)->forceOperator());
+    }
 
     return $this;
   }
