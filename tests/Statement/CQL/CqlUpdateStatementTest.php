@@ -3,6 +3,8 @@ namespace Packaged\Tests\QueryBuilder\Statement\CQL;
 
 use Packaged\QueryBuilder\Assembler\CQL\CqlAssembler;
 use Packaged\QueryBuilder\Builder\CQL\CqlQueryBuilder;
+use Packaged\QueryBuilder\Expression\DecrementExpression;
+use Packaged\QueryBuilder\Expression\IncrementExpression;
 
 class CqlUpdateStatementTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,6 +22,30 @@ class CqlUpdateStatementTest extends \PHPUnit_Framework_TestCase
       $assembler->getQuery()
     );
     $this->assertEquals(['value1'], $assembler->getParameters());
+  }
+
+  public function testUpdateInitCounter()
+  {
+    $stmt = CqlQueryBuilder::update(
+      'tbl',
+      [
+        'counter' => [
+          IncrementExpression::create('counter', 1),
+          DecrementExpression::create('counter', 2),
+        ],
+      ]
+    );
+    $this->assertEquals(
+      'UPDATE "tbl" SET "counter" = "counter" + 1, "counter" = "counter" - 2',
+      CqlAssembler::stringify($stmt)
+    );
+
+    $assembler = new CqlAssembler($stmt);
+    $this->assertEquals(
+      'UPDATE "tbl" SET "counter" = "counter" + ?, "counter" = "counter" - ?',
+      $assembler->getQuery()
+    );
+    $this->assertEquals([1, 2], $assembler->getParameters());
   }
 
   public function testUpdateTtl()
