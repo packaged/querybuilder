@@ -12,6 +12,16 @@ class SelectClause implements IClause
   protected $_expressions = [];
   protected $_distinct = false;
 
+  public static function create(...$fields)
+  {
+    $select = new static();
+    foreach($fields as $field)
+    {
+      $select->addField($field);
+    }
+    return $select;
+  }
+
   public function setDistinct($distinct = true)
   {
     $this->_distinct = $distinct;

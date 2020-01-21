@@ -11,28 +11,7 @@ trait GroupByTrait
     /**
      * @var $this IStatement
      */
-
-    $groupClause = new GroupByClause();
-    if(func_num_args() > 1)
-    {
-      foreach(func_get_args() as $field)
-      {
-        $groupClause->addField($field);
-      }
-    }
-    else if(is_array($fields))
-    {
-      foreach($fields as $field)
-      {
-        $groupClause->addField($field);
-      }
-    }
-    else
-    {
-      $groupClause->addField($fields);
-    }
-
-    $this->addClause($groupClause);
+    $this->addClause(GroupByClause::create(...func_get_args()));
     return $this;
   }
 }

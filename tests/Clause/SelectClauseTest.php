@@ -96,4 +96,13 @@ class SelectClauseTest extends \PHPUnit_Framework_TestCase
     $this->setExpectedException("InvalidArgumentException");
     $clause->setExpressions([$field, $now, 'abc']);
   }
+
+  public function testStatic()
+  {
+    $clause = SelectClause::create('first');
+    $clause->setDistinct(true);
+    $this->assertEquals('SELECT DISTINCT first', QueryAssembler::stringify($clause));
+
+    $this->assertEquals('SELECT *', QueryAssembler::stringify(SelectClause::create()));
+  }
 }
