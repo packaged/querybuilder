@@ -20,5 +20,10 @@
     "psr-4": {
       "Packaged\\QueryBuilder\\": "src"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Packaged\\Tests\\QueryBuilder\\": "tests"
+    }
   }
 }

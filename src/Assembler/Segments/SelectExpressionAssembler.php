@@ -11,9 +11,11 @@ use Packaged\QueryBuilder\SelectExpression\FormatSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\FunctionSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\ISelectExpression;
 use Packaged\QueryBuilder\SelectExpression\NowSelectExpression;
+use Packaged\QueryBuilder\SelectExpression\ReplaceSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\SubQuerySelectExpression;
 use Packaged\QueryBuilder\SelectExpression\SubStringSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\TableSelectExpression;
+use Packaged\QueryBuilder\SelectExpression\TrimSelectExpression;
 
 class SelectExpressionAssembler extends AbstractSegmentAssembler
 {
@@ -49,6 +51,14 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
     else if($this->_segment instanceof SubStringSelectExpression)
     {
       return $this->assembleSubStringSelectExpression($this->_segment);
+    }
+    else if($this->_segment instanceof TrimSelectExpression)
+    {
+      return $this->assembleTrimSelectExpression($this->_segment);
+    }
+    else if($this->_segment instanceof ReplaceSelectExpression)
+    {
+      return $this->assembleReplaceSelectExpression($this->_segment);
     }
     else if($this->_segment instanceof FormatSelectExpression)
     {
@@ -181,11 +191,48 @@ class SelectExpressionAssembler extends AbstractSegmentAssembler
   )
   {
     return $expr->getFunctionName()
-    . '('
-    . $this->getAssembler()->assembleSegment($expr->getField())
-    . ',' . $expr->getStartPosition()
-    . ($expr->hasLength() ? ',' . $expr->getLength() : '')
-    . ')'
-    . ($expr->hasAlias() ? ' AS ' . $this->escapeField($expr->getAlias()) : '');
+      . '('
+      . $this->getAssembler()->assembleSegment($expr->getField())
+      . ',' . $expr->getStartPosition()
+      . ($expr->hasLength() ? ',' . $expr->getLength() : '')
+      . ')'
+      . ($expr->hasAlias() ? ' AS ' . $this->escapeField($expr->getAlias()) : '');
+  }
+
+  public function assembleTrimSelectExpression(TrimSelectExpression $expr)
+  {
+    $build = [];
+    if($expr->hasSide())
+    {
+      $build[] = $expr->getSide();
+    }
+    if($expr->hasString())
+    {
+      $build[] = $this->getAssembler()->assembleSegment($expr->getString());
+    }
+    if($expr->hasSide() || $expr->hasString())
+    {
+      $build[] = 'FROM';
+    }
+    $build[] = $this->getAssembler()->assembleSegment($expr->getField());
+
+    return sprintf(
+      '%s(%s)%s',
+      $expr->getFunctionName(),
+      implode(' ', $build),
+      $expr->hasAlias() ? ' AS ' . $this->escapeField($expr->getAlias()) : ''
+    );
+  }
+
+  public function assembleReplaceSelectExpression(ReplaceSelectExpression $expr)
+  {
+    return sprintf(
+      '%s(%s,%s,%s)%s',
+      $expr->getFunctionName(),
+      $this->getAssembler()->assembleSegment($expr->getField()),
+      $this->getAssembler()->assembleSegment($expr->getSearchString()),
+      $this->getAssembler()->assembleSegment($expr->getReplaceString()),
+      $expr->hasAlias() ? ' AS ' . $this->escapeField($expr->getAlias()) : ''
+    );
   }
 }
