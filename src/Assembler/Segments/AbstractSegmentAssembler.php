@@ -56,12 +56,7 @@ abstract class AbstractSegmentAssembler
   protected function _assemblePrepared($expr = null)
   {
     $assembler = $this->getAssembler();
-    if($assembler->isForPrepare())
-    {
-      $assembler->addParameter($expr !== null ? $expr : $this->_segment);
-      return '?';
-    }
-    return false;
+    return $assembler->prepareParameter($expr !== null ? $expr : $this->_segment);
   }
 
   /**

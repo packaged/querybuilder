@@ -104,9 +104,10 @@ class CqlAssembler extends QueryAssembler
 
   public function assembleSetExpression(SetExpression $set)
   {
-    if($this->isForPrepare())
+    $prepared = $this->prepareParameter($set);
+    if($prepared !== false)
     {
-      return '?';
+      return $prepared;
     }
     $values = $this->assembleSegments((array)$set->getValue());
     return '{' . implode(',', $values) . '}';
@@ -114,23 +115,25 @@ class CqlAssembler extends QueryAssembler
 
   public function assembleListExpression(ListExpression $list)
   {
-    if($this->isForPrepare())
+    $prepared = $this->prepareParameter($list);
+    if($prepared !== false)
     {
-      return '?';
+      return $prepared;
     }
     $values = $this->assembleSegments((array)$list->getValue());
     return '[' . implode(',', $values) . ']';
   }
 
-  public function assembleMapFieldExpression(MapFieldExpression $expression)
+  public function assembleMapFieldExpression(MapFieldExpression $map)
   {
-    if($this->isForPrepare())
+    $prepared = $this->prepareParameter($map);
+    if($prepared !== false)
     {
-      return '?';
+      return $prepared;
     }
-    $key = is_numeric($expression->getKey())
-      ? $expression->getKey() : "'" . $expression->getKey() . "'";
-    return $expression->getField() . '[' . $key . ']';
+    $key = is_numeric($map->getKey())
+      ? $map->getKey() : "'" . $map->getKey() . "'";
+    return $map->getField() . '[' . $key . ']';
   }
 
   public function assembleUsingClause(UsingClause $clause)

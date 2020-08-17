@@ -1,7 +1,6 @@
 <?php
 namespace Packaged\QueryBuilder\Assembler;
 
-use Packaged\QueryBuilder\Assembler\Segments\AbstractSegmentAssembler;
 use Packaged\QueryBuilder\Assembler\Segments\ClauseAssembler;
 use Packaged\QueryBuilder\Assembler\Segments\ExpressionAssembler;
 use Packaged\QueryBuilder\Assembler\Segments\PredicateAssembler;
@@ -167,5 +166,15 @@ class QueryAssembler
   public function escapeValue($value)
   {
     return '"' . addcslashes($value, '"') . '"';
+  }
+
+  public function prepareParameter($parameter)
+  {
+    if($this->isForPrepare())
+    {
+      $this->addParameter($parameter);
+      return '?';
+    }
+    return false;
   }
 }
