@@ -126,7 +126,7 @@ class QueryAssembler
 
   public function addParameter($value)
   {
-    if(!($value instanceof ValueExpression))
+    if(!($value instanceof IExpression))
     {
       $value = ValueExpression::create($value);
     }
