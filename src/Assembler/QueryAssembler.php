@@ -136,6 +136,11 @@ class QueryAssembler
 
   public function getParameters()
   {
+    if(!$this->isForPrepare())
+    {
+      return [];
+    }
+
     if($this->_statement)
     {
       $this->assemble();
@@ -143,7 +148,15 @@ class QueryAssembler
     $parameters = [];
     foreach($this->_parameters as $parameter)
     {
-      $parameters[] = $parameter->getValue();
+      $parameterValue = $parameter->getValue();
+      if(is_array($parameterValue))
+      {
+        $parameterValue = array_map(
+          function ($p) { return $p instanceof ValueExpression ? $p->getValue() : $p; },
+          $parameterValue
+        );
+      }
+      $parameters[] = $parameterValue;
     }
     return $parameters;
   }

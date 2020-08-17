@@ -34,7 +34,9 @@ class SetExpressionTest extends \PHPUnit_Framework_TestCase
       "?",
       $assembler->assembleSegment(SetExpression::create(['test', 1]))
     );
+    $this->assertEquals([['test', 1]], $assembler->getParameters());
 
+    $assembler = new CqlAssembler();
     $this->assertEquals(
       "\"testfield\" + ?",
       $assembler->assembleSegment(
@@ -44,7 +46,9 @@ class SetExpressionTest extends \PHPUnit_Framework_TestCase
         )
       )
     );
+    $this->assertEquals([['test']], $assembler->getParameters());
 
+    $assembler = new CqlAssembler();
     $this->assertEquals(
       "\"testfield\" = \"testfield\" + ?",
       $assembler->assembleSegment(
@@ -57,5 +61,6 @@ class SetExpressionTest extends \PHPUnit_Framework_TestCase
         )
       )
     );
+    $this->assertEquals([['test']], $assembler->getParameters());
   }
 }
