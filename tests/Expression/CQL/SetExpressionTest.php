@@ -5,6 +5,7 @@ use Packaged\QueryBuilder\Assembler\CQL\CqlAssembler;
 use Packaged\QueryBuilder\Expression\AdditionExpression;
 use Packaged\QueryBuilder\Expression\CQL\SetExpression;
 use Packaged\QueryBuilder\Expression\FieldExpression;
+use Packaged\QueryBuilder\Predicate\EqualPredicate;
 
 class SetExpressionTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,6 +22,38 @@ class SetExpressionTest extends \PHPUnit_Framework_TestCase
         AdditionExpression::create(
           FieldExpression::create('testfield'),
           SetExpression::create('test')
+        )
+      )
+    );
+  }
+
+  public function testSetExpressionPrepared()
+  {
+    $assembler = new CqlAssembler();
+    $this->assertEquals(
+      "?",
+      $assembler->assembleSegment(SetExpression::create(['test', 1]))
+    );
+
+    $this->assertEquals(
+      "\"testfield\" + ?",
+      $assembler->assembleSegment(
+        AdditionExpression::create(
+          FieldExpression::create('testfield'),
+          SetExpression::create('test')
+        )
+      )
+    );
+
+    $this->assertEquals(
+      "\"testfield\" = \"testfield\" + ?",
+      $assembler->assembleSegment(
+        EqualPredicate::create(
+          'testfield',
+          AdditionExpression::create(
+            FieldExpression::create('testfield'),
+            SetExpression::create('test')
+          )
         )
       )
     );

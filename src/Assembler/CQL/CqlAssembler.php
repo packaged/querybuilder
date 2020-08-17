@@ -104,18 +104,30 @@ class CqlAssembler extends QueryAssembler
 
   public function assembleSetExpression(SetExpression $set)
   {
+    if($this->isForPrepare())
+    {
+      return '?';
+    }
     $values = $this->assembleSegments((array)$set->getValue());
     return '{' . implode(',', $values) . '}';
   }
 
   public function assembleListExpression(ListExpression $list)
   {
+    if($this->isForPrepare())
+    {
+      return '?';
+    }
     $values = $this->assembleSegments((array)$list->getValue());
     return '[' . implode(',', $values) . ']';
   }
 
   public function assembleMapFieldExpression(MapFieldExpression $expression)
   {
+    if($this->isForPrepare())
+    {
+      return '?';
+    }
     $key = is_numeric($expression->getKey())
       ? $expression->getKey() : "'" . $expression->getKey() . "'";
     return $expression->getField() . '[' . $key . ']';
