@@ -93,6 +93,11 @@ class CqlAssembler extends QueryAssembler
 
   public function assembleMapExpression(MapExpression $map)
   {
+    $prepared = $this->prepareParameter($map);
+    if($prepared !== false)
+    {
+      return $prepared;
+    }
     $return = [];
     $values = $this->assembleSegments((array)$map->getValue());
     foreach($values as $key => $value)
