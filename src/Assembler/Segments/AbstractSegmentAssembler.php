@@ -47,6 +47,7 @@ abstract class AbstractSegmentAssembler
    * @param $segment
    *
    * @return string
+   * @throws \Exception
    */
   public function assembleSegment($segment)
   {
@@ -55,13 +56,13 @@ abstract class AbstractSegmentAssembler
 
   protected function _assemblePrepared($expr = null)
   {
-    $assembler = $this->getAssembler();
-    if($assembler->isForPrepare())
+    if(!$this->getAssembler()->isForPrepare())
     {
-      $assembler->addParameter($expr !== null ? $expr : $this->_segment);
-      return '?';
+      return false;
     }
-    return false;
+
+    $this->getAssembler()->addParameter($expr !== null ? $expr : $this->_segment);
+    return '?';
   }
 
   /**
@@ -72,9 +73,7 @@ abstract class AbstractSegmentAssembler
   public function assemble()
   {
     throw new \RuntimeException(
-      "Unsupported segment '"
-      . get_class($this->_segment)
-      . "' passed to the " .
+      "Unsupported segment '" . get_class($this->_segment) . "' passed to the " .
       ucwords(Strings::humanize(Objects::classShortname(get_called_class())))
     );
   }
@@ -86,10 +85,6 @@ abstract class AbstractSegmentAssembler
 
   public function escapeValue($value)
   {
-    if(is_int($value) || is_float($value) || is_double($value))
-    {
-      return $value;
-    }
-    return $this->getAssembler()->escapeValue($value);
+    return !is_string($value) && is_numeric($value) ? $value : $this->getAssembler()->escapeValue($value);
   }
 }

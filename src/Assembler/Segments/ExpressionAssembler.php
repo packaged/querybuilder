@@ -28,6 +28,7 @@ class ExpressionAssembler extends AbstractSegmentAssembler
    * Assemble the segment
    *
    * @return string
+   * @throws QueryBuilderAssemblerException
    */
   public function assemble()
   {
@@ -85,9 +86,9 @@ class ExpressionAssembler extends AbstractSegmentAssembler
   public function assembleCaseExpression(CaseExpression $expr)
   {
     return 'CASE WHEN(' . $this->assembleSegment($expr->getExpression()) . ')'
-    . ' THEN ' . $this->assembleSegment($expr->getTrueValue())
-    . ' ELSE ' . $this->assembleSegment($expr->getFalseValue())
-    . ' END';
+      . ' THEN ' . $this->assembleSegment($expr->getTrueValue())
+      . ' ELSE ' . $this->assembleSegment($expr->getFalseValue())
+      . ' END';
   }
 
   public function assembleIfExpression(IfExpression $expr)
@@ -113,17 +114,14 @@ class ExpressionAssembler extends AbstractSegmentAssembler
   public function assembleArrayExpression(ArrayExpression $expr)
   {
     $exprValues = $expr->getValue();
-    if(count($exprValues) < 1)
+    if(empty($exprValues))
     {
-      throw new QueryBuilderAssemblerException(
-        'Cannot assemble an empty ArrayExpression'
-      );
+      throw new QueryBuilderAssemblerException('Cannot assemble an empty ArrayExpression');
     }
     $values = [];
     foreach($exprValues as $value)
     {
-      $values[] = $this->_assemblePrepared($value)
-        ?: $this->escapeValue($value);
+      $values[] = $this->_assemblePrepared($value) ?: $this->escapeValue($value);
     }
     return '(' . implode(',', $values) . ')';
   }
@@ -135,8 +133,7 @@ class ExpressionAssembler extends AbstractSegmentAssembler
 
   public function assembleBooleanExpression(BooleanExpression $expr)
   {
-    return $this->_assemblePrepared()
-      ?: ($expr->getValue() ? 'true' : 'false');
+    return $this->_assemblePrepared() ?: ($expr->getValue() ? 'true' : 'false');
   }
 
   public function assembleCounterExpression(CounterExpression $expr)
@@ -151,13 +148,11 @@ class ExpressionAssembler extends AbstractSegmentAssembler
     }
 
     return $this->assembleSegment($field)
-    . ' ' . $expr->getOperator() . ' '
-    . $this->assembleSegment($expr->getValue());
+      . ' ' . $expr->getOperator()
+      . ' ' . $this->assembleSegment($expr->getValue());
   }
 
-  public function assembleArithmeticExpression(
-    AbstractArithmeticExpression $expr
-  )
+  public function assembleArithmeticExpression(AbstractArithmeticExpression $expr)
   {
     $values = [];
     foreach($expr->getExpressions() as $value)
@@ -178,33 +173,25 @@ class ExpressionAssembler extends AbstractSegmentAssembler
     {
       if(!is_string($value) && is_numeric($value))
       {
-        return $this->assembleNumericExpression(
-          NumericExpression::create($value)
-        );
+        return $this->assembleNumericExpression(NumericExpression::create($value));
       }
-      else if(is_bool($value))
+      if(is_bool($value))
       {
-        return $this->assembleBooleanExpression(
-          BooleanExpression::create($value)
-        );
+        return $this->assembleBooleanExpression(BooleanExpression::create($value));
       }
     }
     else if(is_array($value))
     {
-      return $this->assembleArrayExpression(
-        ArrayExpression::create($value)
-      );
+      return $this->assembleArrayExpression(ArrayExpression::create($value));
     }
-    return $this->assembleStringExpression(
-      StringExpression::create($value)
-    );
+    return $this->assembleStringExpression(StringExpression::create($value));
   }
 
   public function assembleFieldExpression(FieldExpression $expr)
   {
     return ($expr->hasTable() ?
-      $this->assembleSegment($expr->getTable()) . '.' : '')
-    . $this->escapeField($expr->getField());
+        $this->assembleSegment($expr->getTable()) . '.' : '')
+      . $this->escapeField($expr->getField());
   }
 
   public function assembleTableExpression(TableExpression $expr)

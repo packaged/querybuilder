@@ -1,7 +1,6 @@
 <?php
 namespace Packaged\QueryBuilder\Assembler;
 
-use Packaged\QueryBuilder\Assembler\Segments\AbstractSegmentAssembler;
 use Packaged\QueryBuilder\Assembler\Segments\ClauseAssembler;
 use Packaged\QueryBuilder\Assembler\Segments\ExpressionAssembler;
 use Packaged\QueryBuilder\Assembler\Segments\PredicateAssembler;
@@ -86,6 +85,10 @@ class QueryAssembler
     {
       return $segment;
     }
+    else if(!($segment instanceof IStatementSegment))
+    {
+      throw new \Exception("Unsupported segment type " . get_class($segment));
+    }
     else if($segment instanceof IStatement)
     {
       $assembler = new StatementAssembler($segment);
@@ -108,7 +111,7 @@ class QueryAssembler
     }
     else
     {
-      throw new \Exception("Unsupported segment type " . get_class($segment));
+      throw new \Exception("Unsupported IStatementSegment type " . get_class($segment));
     }
 
     $assembler->setAssembler($this);
