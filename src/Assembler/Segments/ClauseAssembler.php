@@ -84,15 +84,15 @@ class ClauseAssembler extends AbstractSegmentAssembler
       );
     }
     return $clause->getAction() . ' '
-    . $this->assembleSegment($clause->getTable())
-    . ' ON ' . implode($clause->getGlue(), $segments);
+      . $this->assembleSegment($clause->getTable())
+      . ' ON ' . implode($clause->getGlue(), $segments);
   }
 
   public function assembleInsertClause(InsertClause $clause)
   {
     return $this->assembleAbstractTableClause($clause) . ' ('
-    . implode(', ', $this->assembleSegments($clause->getFields()))
-    . ')';
+      . implode(', ', $this->assembleSegments($clause->getFields()))
+      . ')';
   }
 
   public function assembleLimitClause(LimitClause $clause)
@@ -119,13 +119,13 @@ class ClauseAssembler extends AbstractSegmentAssembler
     }
 
     return $return . ' '
-    . implode(', ', $this->assembleSegments($clause->getExpressions()));
+      . implode(', ', $this->assembleSegments($clause->getExpressions()));
   }
 
   public function assembleAbstractTableClause(AbstractTableClause $clause)
   {
     return $clause->getAction() . ' '
-    . $this->assembleSegment($clause->getTable());
+      . $this->assembleSegment($clause->getTable());
   }
 
   public function assembleValuesClause(ValuesClause $clause)
@@ -150,7 +150,7 @@ class ClauseAssembler extends AbstractSegmentAssembler
     {
       $orders[] = trim(
         $this->assembleSegment($field) . ' '
-        . strtoupper($clause->getOrder($field, ''))
+        . strtoupper($clause->getOrder($field, '') ?? '')
       );
     }
     return $clause->getAction() . ' ' . implode(', ', $orders);
@@ -159,7 +159,7 @@ class ClauseAssembler extends AbstractSegmentAssembler
   public function assembleAbstractFieldClause(AbstractFieldClause $clause)
   {
     return $clause->getAction() . ' '
-    . implode(', ', $this->assembleSegments($clause->getFields()));
+      . implode(', ', $this->assembleSegments($clause->getFields()));
   }
 
   public function assemblePredicateClause(AbstractPredicateClause $clause)
@@ -187,10 +187,10 @@ class ClauseAssembler extends AbstractSegmentAssembler
     else
     {
       return $clause->getAction() . ' '
-      . implode(
-        $clause->getGlue(),
-        $this->assembleSegments($clause->getPredicates())
-      );
+        . implode(
+          $clause->getGlue(),
+          $this->assembleSegments($clause->getPredicates())
+        );
     }
   }
 }

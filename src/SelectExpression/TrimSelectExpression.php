@@ -28,7 +28,7 @@ class TrimSelectExpression extends FunctionSelectExpression
 
   public function setSide($side)
   {
-    $side = strtoupper($side);
+    $side = strtoupper($side ?? '');
     if(in_array($side, ['LEADING', 'TRAILING', 'BOTH']))
     {
       $this->_side = $side;
