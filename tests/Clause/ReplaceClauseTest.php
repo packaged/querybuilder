@@ -5,7 +5,7 @@ use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\ReplaceClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 
-class ReplaceClauseTest extends \PHPUnit_Framework_TestCase
+class ReplaceClauseTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {
@@ -43,7 +43,7 @@ class ReplaceClauseTest extends \PHPUnit_Framework_TestCase
     $clause->clearFields();
     $this->assertFalse($clause->hasFields());
 
-    $this->setExpectedException("InvalidArgumentException");
+    $this->expectException("InvalidArgumentException");
     $clause->setFields([$nameField, $idField, 'abc']);
   }
 }

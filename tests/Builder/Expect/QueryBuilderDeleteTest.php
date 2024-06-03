@@ -3,8 +3,9 @@ namespace Packaged\Tests\QueryBuilder\Builder\Expect;
 
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Builder\QueryBuilder;
+use PHPUnit\Framework\TestCase;
 
-class QueryBuilderDeleteTest extends \PHPUnit_Framework_TestCase
+class QueryBuilderDeleteTest extends TestCase
 {
   public function testDelete()
   {

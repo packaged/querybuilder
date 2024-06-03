@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Clause\DuplicateKeyClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 
-class DuplicateKeyClauseTest extends \PHPUnit_Framework_TestCase
+class DuplicateKeyClauseTest extends \PHPUnit\Framework\TestCase
 {
   public function testDuplicateKey()
   {

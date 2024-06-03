@@ -5,7 +5,7 @@ use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\AbstractFieldClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 
-class AbstractFieldClauseTest extends \PHPUnit_Framework_TestCase
+class AbstractFieldClauseTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

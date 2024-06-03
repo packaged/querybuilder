@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Builder\Traits\OrderByTrait;
 use Packaged\QueryBuilder\Clause\OrderByClause;
 use Packaged\QueryBuilder\Statement\AbstractStatement;
 
-class OrderByTraitTest extends \PHPUnit_Framework_TestCase
+class OrderByTraitTest extends \PHPUnit\Framework\TestCase
 {
   public function testCreate()
   {

@@ -7,7 +7,7 @@ use Packaged\QueryBuilder\Clause\FromClause;
 use Packaged\QueryBuilder\SelectExpression\CountSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\SubQuerySelectExpression;
 
-class FromClauseTest extends \PHPUnit_Framework_TestCase
+class FromClauseTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

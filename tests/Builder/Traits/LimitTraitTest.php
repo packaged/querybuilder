@@ -5,7 +5,7 @@ use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Builder\Traits\LimitTrait;
 use Packaged\QueryBuilder\Statement\AbstractStatement;
 
-class LimitTraitTest extends \PHPUnit_Framework_TestCase
+class LimitTraitTest extends \PHPUnit\Framework\TestCase
 {
   public function testCreate()
   {

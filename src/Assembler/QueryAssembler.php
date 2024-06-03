@@ -169,6 +169,6 @@ class QueryAssembler
 
   public function escapeValue($value)
   {
-    return '"' . addcslashes($value, '"') . '"';
+    return $value ? '"' . addcslashes($value, '"') . '"' : '""';
   }
 }

@@ -15,8 +15,9 @@ use Packaged\QueryBuilder\Predicate\PredicateSet;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\CountSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
+use PHPUnit\Framework\TestCase;
 
-class CqlAssemblerTest extends \PHPUnit_Framework_TestCase
+class CqlAssemblerTest extends TestCase
 {
   public function testBetween()
   {

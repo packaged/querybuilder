@@ -8,7 +8,7 @@ use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\SubQuerySelectExpression;
 use Packaged\QueryBuilder\Statement\QueryStatement;
 
-class SubQuerySelectExpressionTest extends \PHPUnit_Framework_TestCase
+class SubQuerySelectExpressionTest extends \PHPUnit\Framework\TestCase
 {
   protected function _basicQuery()
   {

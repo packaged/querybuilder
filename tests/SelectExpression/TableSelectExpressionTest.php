@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Expression\TableExpression;
 use Packaged\QueryBuilder\SelectExpression\TableSelectExpression;
 
-class TableSelectExpressionTest extends \PHPUnit_Framework_TestCase
+class TableSelectExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

@@ -5,7 +5,7 @@ use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Builder\Traits\WhereTrait;
 use Packaged\QueryBuilder\Statement\AbstractStatement;
 
-class WhereTraitTest extends \PHPUnit_Framework_TestCase
+class WhereTraitTest extends \PHPUnit\Framework\TestCase
 {
   public function testCreate()
   {
@@ -35,7 +35,7 @@ class WhereTraitTest extends \PHPUnit_Framework_TestCase
   public function testException()
   {
     $class = new FinalWhereTrait();
-    $this->setExpectedException(
+    $this->expectException(
       'RuntimeException',
       'You can only use andWhere and orWhere after specifying a where clause'
     );

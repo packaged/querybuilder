@@ -4,7 +4,7 @@ namespace Packaged\Tests\QueryBuilder\SelectExpression;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\ReplaceSelectExpression;
 
-class ReplaceSelectExpressionTest extends \PHPUnit_Framework_TestCase
+class ReplaceSelectExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

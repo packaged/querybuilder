@@ -8,7 +8,7 @@ use Packaged\QueryBuilder\Predicate\GreaterThanOrEqualPredicate;
 use Packaged\QueryBuilder\SelectExpression\ExpressionSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\SumSelectExpression;
 
-class ExpressionSelectExpressionTest extends \PHPUnit_Framework_TestCase
+class ExpressionSelectExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testExpressionSelectExpression()
   {

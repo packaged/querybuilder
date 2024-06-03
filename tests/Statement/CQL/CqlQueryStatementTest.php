@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Builder\CQL\CqlQueryBuilder;
 use Packaged\QueryBuilder\Clause\CQL\AllowFilteringClause;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 
-class CqlQueryStatementTest extends \PHPUnit_Framework_TestCase
+class CqlQueryStatementTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

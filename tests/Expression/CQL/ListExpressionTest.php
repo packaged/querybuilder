@@ -8,7 +8,7 @@ use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\SubtractExpression;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 
-class ListExpressionTest extends \PHPUnit_Framework_TestCase
+class ListExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testListExpression()
   {

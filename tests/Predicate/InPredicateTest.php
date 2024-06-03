@@ -10,7 +10,7 @@ use Packaged\QueryBuilder\Expression\ValueExpression;
 use Packaged\QueryBuilder\Predicate\InPredicate;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 
-class InPredicateTest extends \PHPUnit_Framework_TestCase
+class InPredicateTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

@@ -7,7 +7,7 @@ use Packaged\QueryBuilder\Expression\IncrementExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 
-class SetClauseTest extends \PHPUnit_Framework_TestCase
+class SetClauseTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

@@ -5,8 +5,9 @@ use Packaged\Helpers\Arrays;
 use Packaged\QueryBuilder\Builder\Traits\GroupByTrait;
 use Packaged\QueryBuilder\Clause\GroupByClause;
 use Packaged\QueryBuilder\Statement\AbstractStatement;
+use PHPUnit\Framework\TestCase;
 
-class GroupByTraitTest extends \PHPUnit_Framework_TestCase
+class GroupByTraitTest extends TestCase
 {
   public function testCreate()
   {

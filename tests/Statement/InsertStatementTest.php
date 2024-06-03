@@ -7,7 +7,7 @@ use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\IncrementExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
 
-class InsertStatementTest extends \PHPUnit_Framework_TestCase
+class InsertStatementTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

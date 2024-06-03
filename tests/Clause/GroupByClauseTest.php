@@ -5,7 +5,7 @@ use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\GroupByClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 
-class GroupByClauseTest extends \PHPUnit_Framework_TestCase
+class GroupByClauseTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

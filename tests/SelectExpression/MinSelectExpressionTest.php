@@ -4,7 +4,7 @@ namespace Packaged\Tests\QueryBuilder\SelectExpression;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\MinSelectExpression;
 
-class MinSelectExpressionTest extends \PHPUnit_Framework_TestCase
+class MinSelectExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

@@ -7,7 +7,7 @@ use Packaged\QueryBuilder\Clause\LimitClause;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 
-class LimitClauseTest extends \PHPUnit_Framework_TestCase
+class LimitClauseTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

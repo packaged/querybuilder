@@ -12,7 +12,7 @@ use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\TableSelectExpression;
 use Packaged\QueryBuilder\Statement\AbstractStatement;
 
-class JoinTraitTest extends \PHPUnit_Framework_TestCase
+class JoinTraitTest extends \PHPUnit\Framework\TestCase
 {
   public function testCreate()
   {

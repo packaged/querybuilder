@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Clause\ValuesClause;
 use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
 
-class ValuesClauseTest extends \PHPUnit_Framework_TestCase
+class ValuesClauseTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {
@@ -44,7 +44,7 @@ class ValuesClauseTest extends \PHPUnit_Framework_TestCase
     $clause->clearExpressions();
     $this->assertFalse($clause->hasExpressions());
 
-    $this->setExpectedException("InvalidArgumentException");
+    $this->expectException("InvalidArgumentException");
     $clause->setExpressions([$field, $null, 'abc']);
   }
 }

@@ -8,7 +8,7 @@ use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
 use Packaged\QueryBuilder\Statement\ReplaceStatement;
 
-class ReplaceStatementTest extends \PHPUnit_Framework_TestCase
+class ReplaceStatementTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

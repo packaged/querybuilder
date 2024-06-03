@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Builder\QueryBuilder;
 use Packaged\QueryBuilder\Expression\BooleanExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
 
-class BooleanExpressionTest extends \PHPUnit_Framework_TestCase
+class BooleanExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testBoolean()
   {

@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Predicate\NotBetweenPredicate;
 
-class NotBetweenPredicateTest extends \PHPUnit_Framework_TestCase
+class NotBetweenPredicateTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

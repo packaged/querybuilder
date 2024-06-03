@@ -4,6 +4,21 @@ namespace Packaged\QueryBuilder\Expression;
 class TableExpression implements IExpression
 {
   protected $_table;
+  protected $_database;
+
+  /**
+   * @return string|null
+   */
+  public function getDatabase()
+  {
+    return $this->_database;
+  }
+
+  public function setDatabase($database)
+  {
+    $this->_database = $database;
+    return $this;
+  }
 
   public function setTableName($table)
   {
@@ -18,11 +33,12 @@ class TableExpression implements IExpression
 
   /**
    * @param $table
+   * @param $database
    *
-   * @return static
+   * @return \Packaged\QueryBuilder\Expression\TableExpression
    */
-  public static function create($table)
+  public static function create($table, $database = null)
   {
-    return (new static)->setTableName($table);
+    return (new static())->setTableName($table)->setDatabase($database);
   }
 }

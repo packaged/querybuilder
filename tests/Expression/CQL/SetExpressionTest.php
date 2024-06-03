@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Expression\AdditionExpression;
 use Packaged\QueryBuilder\Expression\CQL\SetExpression;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 
-class SetExpressionTest extends \PHPUnit_Framework_TestCase
+class SetExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testSetExpression()
   {

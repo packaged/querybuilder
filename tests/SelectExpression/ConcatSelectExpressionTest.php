@@ -4,7 +4,7 @@ namespace Packaged\Tests\QueryBuilder\SelectExpression;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\ConcatSelectExpression;
 
-class ConcatSelectExpressionTest extends \PHPUnit_Framework_TestCase
+class ConcatSelectExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

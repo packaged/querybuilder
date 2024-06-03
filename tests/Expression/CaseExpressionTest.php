@@ -5,7 +5,7 @@ use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Expression\CaseExpression;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 
-class CaseExpressionTest extends \PHPUnit_Framework_TestCase
+class CaseExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testCaseExpression()
   {

@@ -4,7 +4,7 @@ namespace Packaged\Tests\QueryBuilder\Expression;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 
-class NumericExpressionTest extends \PHPUnit_Framework_TestCase
+class NumericExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

@@ -4,7 +4,7 @@ namespace Packaged\Tests\QueryBuilder\SelectExpression;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\TrimSelectExpression;
 
-class TrimSelectExpressionTest extends \PHPUnit_Framework_TestCase
+class TrimSelectExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

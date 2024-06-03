@@ -5,7 +5,7 @@ use Packaged\QueryBuilder\Assembler\CQL\CqlAssembler;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Expression\StringExpression;
 
-class StringExpressionTest extends \PHPUnit_Framework_TestCase
+class StringExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

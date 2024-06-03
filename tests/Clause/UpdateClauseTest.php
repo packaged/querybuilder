@@ -4,7 +4,7 @@ namespace Packaged\Tests\QueryBuilder\Clause;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\UpdateClause;
 
-class UpdateClauseTest extends \PHPUnit_Framework_TestCase
+class UpdateClauseTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

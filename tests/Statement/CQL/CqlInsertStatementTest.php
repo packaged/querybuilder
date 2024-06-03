@@ -4,7 +4,7 @@ namespace Packaged\Tests\QueryBuilder\Statement\CQL;
 use Packaged\QueryBuilder\Assembler\CQL\CqlAssembler;
 use Packaged\QueryBuilder\Builder\CQL\CqlQueryBuilder;
 
-class CqlInsertStatementTest extends \PHPUnit_Framework_TestCase
+class CqlInsertStatementTest extends \PHPUnit\Framework\TestCase
 {
   public function testInsert()
   {

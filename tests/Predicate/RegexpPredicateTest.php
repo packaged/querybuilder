@@ -4,7 +4,7 @@ namespace Packaged\Tests\QueryBuilder\Predicate;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Predicate\RegexpPredicate;
 
-class RegexpPredicateTest extends \PHPUnit_Framework_TestCase
+class RegexpPredicateTest extends \PHPUnit\Framework\TestCase
 {
   public function testRegexpPredicate()
   {

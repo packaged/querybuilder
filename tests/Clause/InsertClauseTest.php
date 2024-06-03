@@ -5,7 +5,7 @@ use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\InsertClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 
-class InsertClauseTest extends \PHPUnit_Framework_TestCase
+class InsertClauseTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {
@@ -43,7 +43,7 @@ class InsertClauseTest extends \PHPUnit_Framework_TestCase
     $clause->clearFields();
     $this->assertFalse($clause->hasFields());
 
-    $this->setExpectedException("InvalidArgumentException");
+    $this->expectException("InvalidArgumentException");
     $clause->setFields([$nameField, $idField, 'abc']);
   }
 }

@@ -8,7 +8,7 @@ use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\IExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
 
-class AbstractArithmeticExpressionTest extends \PHPUnit_Framework_TestCase
+class AbstractArithmeticExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

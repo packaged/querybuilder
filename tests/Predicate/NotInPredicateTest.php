@@ -7,7 +7,7 @@ use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\Expression\ValueExpression;
 use Packaged\QueryBuilder\Predicate\NotInPredicate;
 
-class NotInPredicateTest extends \PHPUnit_Framework_TestCase
+class NotInPredicateTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

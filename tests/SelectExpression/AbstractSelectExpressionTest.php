@@ -4,7 +4,7 @@ namespace Packaged\Tests\QueryBuilder\SelectExpression;
 use Packaged\QueryBuilder\Assembler\Segments\SelectExpressionAssembler;
 use Packaged\QueryBuilder\SelectExpression\ISelectExpression;
 
-class AbstractSelectExpressionTest extends \PHPUnit_Framework_TestCase
+class AbstractSelectExpressionTest extends \PHPUnit\Framework\TestCase
 {
   /**
    * @expectedException \RuntimeException

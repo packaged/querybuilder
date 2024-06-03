@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Assembler\Segments\ClauseAssembler;
 use Packaged\QueryBuilder\Clause\AbstractTableClause;
 use Packaged\QueryBuilder\Clause\IClause;
 
-class AbstractTableClauseTest extends \PHPUnit_Framework_TestCase
+class AbstractTableClauseTest extends \PHPUnit\Framework\TestCase
 {
   public function testGettersAndSetters()
   {

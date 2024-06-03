@@ -9,7 +9,7 @@ use Packaged\QueryBuilder\Expression\CQL\SetExpression;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 
-class MapExpressionTest extends \PHPUnit_Framework_TestCase
+class MapExpressionTest extends \PHPUnit\Framework\TestCase
 {
   /**
    * @expectedException \InvalidArgumentException

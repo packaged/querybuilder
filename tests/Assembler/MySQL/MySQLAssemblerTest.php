@@ -11,8 +11,9 @@ use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\MatchSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\MaxSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\SubQuerySelectExpression;
+use PHPUnit\Framework\TestCase;
 
-class MySQLAssemblerTest extends \PHPUnit_Framework_TestCase
+class MySQLAssemblerTest extends TestCase
 {
   public function testTableName()
   {
@@ -26,6 +27,12 @@ class MySQLAssemblerTest extends \PHPUnit_Framework_TestCase
       '`mytable`',
       MySQLAssembler::stringify(
         TableExpression::create('mytable')
+      )
+    );
+    $this->assertEquals(
+      '`mydb`.`mytable`',
+      MySQLAssembler::stringify(
+        TableExpression::create('mytable', 'mydb')
       )
     );
   }

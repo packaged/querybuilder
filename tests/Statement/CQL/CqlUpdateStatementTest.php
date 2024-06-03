@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Builder\CQL\CqlQueryBuilder;
 use Packaged\QueryBuilder\Expression\DecrementExpression;
 use Packaged\QueryBuilder\Expression\IncrementExpression;
 
-class CqlUpdateStatementTest extends \PHPUnit_Framework_TestCase
+class CqlUpdateStatementTest extends \PHPUnit\Framework\TestCase
 {
   public function testUpdate()
   {

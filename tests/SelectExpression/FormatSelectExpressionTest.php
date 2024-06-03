@@ -4,7 +4,7 @@ namespace Packaged\Tests\QueryBuilder\SelectExpression;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\FormatSelectExpression;
 
-class FormatSelectExpressionTest extends \PHPUnit_Framework_TestCase
+class FormatSelectExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

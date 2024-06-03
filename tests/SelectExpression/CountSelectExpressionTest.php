@@ -5,7 +5,7 @@ use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\CountSelectExpression;
 
-class CountSelectExpressionTest extends \PHPUnit_Framework_TestCase
+class CountSelectExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\SelectExpression\MatchSelectExpression;
 
-class MatchSelectExpressionTest extends \PHPUnit_Framework_TestCase
+class MatchSelectExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

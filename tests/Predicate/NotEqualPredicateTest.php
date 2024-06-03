@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
 
-class NotEqualPredicateTest extends \PHPUnit_Framework_TestCase
+class NotEqualPredicateTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

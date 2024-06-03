@@ -5,7 +5,7 @@ use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Builder\QueryBuilder;
 use Packaged\QueryBuilder\Expression\ValueExpression;
 
-class ValueExpressionTest extends \PHPUnit_Framework_TestCase
+class ValueExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

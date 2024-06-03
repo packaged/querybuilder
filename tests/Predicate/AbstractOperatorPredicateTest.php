@@ -9,7 +9,7 @@ use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Predicate\AbstractOperatorPredicate;
 use Packaged\QueryBuilder\Predicate\IPredicate;
 
-class AbstractOperatorPredicateTest extends \PHPUnit_Framework_TestCase
+class AbstractOperatorPredicateTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

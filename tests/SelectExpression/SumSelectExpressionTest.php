@@ -4,7 +4,7 @@ namespace Packaged\Tests\QueryBuilder\SelectExpression;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\SumSelectExpression;
 
-class SumSelectExpressionTest extends \PHPUnit_Framework_TestCase
+class SumSelectExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

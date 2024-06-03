@@ -8,7 +8,7 @@ use Packaged\QueryBuilder\Expression\Like\EndsWithExpression;
 use Packaged\QueryBuilder\Expression\Like\StartsWithExpression;
 use Packaged\QueryBuilder\Predicate\LikePredicate;
 
-class LikeBinaryPredicateTest extends \PHPUnit_Framework_TestCase
+class LikeBinaryPredicateTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

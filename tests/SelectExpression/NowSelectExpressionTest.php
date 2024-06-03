@@ -4,7 +4,7 @@ namespace Packaged\Tests\QueryBuilder\SelectExpression;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\NowSelectExpression;
 
-class NowSelectExpressionTest extends \PHPUnit_Framework_TestCase
+class NowSelectExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

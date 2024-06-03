@@ -8,7 +8,7 @@ use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Predicate\GreaterThanPredicate;
 
-class HavingClauseTest extends \PHPUnit_Framework_TestCase
+class HavingClauseTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

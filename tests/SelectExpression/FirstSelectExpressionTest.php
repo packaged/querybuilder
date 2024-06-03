@@ -4,7 +4,7 @@ namespace Packaged\Tests\QueryBuilder\SelectExpression;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\FirstSelectExpression;
 
-class FirstSelectExpressionTest extends \PHPUnit_Framework_TestCase
+class FirstSelectExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

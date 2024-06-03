@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Clause\SelectClause;
 use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 use Packaged\QueryBuilder\SelectExpression\NowSelectExpression;
 
-class SelectClauseTest extends \PHPUnit_Framework_TestCase
+class SelectClauseTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {
@@ -71,7 +71,7 @@ class SelectClauseTest extends \PHPUnit_Framework_TestCase
       QueryAssembler::stringify($clause)
     );
 
-    $this->setExpectedException("InvalidArgumentException");
+    $this->expectException("InvalidArgumentException");
     $clause->addField(new \stdClass());
   }
 
@@ -93,7 +93,7 @@ class SelectClauseTest extends \PHPUnit_Framework_TestCase
     $clause->clearExpressions();
     $this->assertFalse($clause->hasExpressions());
 
-    $this->setExpectedException("InvalidArgumentException");
+    $this->expectException("InvalidArgumentException");
     $clause->setExpressions([$field, $now, 'abc']);
   }
 

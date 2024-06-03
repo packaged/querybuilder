@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Predicate\LessThanPredicate;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
 
-class LessThanPredicateTest extends \PHPUnit_Framework_TestCase
+class LessThanPredicateTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

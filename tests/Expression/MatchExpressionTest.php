@@ -9,7 +9,7 @@ use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Predicate\GreaterThanPredicate;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 
-class MatchExpressionTest extends \PHPUnit_Framework_TestCase
+class MatchExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

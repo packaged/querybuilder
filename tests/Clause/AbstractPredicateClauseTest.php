@@ -7,13 +7,13 @@ use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
 
-class AbstractPredicateClauseTest extends \PHPUnit_Framework_TestCase
+class AbstractPredicateClauseTest extends \PHPUnit\Framework\TestCase
 {
   public function testGettersAndSetters()
   {
     $clause = new FinalAbstractPredicateClause();
-    $eq     = new EqualPredicate();
-    $neq    = new NotEqualPredicate();
+    $eq = new EqualPredicate();
+    $neq = new NotEqualPredicate();
 
     $this->assertFalse($clause->hasPredicates());
     $clause->addPredicate($eq);
@@ -27,14 +27,14 @@ class AbstractPredicateClauseTest extends \PHPUnit_Framework_TestCase
     $clause->clearPredicates();
     $this->assertFalse($clause->hasPredicates());
 
-    $this->setExpectedException("InvalidArgumentException");
+    $this->expectException("InvalidArgumentException");
     $clause->setPredicates([$eq, $neq, 'abc']);
   }
 
   public function testAssemble()
   {
     $clause = new FinalAbstractPredicateClause();
-    $eq     = new EqualPredicate();
+    $eq = new EqualPredicate();
     $string = (new StringExpression())->setValue('val');
     $eq->setField('one')->setExpression($string);
     $neq = new NotEqualPredicate();

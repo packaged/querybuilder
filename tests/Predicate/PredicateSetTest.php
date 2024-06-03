@@ -7,7 +7,7 @@ use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
 use Packaged\QueryBuilder\Predicate\PredicateSet;
 
-class PredicateSetTest extends \PHPUnit_Framework_TestCase
+class PredicateSetTest extends \PHPUnit\Framework\TestCase
 {
   public function testGettersAndSetters()
   {
@@ -27,7 +27,7 @@ class PredicateSetTest extends \PHPUnit_Framework_TestCase
     $set->clearPredicates();
     $this->assertFalse($set->hasPredicates());
 
-    $this->setExpectedException("InvalidArgumentException");
+    $this->expectException("InvalidArgumentException");
     $set->setPredicates([$eq, $neq, 'abc']);
   }
 

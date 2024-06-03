@@ -14,8 +14,9 @@ use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 use Packaged\QueryBuilder\Statement\IStatement;
 use Packaged\QueryBuilder\Statement\QueryStatement;
+use PHPUnit\Framework\TestCase;
 
-class AssemblerTest extends \PHPUnit_Framework_TestCase
+class AssemblerTest extends TestCase
 {
   /**
    * @expectedException \Exception
@@ -46,9 +47,9 @@ class AssemblerTest extends \PHPUnit_Framework_TestCase
       [
         'AND' => [
           EqualPredicate::create('field2', null),
-          NotEqualPredicate::create('field3', null)
+          NotEqualPredicate::create('field3', null),
         ],
-        'OR'  => BetweenPredicate::create('field4', 123, 456)
+        'OR'  => BetweenPredicate::create('field4', 123, 456),
       ]
     );
     $assembler = new QueryAssembler($stm, true);
@@ -114,7 +115,7 @@ class AssemblerTest extends \PHPUnit_Framework_TestCase
       )
     );
 
-    $this->setExpectedException(
+    $this->expectException(
       '\Packaged\QueryBuilder\Exceptions\Assembler\QueryBuilderAssemblerException',
       'Cannot assemble an empty ArrayExpression'
     );

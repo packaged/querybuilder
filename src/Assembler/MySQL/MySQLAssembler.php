@@ -32,7 +32,7 @@ class MySQLAssembler extends QueryAssembler
     if($field->hasTable())
     {
       return $this->assembleTableExpression($field->getTable())
-      . '.' . $this->escapeField($field->getField());
+        . '.' . $this->escapeField($field->getField());
     }
     else
     {
@@ -42,6 +42,10 @@ class MySQLAssembler extends QueryAssembler
 
   public function assembleTableExpression(TableExpression $expr)
   {
+    if($expr->getDatabase())
+    {
+      return $this->escapeField($expr->getDatabase()) . '.' . $this->escapeField($expr->getTableName());
+    }
     return $this->escapeField($expr->getTableName());
   }
 

@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Expression\DivisionExpression;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 
-class DivisionExpressionTest extends \PHPUnit_Framework_TestCase
+class DivisionExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Expression\Traits\TableTrait;
 use Packaged\QueryBuilder\SelectExpression\TableSelectExpression;
 use Packaged\QueryBuilder\Statement\AbstractStatement;
 
-class TableTraitTest extends \PHPUnit_Framework_TestCase
+class TableTraitTest extends \PHPUnit\Framework\TestCase
 {
   public function testGetTable()
   {

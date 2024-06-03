@@ -9,7 +9,7 @@ use Packaged\QueryBuilder\Expression\Like\StartsWithExpression;
 use Packaged\QueryBuilder\Expression\StringExpression;
 use Packaged\QueryBuilder\Predicate\NotLikePredicate;
 
-class NotLikePredicateTest extends \PHPUnit_Framework_TestCase
+class NotLikePredicateTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

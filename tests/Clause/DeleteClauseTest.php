@@ -4,7 +4,7 @@ namespace Packaged\Tests\QueryBuilder\Clause;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Clause\DeleteClause;
 
-class DeleteClauseTest extends \PHPUnit_Framework_TestCase
+class DeleteClauseTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

@@ -4,7 +4,7 @@ namespace Packaged\Tests\QueryBuilder\Expression;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 
-class FieldExpressionTest extends \PHPUnit_Framework_TestCase
+class FieldExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

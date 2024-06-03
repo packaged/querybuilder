@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Builder\QueryBuilder;
 use Packaged\QueryBuilder\Expression\Like\StartsWithExpression;
 use Packaged\QueryBuilder\Predicate\LikePredicate;
 
-class UpdateStatementTest extends \PHPUnit_Framework_TestCase
+class UpdateStatementTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

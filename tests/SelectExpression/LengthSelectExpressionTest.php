@@ -4,7 +4,7 @@ namespace Packaged\Tests\QueryBuilder\SelectExpression;
 use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\SelectExpression\LengthSelectExpression;
 
-class LengthSelectExpressionTest extends \PHPUnit_Framework_TestCase
+class LengthSelectExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

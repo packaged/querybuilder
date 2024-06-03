@@ -5,7 +5,7 @@ use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Expression\DecrementExpression;
 use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 
-class DecrementExpressionTest extends \PHPUnit_Framework_TestCase
+class DecrementExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

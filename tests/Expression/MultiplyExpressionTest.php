@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\Expression\MultiplyExpression;
 use Packaged\QueryBuilder\Expression\NumericExpression;
 
-class MultiplyExpressionTest extends \PHPUnit_Framework_TestCase
+class MultiplyExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

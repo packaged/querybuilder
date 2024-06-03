@@ -18,7 +18,7 @@ use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
 use Packaged\QueryBuilder\SelectExpression\AllSelectExpression;
 use Packaged\QueryBuilder\Statement\QueryStatement;
 
-class QueryStatementTest extends \PHPUnit_Framework_TestCase
+class QueryStatementTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

@@ -5,7 +5,7 @@ use Packaged\QueryBuilder\Assembler\QueryAssembler;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\SelectExpression\FieldSelectExpression;
 
-class FieldSelectExpressionTest extends \PHPUnit_Framework_TestCase
+class FieldSelectExpressionTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

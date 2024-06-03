@@ -10,7 +10,7 @@ use Packaged\QueryBuilder\Predicate\EqualPredicate;
 use Packaged\QueryBuilder\Predicate\GreaterThanPredicate;
 use Packaged\QueryBuilder\Predicate\PredicateSet;
 
-class WhereClauseTest extends \PHPUnit_Framework_TestCase
+class WhereClauseTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

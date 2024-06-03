@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Expression\AdditionExpression;
 use Packaged\QueryBuilder\Expression\SubtractExpression;
 use Packaged\QueryBuilder\SelectExpression\SumSelectExpression;
 
-class ArithmeticTest extends \PHPUnit_Framework_TestCase
+class ArithmeticTest extends \PHPUnit\Framework\TestCase
 {
   public function testArithmetic()
   {

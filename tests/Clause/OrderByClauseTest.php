@@ -6,7 +6,7 @@ use Packaged\QueryBuilder\Clause\OrderByClause;
 use Packaged\QueryBuilder\Expression\FieldExpression;
 use Packaged\QueryBuilder\SelectExpression\CustomSelectExpression;
 
-class OrderByClauseTest extends \PHPUnit_Framework_TestCase
+class OrderByClauseTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {

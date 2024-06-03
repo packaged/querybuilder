@@ -9,7 +9,7 @@ use Packaged\QueryBuilder\Predicate\LikePredicate;
 use Packaged\QueryBuilder\Predicate\NotEqualPredicate;
 use Packaged\QueryBuilder\Statement\DeleteStatement;
 
-class DeleteStatementTest extends \PHPUnit_Framework_TestCase
+class DeleteStatementTest extends \PHPUnit\Framework\TestCase
 {
   public function testAssemble()
   {
