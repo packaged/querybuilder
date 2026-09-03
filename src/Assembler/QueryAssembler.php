@@ -36,7 +36,7 @@ class QueryAssembler
    * @param bool       $forPrepare If the statement should be build with
    *                               parameters
    */
-  public function __construct(IStatement $statement = null, $forPrepare = true)
+  public function __construct(?IStatement $statement = null, $forPrepare = true)
   {
     $this->_statement = $statement;
     $this->_forPrepare = $forPrepare;

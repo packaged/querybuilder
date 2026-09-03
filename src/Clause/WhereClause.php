@@ -22,7 +22,7 @@ class WhereClause extends AbstractPredicateClause
     return 'WHERE';
   }
 
-  public static function create(array $predicated = null)
+  public static function create(?array $predicated = null)
   {
     $clause = new static;
     if($predicated !== null)

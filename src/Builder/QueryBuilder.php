@@ -62,7 +62,7 @@ class QueryBuilder
     return $statement;
   }
 
-  public static function update($table, array $keyValues = null)
+  public static function update($table, ?array $keyValues = null)
   {
     $statement = static::_getUpdateStatement();
     $statement->update($table);

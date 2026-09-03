@@ -50,7 +50,7 @@ class CqlQueryBuilder extends QueryBuilder
    *
    * @return CqlUpdateStatement
    */
-  public static function update($table, array $keyValues = null)
+  public static function update($table, ?array $keyValues = null)
   {
     return parent::update($table, $keyValues);
   }
